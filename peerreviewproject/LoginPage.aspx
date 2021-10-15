@@ -31,15 +31,19 @@
                     <td>
                         </td>
                     <td>
-                        <asp:Button ID="loginButton" runat="server" Text="Login" OnClick="loginButton_Click" /> </td>
+                         </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td>
-                        <asp:Label ID="lblError" runat="server" Text="Password entered is incorrect" ForeColor="Red"></asp:Label></td>
+                        </td>
                 </tr>
                 
             </table>
+            <table style="margin: auto"><tr><td><asp:Button ID="loginButton" runat="server" Text="Login"
+                OnClick="loginButton_Click" /></td></tr></table>
+            <table style="margin: auto"><tr><td><asp:Label ID="lblError" runat="server" Text="email or password entered is incorrect" 
+                ForeColor="Red"></asp:Label></td></tr></table>
         </div>
     </form>
 </body>
