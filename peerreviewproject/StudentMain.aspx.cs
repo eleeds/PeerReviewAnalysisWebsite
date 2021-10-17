@@ -11,7 +11,9 @@ namespace peerreviewproject
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            lblStudentDetails.Text = "User: " + Session["email"];
+            lblStudentDetails.Text = "User ID: " + Session["email"];
+            
+            
         }
 
         protected void logoutButton_Click(object sender, EventArgs e)

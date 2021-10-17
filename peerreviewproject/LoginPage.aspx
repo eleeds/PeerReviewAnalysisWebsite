@@ -14,7 +14,9 @@
 <body>
     <form id="form1" runat="server">
         <div>
+            <table style="margin: auto"><tr><td><b>USI PEER REVIEW APPLICATION</b></td></tr></table>
             <table style="margin: auto; border: 5px solid white">
+                
                 <tr>
                     <td>
                         <asp:Label ID="emailLbl" runat="server" Text="email"></asp:Label></td>
@@ -27,22 +29,12 @@
                     <td>
                         <asp:TextBox ID="passwordBox" runat="server" TextMode="Password"></asp:TextBox></td>
                 </tr>
-                 <tr>
-                    <td>
-                        </td>
-                    <td>
-                         </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        </td>
-                </tr>
+             
                 
             </table>
             <table style="margin: auto"><tr><td><asp:Button ID="loginButton" runat="server" Text="Login"
                 OnClick="loginButton_Click" /></td></tr></table>
-            <table style="margin: auto"><tr><td><asp:Label ID="lblError" runat="server" Text="email or password entered is incorrect" 
+            <table style="margin: auto"><tr><td><asp:Label ID="lblError" runat="server" Text="the email or password entered is incorrect" 
                 ForeColor="Red"></asp:Label></td></tr></table>
         </div>
     </form>

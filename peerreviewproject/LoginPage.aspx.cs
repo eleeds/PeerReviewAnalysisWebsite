@@ -26,12 +26,17 @@ namespace peerreviewproject
                 sqlCon.Open();
                 string query = "SELECT COUNT(1) FROM User_table WHERE email=@email AND password=@password";
                 SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+               
                 sqlCmd.Parameters.AddWithValue("@email", emailBox.Text.Trim());
                 sqlCmd.Parameters.AddWithValue("@password", passwordBox.Text.Trim());
+             
                 int count = Convert.ToInt32(sqlCmd.ExecuteScalar());
-                if(count == 1)
+
+                if (count == 1)
                 {
                     Session["email"] = emailBox.Text.Trim();
+                    Session["password"] = passwordBox.Text.Trim();
+                  
                     Response.Redirect("StudentMain.aspx");
                 }
                 else
