@@ -26,11 +26,12 @@
                         
         </table>
            <table style="margin: auto" >
-               <tr><td><asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false">
+               <tr><td><asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False">
                <Columns>
                    <asp:BoundField DataField="CourseDepartment" HeaderText="Course Dept" />
                    <asp:BoundField DataField="CourseNumber" HeaderText="Course Num" />
                    <asp:BoundField DataField="CourseName" HeaderText="Course Name" />
+                   <asp:HyperLinkField text="Open" navigateurl="~\DefaultNavPage.aspx" HeaderText="Test Field"/>
                </Columns>
            </asp:GridView></td></tr>
                <tr><td><asp:Button ID="logoutButton" runat="server" Text="Logout" OnClick="logoutButton_Click" /></td></tr>
