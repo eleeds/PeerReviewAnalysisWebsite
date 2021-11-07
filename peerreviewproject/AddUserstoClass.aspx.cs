@@ -18,26 +18,31 @@ namespace peerreviewproject
         public string fileName;
         public string filePath;
         public DataTable CSV_Datatable = new DataTable();
+        string user;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (IsPostBack)
+            if (!IsPostBack)
             {
-                // Label5.Text = "List of students in " + DropDownList1.SelectedItem.Text;
+                CourseAvailable_dropdownlist.DataBind();
             }
+                CurrentRoster_lbl.Text = "Current Student Roster for " + CourseAvailable_dropdownlist.SelectedItem.Text;
+                StudentToClass_bttn.Text = "Add students to " + CourseAvailable_dropdownlist.SelectedItem.Text;
+            
+            user = Session["userID"].ToString();
 
             if (ViewState["data"] != null)
             {
                 CSV_Datatable = (DataTable)ViewState["data"];
-
-
             }
             else
             {
                 GridView1.DataSource = new string[] { };
                 GridView1.DataBind();
-                CSV_Datatable.Columns.AddRange(new DataColumn[3] {new DataColumn("First Name", typeof(string))
+                CSV_Datatable.Columns.AddRange(new DataColumn[4] 
+                {new DataColumn("First Name", typeof(string))
                 ,new DataColumn("Last Name", typeof(string))
-                ,new DataColumn("Email", typeof(string)) });
+                ,new DataColumn("Email", typeof(string))
+                ,new DataColumn("Team", typeof(string))});
 
             }
 
@@ -55,7 +60,6 @@ namespace peerreviewproject
                     string extension = Path.GetExtension(FileUpload1.PostedFile.FileName);
                     string folder = "~/CSV_uploads/";
 
-                    //string filePath = Server.MapPath(folder + randomName + fileName);
                     filePath = Server.MapPath(folder + fileName);
                     string[] filenames = Directory.GetFiles(Server.MapPath("~/CSV_uploads"));
 
@@ -82,7 +86,7 @@ namespace peerreviewproject
                         Read_from_csv(fileName, filePath);
                     }
                     Label1.Text = fileName + " was imported successfully!";
-                    File.Delete(filePath);      //remove import file after reading data
+                    File.Delete(filePath);                                  //remove import file after reading data
                 }
                 else Label1.Text = "Please select a CSV file";
 
@@ -94,22 +98,26 @@ namespace peerreviewproject
             }
         }
 
-        protected void StudentToClass_bttn(object sender, EventArgs e)
+        protected void StudentToClass_bttnClick(object sender, EventArgs e)
         {
-            //int count = 0;
-            if (CSV_Datatable == null)
+            string courseID = CourseAvailable_dropdownlist.SelectedValue;
+
+            if (CSV_Datatable == null || CSV_Datatable.Rows.Count == 0)
             {
                 Label2.Text = "Add students first";
-                //ListBox1.Items.Add("No students");
                 return;
             }
             foreach (DataRow row in CSV_Datatable.Rows)
-            {
-                CreateUser_Class std = new CreateUser_Class(row[0].ToString(), row[1].ToString(), row[2].ToString());
-                StudentTo_Class stu = new StudentTo_Class();
+            {                    
+                                                // [0]first name, [1]last name, [2]email, [3]team
+                _ = new CreateUser_Class(row[0].ToString(), row[1].ToString(), row[2].ToString());
+                _ = new StudentTo_Class(courseID, row[2].ToString(), row[3].ToString());
+                //here
             }
             Label2.Text = "New users added";
-
+            CSV_Datatable.Clear();
+            GridView1.DataBind();
+            ListBox1.DataBind();
         }
 
 
@@ -170,12 +178,14 @@ namespace peerreviewproject
 
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)  //for updating cells to temp_table
         {
-            string FirstN = e.NewValues[0].ToString();
+           // string FirstN = e.OldValues[1].ToString();
             CSV_Datatable.Rows[e.RowIndex]["First Name"] = e.NewValues[0].ToString().Trim();
             CSV_Datatable.Rows[e.RowIndex]["Last Name"] = e.NewValues[1].ToString().Trim();
             CSV_Datatable.Rows[e.RowIndex]["Email"] = e.NewValues[2].ToString().Trim();
+            CSV_Datatable.Rows[e.RowIndex]["Team"] = e.NewValues[3].ToString().Trim();
             CSV_Datatable.AcceptChanges();
-
+           
+            
             ViewState["data"] = CSV_Datatable;
             GridView1.EditIndex = -1;
             GridView1.DataSource = CSV_Datatable;
@@ -228,11 +238,11 @@ namespace peerreviewproject
 
         protected void AddStudent_bttnclick(object sender, EventArgs e)
         { 
-            TextBox[] boxes = { FirstnameTB, LastnameTB, EmailTB };
+            TextBox[] boxes = { FirstnameTB, LastnameTB, EmailTB, TeamTB };
 
             if (!TextBox_Check(boxes))
             {
-                CSV_Datatable.Rows.Add(FirstnameTB.Text, LastnameTB.Text, EmailTB.Text);
+                CSV_Datatable.Rows.Add(FirstnameTB.Text, LastnameTB.Text, EmailTB.Text, TeamTB.Text);
                 ViewState["data"] = CSV_Datatable;
                 GridView1.DataSource = CSV_Datatable;
                 GridView1.DataBind();

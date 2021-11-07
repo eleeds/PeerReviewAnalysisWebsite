@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.Security;
 
 namespace peerreviewproject
@@ -41,14 +38,10 @@ namespace peerreviewproject
                         Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
             {
                 sqlCon.Open();
-                string query = "SELECT COUNT(1) FROM User_table WHERE email=@email";
-
-                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-
-                sqlCmd.Parameters.AddWithValue("@email", userEmail); 
-                
-
-                int count = Convert.ToInt32(sqlCmd.ExecuteScalar());
+                string userExist_query = "SELECT COUNT(1) FROM User_table WHERE email=@email";
+                SqlCommand userExist_sqlCmd = new SqlCommand(userExist_query, sqlCon);
+                userExist_sqlCmd.Parameters.AddWithValue("@email", userEmail); 
+                int count = Convert.ToInt32(userExist_sqlCmd.ExecuteScalar());
                 sqlCon.Close();
 
                 if (count == 1)
@@ -65,17 +58,17 @@ namespace peerreviewproject
                         Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
             {
                 sqlCon.Open();
-                string query = "INSERT INTO User_table ([firstName], [lastName], [email], [password], [type]) " +
+                string createUser_query = "INSERT INTO User_table ([firstName], [lastName], [email], [password], [type]) " +
                     "VALUES (@fname, @lname, @email, ENCRYPTBYPASSPHRASE(N'USI2021', @password), @type)";
 
-                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                SqlCommand createUser_sqlCmd = new SqlCommand(createUser_query, sqlCon);
 
-                sqlCmd.Parameters.AddWithValue("@fname", firstName);
-                sqlCmd.Parameters.AddWithValue("@lname", lastName);
-                sqlCmd.Parameters.AddWithValue("@password", Membership.GeneratePassword(10,2));
-                sqlCmd.Parameters.AddWithValue("@email", userEmail);
-                sqlCmd.Parameters.AddWithValue("@type", permissionType);
-                sqlCmd.ExecuteNonQuery();
+                createUser_sqlCmd.Parameters.AddWithValue("@fname", firstName);
+                createUser_sqlCmd.Parameters.AddWithValue("@lname", lastName);
+                createUser_sqlCmd.Parameters.AddWithValue("@password", Membership.GeneratePassword(10,2));
+                createUser_sqlCmd.Parameters.AddWithValue("@email", userEmail);
+                createUser_sqlCmd.Parameters.AddWithValue("@type", permissionType);
+                createUser_sqlCmd.ExecuteNonQuery();
                 sqlCon.Close();
 
             }

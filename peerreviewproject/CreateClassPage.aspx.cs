@@ -9,18 +9,23 @@ namespace peerreviewproject
 {
     public partial class CreateClassPage : System.Web.UI.Page
     {
+        int user;
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            user = Convert.ToInt32(Session["userID"]);
         }
 
         protected void CreateCourse_btnclick(object sender, EventArgs e)
         {
             //prof id = 500
-            CreateCourse_Class stan = new CreateCourse_Class(500, CourseDepartTB.Text, CourseNumberTB.Text, CourseNameTB.Text);
+            CreateCourse_Class stan = new CreateCourse_Class(user, CourseDepartTB.Text, CourseNumberTB.Text, CourseNameTB.Text);
             
 
         }
 
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("TeacherMain.aspx");
+        }
     }
 }

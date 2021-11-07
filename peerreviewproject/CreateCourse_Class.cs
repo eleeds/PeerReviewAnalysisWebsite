@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 
 namespace peerreviewproject
-{                                                   //need something to keep track of current users ID
+{                                                   
     public class CreateCourse_Class
     {
         private string CourseDepartment;
@@ -35,21 +35,21 @@ namespace peerreviewproject
             CourseName_ = CName;
            if(!DoesClassExist(Coursedept,CourseNum,CourseName_))
             {
-                CreateClass();
+                CreateCourse();
                 CourseAccess();
             }
             //maybe add date to course table
 
         }
-        public void CreateClass()
+        public void CreateCourse()
         {
             using (SqlConnection sqlCon = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
                         Integrated Security=True;
                         Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
             {
                 sqlCon.Open();
-                string query = "INSERT INTO Course_table ([courseDepartment], [courseNumber], [courseName]) VALUES(@department, @courseNum, @courseName)";
-                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
+                string createCourse_query = "INSERT INTO Course_table ([courseDepartment], [courseNumber], [courseName]) VALUES(@department, @courseNum, @courseName)";
+                SqlCommand sqlCmd = new SqlCommand(createCourse_query, sqlCon);
                 sqlCmd.Parameters.AddWithValue("@department", Coursedept);
                 sqlCmd.Parameters.AddWithValue("@courseNum", CourseNum);
                 sqlCmd.Parameters.AddWithValue("@courseName", CourseName_);
@@ -62,23 +62,24 @@ namespace peerreviewproject
 
         public void CourseAccess()
         {
-            int ID = 0;
+            
             using (SqlConnection sqlCon = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
                         Integrated Security=True;
                         Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
             {
-                sqlCon.Open();                      //userID needs to be current professor logged in
-                string query2 = "INSERT INTO Course_access_table ([userID], [courseID], [permissionType]) VALUES(500, @courseID, N'Professor')";
-                string query3 = "Select courseID FROM Course_table WHERE courseDepartment =@department AND courseNumber =@courseNum AND courseName =@courseName";
-                SqlCommand sqlCmd2 = new SqlCommand(query2, sqlCon);
-                SqlCommand sqlCmd3 = new SqlCommand(query3, sqlCon);
-                sqlCmd3.Parameters.AddWithValue("@department", Coursedept);
-                sqlCmd3.Parameters.AddWithValue("@courseNum", CourseNum);
-                sqlCmd3.Parameters.AddWithValue("@courseName", CourseName_);
-                ID = Convert.ToInt32(sqlCmd3.ExecuteScalar());
-                //need to grab courseID from course table
-                sqlCmd2.Parameters.AddWithValue("@courseID", ID);
-                sqlCmd2.ExecuteNonQuery();
+                sqlCon.Open();                      
+                string userCourseAccess_query = "INSERT INTO Course_access_table ([userID], [courseID], [permissionType]) VALUES(500, @courseID, N'Professor')";
+                string courseID_query = "Select courseID FROM Course_table WHERE courseDepartment =@department AND courseNumber =@courseNum AND courseName =@courseName";
+                SqlCommand courseAccess_sqlCmd = new SqlCommand(userCourseAccess_query, sqlCon);
+                SqlCommand courseID_sqlCmd = new SqlCommand(courseID_query, sqlCon);
+                courseID_sqlCmd.Parameters.AddWithValue("@department", Coursedept);
+                courseID_sqlCmd.Parameters.AddWithValue("@courseNum", CourseNum);
+                courseID_sqlCmd.Parameters.AddWithValue("@courseName", CourseName_);
+
+                int ID = Convert.ToInt32(courseID_sqlCmd.ExecuteScalar());
+
+                courseAccess_sqlCmd.Parameters.AddWithValue("@courseID", ID);
+                courseAccess_sqlCmd.ExecuteNonQuery();
                 sqlCon.Close();
 
 
@@ -91,13 +92,13 @@ namespace peerreviewproject
                         Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
             {
                 sqlCon.Open();
-                string query = "SELECT COUNT(1) FROM Course_table WHERE courseDepartment = @department AND courseNumber = @courseNum and courseName = @courseName";
-                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                sqlCmd.Parameters.AddWithValue("@department", dept);
-                sqlCmd.Parameters.AddWithValue("@courseNum", num);
-                sqlCmd.Parameters.AddWithValue("@courseName", name);
+                string classExist_query = "SELECT COUNT(1) FROM Course_table WHERE courseDepartment = @department AND courseNumber = @courseNum and courseName = @courseName";
+                SqlCommand classExist_sqlCmd = new SqlCommand(classExist_query, sqlCon);
+                classExist_sqlCmd.Parameters.AddWithValue("@department", dept);
+                classExist_sqlCmd.Parameters.AddWithValue("@courseNum", num);
+                classExist_sqlCmd.Parameters.AddWithValue("@courseName", name);
 
-                int count = Convert.ToInt32(sqlCmd.ExecuteScalar());
+                int count = Convert.ToInt32(classExist_sqlCmd.ExecuteScalar());
                 sqlCon.Close();
 
                 if (count == 1)
