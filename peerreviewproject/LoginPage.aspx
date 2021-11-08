@@ -21,19 +21,21 @@
                     <td>
                         <asp:Label ID="emailLbl" runat="server" Text="email"></asp:Label></td>
                     <td>
-                        <asp:TextBox ID="emailBox" runat="server">idk300@eagles.usi.edu</asp:TextBox></td>
+                        <asp:TextBox ID="emailBox" runat="server"></asp:TextBox></td>
                 </tr>
                 <tr>
                     <td>
                         <asp:Label ID="passwordLbl" runat="server" Text="password"></asp:Label></td>
                     <td>
-                        <asp:TextBox ID="passwordBox" runat="server" TextMode="Password">password</asp:TextBox></td>
+                        <asp:TextBox ID="passwordBox" runat="server" TextMode="Password"></asp:TextBox></td>
                 </tr>
              
                 
             </table>
             <table style="margin: auto"><tr><td><asp:Button ID="loginButton" runat="server" Text="Login"
-                OnClick="loginButton_Click" /></td></tr></table>
+                OnClick="loginButton_Click" />&nbsp;&nbsp;
+                <asp:Button ID="Button1" runat="server" OnClick="ForgotBttn_click" Text="Forgot Password" />
+                </td></tr></table>
             <table style="margin: auto"><tr><td><asp:Label ID="lblError" runat="server" Text="the email or password entered is incorrect" 
                 ForeColor="Red"></asp:Label></td></tr></table>
         </div>

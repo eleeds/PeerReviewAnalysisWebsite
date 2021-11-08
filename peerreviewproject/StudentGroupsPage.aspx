@@ -94,7 +94,7 @@
                     <asp:TableCell>
                         <asp:TextBox ID="TextBox1" runat="server"  ></asp:TextBox>
                 
-<asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Add team" />
+<asp:Button ID="AddTeamBttn" runat="server" OnClick="Button1_Click" Text="Add team" />
                     
 </asp:TableCell>
                 </asp:TableRow>

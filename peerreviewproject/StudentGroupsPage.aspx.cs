@@ -10,7 +10,9 @@ namespace peerreviewproject
 {
     public partial class StudentGroupsPage : System.Web.UI.Page
     {
-        
+        public string sqlConnection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
+                        Integrated Security=True;
+                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -22,7 +24,7 @@ namespace peerreviewproject
             GridView3.DataBind();
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void AddTeamBttn_click(object sender, EventArgs e)
         {
             
             for (int i = 0; i < GridView1.Rows.Count; i++)
@@ -35,9 +37,7 @@ namespace peerreviewproject
                 }
             }
 
-            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
-                        Integrated Security=True;
-                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
+            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
             {
                 sqlCon.Open();
                 SqlCommand cmd = new SqlCommand("_insertTeam", sqlCon);
@@ -84,9 +84,7 @@ namespace peerreviewproject
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "Message Box", "<script language = 'javascript'>alert('Create Team # first before adding Student')</script>");
                 return;
             }
-            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
-                        Integrated Security=True;
-                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
+            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
             {
                 string query = "UPDATE UserTeam_table SET teamID = a.teamID FROM UserTeam_table CROSS JOIN (SELECT teamID FROM teams_table WHERE (name = @name)) AS a WHERE (UserTeam_table.userID = @userID)";
 
@@ -103,9 +101,7 @@ namespace peerreviewproject
 
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
-                        Integrated Security=True;
-                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
+            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
             {
                 string query = "UPDATE teams_table SET name = @name WHERE (courseID = @courseID) AND (name = @old)";
                 

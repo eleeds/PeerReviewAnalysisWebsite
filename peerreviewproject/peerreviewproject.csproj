@@ -110,9 +110,11 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="CreateClassPage.aspx" />
+    <Content Include="ChangePass.aspx" />
     <Content Include="CreatePeerReviewPage.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="ForgotPass.aspx" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -179,6 +181,13 @@
       <DependentUpon>CreateClassPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="CreateCourse_Class.cs" />
+    <Compile Include="ChangePass.aspx.cs">
+      <DependentUpon>ChangePass.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChangePass.aspx.designer.cs">
+      <DependentUpon>ChangePass.aspx</DependentUpon>
+    </Compile>
     <Compile Include="CreatePeerReviewPage.aspx.cs">
       <DependentUpon>CreatePeerReviewPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -187,6 +196,14 @@
       <DependentUpon>CreatePeerReviewPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="CreateUser_Class.cs" />
+    <Compile Include="ForgotPass.aspx.cs">
+      <DependentUpon>ForgotPass.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ForgotPass.aspx.designer.cs">
+      <DependentUpon>ForgotPass.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PasswordManagement_Class.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -211,30 +211,6 @@ namespace peerreviewproject
             }
         }
 
-        protected void buttonclick(object sender, EventArgs e)
-        {
-            // static void Email(string htmlString) for email class
-            // {
-            try
-            {
-                MailMessage message = new MailMessage();
-                SmtpClient smtp = new SmtpClient();
-                message.From = new MailAddress("shai114@hotmail.com");
-                message.To.Add(new MailAddress("shai114@hotmail.com"));
-                message.Subject = "Test";
-                message.IsBodyHtml = true; //to make message body as html  
-                message.Body = "did i work?";
-                smtp.Port = 587;
-                smtp.Host = "smtp.live.com"; //for gmail host  
-                smtp.EnableSsl = true;
-                smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new NetworkCredential("shai114@hotmail.com", "Megashai2018");
-                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtp.Send(message);
-            }
-            catch (Exception) { }
-            // }
-        }
 
         protected void AddStudent_bttnclick(object sender, EventArgs e)
         { 

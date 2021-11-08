@@ -10,6 +10,9 @@ namespace peerreviewproject
     {
         private int courseID;
         private int userID;
+        public string sqlConnection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
+                        Integrated Security=True;
+                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         public int course_ID
         {
             get { return courseID; }
@@ -21,12 +24,11 @@ namespace peerreviewproject
             set { userID = value; }
         }
 
-
         public StudentTo_Class(string class_ID, string email, string team)
         {
             courseID = Convert.ToInt32(class_ID);
 
-            if (!IsUserInClassAlready(class_ID, email))
+            if (!IsUserInClassAlready(class_ID, email))     //skips student if their already in the class
             {
                 courseInfo(courseID, email);
                 createTeam(courseID, Convert.ToInt32(team));
@@ -35,10 +37,11 @@ namespace peerreviewproject
         }
         public void courseInfo(int ID, string email)
         {
-            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
-                        Integrated Security=True;
-                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
+            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
             {
+                                    //query to grab student's userID
+                                    //query to place student into class
+
                 sqlCon.Open();
                 string StudentToCourse_Query = "INSERT INTO Course_access_table ([userID], [courseID], [permissionType]) VALUES(@userID, @courseID, N'Student')";
                 string StudentID_Query = "Select ID FROM User_table WHERE email =@email";
@@ -52,14 +55,12 @@ namespace peerreviewproject
                 ToCourseCMD.Parameters.AddWithValue("@courseID", ID);
                 ToCourseCMD.ExecuteNonQuery();
                 sqlCon.Close();
-                                    //query to grab student's userID
-                                    //query to place student into class
+                                    
             }
         }
         public bool IsUserInClassAlready(string classID, string email)
         {
-                using (SqlConnection sqlCon = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;Integrated Security=True;
-                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
+                using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
                 {
                     sqlCon.Open();
                     string inClass_query = "SELECT COUNT(1) FROM Course_access_table WHERE userID=@user AND courseID=@courseID";
@@ -81,12 +82,10 @@ namespace peerreviewproject
                 }
             
         }
-        public void studentToGroup(string classID, string email, int name)
+        public void studentToGroup(string classID, string email, int name)      //student assigned to team in class
         {
 
-            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
-                        Integrated Security=True;
-                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
+            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
             {
                 sqlCon.Open();
                 string toGroup_Query = "INSERT INTO UserTeam_table ([userID], [teamID], [courseID]) VALUES(@userID, @teamID, @courseID)";
@@ -110,14 +109,12 @@ namespace peerreviewproject
                 sqlCon.Close();
 
             }
-          //  INSERT INTO[dbo].[UserTeam_table] ([userID], [teamID]) VALUES(536, NULL)
+          
 
         }
-        public void createTeam(int courseID, int team)
+        public void createTeam(int courseID, int team)          //teams created in class before student is added
         {
-            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
-                        Integrated Security=True;
-                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
+            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
             {
                 sqlCon.Open();
                 string DoesTeamExist_Query = "Select teamID FROM teams_table WHERE courseID=@courseID AND name=@name";
