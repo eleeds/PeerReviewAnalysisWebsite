@@ -19,7 +19,7 @@ namespace peerreviewproject
         {
             //prof id = 500
             CreateCourse_Class stan = new CreateCourse_Class(user, CourseDepartTB.Text, CourseNumberTB.Text, CourseNameTB.Text);
-            
+          //  GridView1.DataBind();
 
         }
 

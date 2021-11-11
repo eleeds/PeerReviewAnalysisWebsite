@@ -112,12 +112,12 @@ namespace peerreviewproject
                                                 // [0]first name, [1]last name, [2]email, [3]team
                 _ = new CreateUser_Class(row[0].ToString(), row[1].ToString(), row[2].ToString());
                 _ = new StudentTo_Class(courseID, row[2].ToString(), row[3].ToString());
-                //here
+                
             }
             Label2.Text = "New users added";
             CSV_Datatable.Clear();
             GridView1.DataBind();
-            ListBox1.DataBind();
+            GridView2.DataBind();
         }
 
 
@@ -178,7 +178,7 @@ namespace peerreviewproject
 
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)  //for updating cells to temp_table
         {
-           // string FirstN = e.OldValues[1].ToString();
+           
             CSV_Datatable.Rows[e.RowIndex]["First Name"] = e.NewValues[0].ToString().Trim();
             CSV_Datatable.Rows[e.RowIndex]["Last Name"] = e.NewValues[1].ToString().Trim();
             CSV_Datatable.Rows[e.RowIndex]["Email"] = e.NewValues[2].ToString().Trim();
@@ -205,10 +205,11 @@ namespace peerreviewproject
 
         protected void Dropdownchange(object sender, EventArgs e)
         {
-            if (ListBox1.Items.Count == 0)
-            {
-                ListBox1.Items.Add("No students");
-            }
+            // if (ListBox1.Items.Count == 0)
+            //{
+            //  ListBox1.Items.Add("No students");
+            // }
+            Label2.Visible = false;
         }
 
 
@@ -244,6 +245,19 @@ namespace peerreviewproject
             else return true;
         }
 
+        protected void GridView2_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            _ = new StudentTo_Class(e.Keys[0].ToString(), CourseAvailable_dropdownlist.SelectedValue);
+            
+        }
 
+        protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                LinkButton Remove = e.Row.FindControl("LinkButton2") as LinkButton;
+                Remove.Attributes.Add("onclick", string.Format("return confirm('Are you sure you want to remove {0} ?')", e.Row.Cells[0].Text));
+            }
+        }
     }
 }

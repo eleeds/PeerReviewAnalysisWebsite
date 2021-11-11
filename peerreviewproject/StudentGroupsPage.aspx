@@ -92,9 +92,9 @@
                 </asp:TableRow>
                 <asp:TableRow runat="server">
                     <asp:TableCell>
-                        <asp:TextBox ID="TextBox1" runat="server"  ></asp:TextBox>
+                        <asp:TextBox ID="TextBox1" runat="server"  TextMode="Number"></asp:TextBox>
                 
-<asp:Button ID="AddTeamBttn" runat="server" OnClick="Button1_Click" Text="Add team" />
+<asp:Button ID="AddTeamBttn" runat="server" OnClick="AddTeamBttn_click" Text="Add team" />
                     
 </asp:TableCell>
                 </asp:TableRow>

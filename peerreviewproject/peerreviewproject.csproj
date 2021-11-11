@@ -157,6 +157,7 @@
     <Content Include="Site.Master" />
     <Content Include="StudentGroupsPage.aspx" />
     <Content Include="StudentMain.aspx" />
+    <Content Include="StudentResponsePage.aspx" />
     <Content Include="TeacherMain.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -235,6 +236,13 @@
     </Compile>
     <Compile Include="StudentMain.aspx.designer.cs">
       <DependentUpon>StudentMain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StudentResponsePage.aspx.cs">
+      <DependentUpon>StudentResponsePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StudentResponsePage.aspx.designer.cs">
+      <DependentUpon>StudentResponsePage.aspx</DependentUpon>
     </Compile>
     <Compile Include="StudentTo_Class.cs" />
     <Compile Include="TeacherMain.aspx.cs">

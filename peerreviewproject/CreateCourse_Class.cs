@@ -11,6 +11,9 @@ namespace peerreviewproject
         private string CourseDepartment;
         private string CourseNumber;
         private string CourseName;
+        public string sqlConnection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
+                        Integrated Security=True;
+                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         public string Coursedept
         {
@@ -43,9 +46,7 @@ namespace peerreviewproject
         }
         public void CreateCourse()
         {
-            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
-                        Integrated Security=True;
-                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
+            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
             {
                 sqlCon.Open();
                 string createCourse_query = "INSERT INTO Course_table ([courseDepartment], [courseNumber], [courseName]) VALUES(@department, @courseNum, @courseName)";
@@ -63,9 +64,7 @@ namespace peerreviewproject
         public void CourseAccess()
         {
             
-            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
-                        Integrated Security=True;
-                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
+            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
             {
                 sqlCon.Open();                      
                 string userCourseAccess_query = "INSERT INTO Course_access_table ([userID], [courseID], [permissionType]) VALUES(500, @courseID, N'Professor')";
@@ -88,8 +87,7 @@ namespace peerreviewproject
 
         public bool DoesClassExist(string dept, string num, string name)
         {
-            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;Integrated Security=True;
-                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
+            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
             {
                 sqlCon.Open();
                 string classExist_query = "SELECT COUNT(1) FROM Course_table WHERE courseDepartment = @department AND courseNumber = @courseNum and courseName = @courseName";

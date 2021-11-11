@@ -15,7 +15,7 @@ namespace peerreviewproject
         string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         protected void Page_Load(object sender, EventArgs e)
         {
-            using (SqlConnection sqlCon = new SqlConnection(connectionString))
+        /*    using (SqlConnection sqlCon = new SqlConnection(connectionString))
             {
                 sqlCon.Open();
                 SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT CourseDepartment, CourseNumber, CourseName FROM Course_table", sqlCon);
@@ -25,7 +25,7 @@ namespace peerreviewproject
                 GridView1.DataBind();
 
             }
-
+        */
                 lblStudentDetails.Text = "User ID: " + Session["email"];
             
             

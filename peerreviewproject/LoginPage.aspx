@@ -21,7 +21,7 @@
                     <td>
                         <asp:Label ID="emailLbl" runat="server" Text="email"></asp:Label></td>
                     <td>
-                        <asp:TextBox ID="emailBox" runat="server"></asp:TextBox></td>
+                        <asp:TextBox ID="emailBox" runat="server">idk300@eagles.usi.edu</asp:TextBox></td>
                 </tr>
                 <tr>
                     <td>

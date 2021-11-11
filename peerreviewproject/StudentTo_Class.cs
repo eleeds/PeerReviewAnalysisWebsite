@@ -35,6 +35,11 @@ namespace peerreviewproject
                 studentToGroup(class_ID, email, Convert.ToInt32(team));
             }
         }
+
+        public StudentTo_Class(string userID, string courseID)
+        {
+            RemoveFromClass(Convert.ToInt32(userID), Convert.ToInt32(courseID));
+        }
         public void courseInfo(int ID, string email)
         {
             using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
@@ -134,6 +139,32 @@ namespace peerreviewproject
                 sqlCon.Close();
 
             }
+        }
+
+        public void RemoveFromClass(int userID, int courseID)
+        {
+            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            {
+                sqlCon.Open();
+                SqlCommand cmd = new SqlCommand("_removeStudentFromClass", sqlCon);         
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@courseID", courseID);
+                cmd.Parameters.AddWithValue("@userID", userID);
+                cmd.ExecuteNonQuery();
+
+                RemoveFromGroup(sqlCon, userID, courseID);
+                sqlCon.Close();
+
+            }
+        }
+
+        public void RemoveFromGroup(SqlConnection sqlCon, int userID, int courseID)
+        {
+            SqlCommand cmd = new SqlCommand("_deleteStudentFromTeam", sqlCon);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@courseID", courseID);
+            cmd.Parameters.AddWithValue("@userID", userID);
+            cmd.ExecuteNonQuery();
         }
     }
 }

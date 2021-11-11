@@ -40,7 +40,7 @@ namespace peerreviewproject
             using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
             {
                 sqlCon.Open();
-                SqlCommand cmd = new SqlCommand("_insertTeam", sqlCon);
+                SqlCommand cmd = new SqlCommand("_insertTeam", sqlCon);         //numbers only
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@courseID", DropDownList1.SelectedValue);
                 cmd.Parameters.AddWithValue("@name", Convert.ToInt32(TextBox1.Text));
@@ -71,7 +71,7 @@ namespace peerreviewproject
 
             while (i < GridView1.Rows.Count && !flag)
             {
-                if (GridView1.Rows[i].Cells[2].Text == e.NewValues[0].ToString())
+                if (GridView1.Rows[i].Cells[1].Text == e.NewValues[0].ToString())
                 {
                     flag = true;
                 }
