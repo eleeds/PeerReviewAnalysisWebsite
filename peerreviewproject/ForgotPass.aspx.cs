@@ -44,7 +44,7 @@ namespace peerreviewproject
                 smtp.Host = "smtp.live.com"; //for gmail host  
                 smtp.EnableSsl = true;
                 smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new NetworkCredential("shai114@hotmail.com", "Megashai2018");
+                smtp.Credentials = new NetworkCredential("*****@hotmail.com", "*******");
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtp.Send(message);
             }
