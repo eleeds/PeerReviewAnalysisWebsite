@@ -22,28 +22,35 @@ namespace peerreviewproject
             Response.Redirect("LoginPage.aspx");
         }
 
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void EditClassesbttn_Click(object sender, EventArgs e)
         {
             Session["userID"] = user;
             Response.Redirect("CreateClassPage.aspx");
         }
 
-        protected void Button2_Click(object sender, EventArgs e)
+        protected void EditStudentsbttn_Click(object sender, EventArgs e)
         {
             Session["userID"] = user;
             Response.Redirect("AddUserstoClass.aspx");
         }
 
-        protected void Button3_Click(object sender, EventArgs e)
+        protected void EditReviewsbttn_Click(object sender, EventArgs e)
         {
             Session["userID"] = user;
             Response.Redirect("CreatePeerReviewPage.aspx");
         }
 
-        protected void Button4_Click(object sender, EventArgs e)
+        protected void EditGroupsbttn_Click(object sender, EventArgs e)
         {
             Session["userID"] = user;
-            Response.Redirect("StudentGroupsPage");
+            Response.Redirect("StudentGroupsPage.aspx");
+        }
+
+        protected void TeacherCourseGridview_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Session["userID"] = user;
+            Session["course"] = TeacherCourseGridview.Rows[TeacherCourseGridview.SelectedIndex].Cells[1].Text;
+            Response.Redirect("CourseReviews.aspx");
         }
     }
 }

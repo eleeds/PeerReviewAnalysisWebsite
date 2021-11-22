@@ -11,7 +11,7 @@ namespace peerreviewproject
 {
     public partial class CreatePeerReviewPage : System.Web.UI.Page
     {
-        
+        int check;
         string sqlConnection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
                         Integrated Security=True;
                         Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
@@ -23,7 +23,7 @@ namespace peerreviewproject
             {
                 return;
             }
-                 set();
+            GetQuestionSetsForCourse();
         }
 
         protected void SubmitBttn_Click(object sender, EventArgs e)
@@ -33,7 +33,8 @@ namespace peerreviewproject
 
             using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
             {
-                int recentID;
+                int recentID = 0;
+                int setNumber;
                 sqlCon.Open();
                 string createQuestion_query = "INSERT INTO questions_table ([courseID], [question], [type], [correctResponses], [questionName], [questionSet])" +
                     " VALUES (@courseID, @questionText, @type, @answers, @name, @set)";
@@ -45,7 +46,7 @@ namespace peerreviewproject
                 }
                 catch
                 {
-                    recentID = 0;
+                    
                 }
                 
                 SqlCommand question_sqlCmd = new SqlCommand(createQuestion_query, sqlCon);
@@ -57,16 +58,23 @@ namespace peerreviewproject
                 question_sqlCmd.Parameters.AddWithValue("@name", name_tb.Text);
 
                 if (CurrentQuestionSet_listbox.Items.Count == 0)
-                {  
+                {
                     question_sqlCmd.Parameters.AddWithValue("@set", 1);         //work on duplicates
+                    setNumber = 1;
                 }
                 else if (CurrentQuestionSet_listbox.SelectedIndex == -1)
                 {
                     question_sqlCmd.Parameters.AddWithValue("set", CurrentQuestionSet_listbox.Items[CurrentQuestionSet_listbox.Items.Count - 1]);
+                    setNumber = Convert.ToInt32(CurrentQuestionSet_listbox.Items[CurrentQuestionSet_listbox.Items.Count - 1].Value);
                 }
-                else question_sqlCmd.Parameters.AddWithValue("set", CurrentQuestionSet_listbox.SelectedValue);
-
+                else
+                {
+                    question_sqlCmd.Parameters.AddWithValue("set", CurrentQuestionSet_listbox.SelectedValue);
+                    setNumber = Convert.ToInt32(CurrentQuestionSet_listbox.SelectedValue);
+                }
                 question_sqlCmd.ExecuteNonQuery();
+                setDueDate(sqlCon, setNumber);
+
                 sqlCon.Close();
                 GridView1.DataBind();
                 CurrentQuestionSet_listbox.DataBind();
@@ -82,7 +90,7 @@ namespace peerreviewproject
 
         protected void Course_listbox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            set();
+            GetQuestionSetsForCourse();
             CurrentQuestionSet_listbox.DataBind();
             GridView1.DataBind();
         }
@@ -90,13 +98,18 @@ namespace peerreviewproject
 
         protected void Button1_Click1(object sender, EventArgs e)
         {
+            NewSetToDataTable();
 
+        }
+
+        private void NewSetToDataTable()
+        {
             SetList_Datatable = (DataTable)ViewState["data"];
             if (CurrentQuestionSet_listbox.Items.Count == 0)
             {
                 SetList_Datatable.Rows.Add(1);
             }
-            else 
+            else
             {
                 for (int i = 0; i < CurrentQuestionSet_listbox.Items.Count - 1; i++)
                 {
@@ -109,14 +122,15 @@ namespace peerreviewproject
                 SetList_Datatable.Rows.Add(CurrentQuestionSet_listbox.Items.Count + 1);
             }
 
+            DataView dv = SetList_Datatable.DefaultView;
+            dv.Sort = "questionSet";
+            SetList_Datatable = dv.ToTable();
             ViewState["data"] = SetList_Datatable;
             CurrentQuestionSet_listbox.DataSource = SetList_Datatable;
-
             CurrentQuestionSet_listbox.DataBind();
             CurrentQuestionSet_listbox.SelectedIndex = CurrentQuestionSet_listbox.Items.Count - 1;
         }
-
-        public void set()
+        private void GetQuestionSetsForCourse()
         {
             string query = "select DISTINCT questionSet from questions_table WHERE courseID=@courseID";
             using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
@@ -147,18 +161,29 @@ namespace peerreviewproject
 
 
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
-            
+        {           
             GetAnswers();
             e.NewValues[0] = questDescriptionTB.Text.Trim();
             e.NewValues[1] = type_radiobttn.SelectedValue;
             e.NewValues[2] = answers;            
             e.NewValues[3] = name_tb.Text.Trim();
-
             clearText();
         }
 
-        public void GetAnswers()
+        private void DateFormat(string year)
+        {
+            year = year.Substring(0, year.IndexOf(' '));             //special format for calendar year-month-day
+            string month = year.Substring(0, year.IndexOf('/'));
+            year = year.Substring(year.IndexOf('/') + 1);
+            string day = year.Substring(0, year.IndexOf('/'));
+            year = year.Substring(year.IndexOf('/') + 1);
+            if (day.Length == 1)
+                day = "0" + day;
+            if (month.Length == 1)
+                month = "0" + month;
+            DueDateTB.Text = year + "-" + month + "-" + day;
+        }
+        private void GetAnswers()
         {
             if (type_radiobttn.SelectedIndex == 1)
             {
@@ -170,7 +195,7 @@ namespace peerreviewproject
             }
         }
 
-        public void AnswerTextBoxes()
+        private void AnswerTextBoxes()
         {
             if (type_radiobttn.SelectedIndex == 0)
             {
@@ -199,7 +224,7 @@ namespace peerreviewproject
             }
         }
 
-        public void clearText()
+        private void clearText()
         {
             name_tb.Text = "";
             questDescriptionTB.Text = "";
@@ -207,9 +232,7 @@ namespace peerreviewproject
 
         protected void GridView1_RowUpdated(object sender, GridViewUpdatedEventArgs e)
         {
-
             SubmitBttn.Visible = true;
-
             GridView1.DataBind();
         }
 
@@ -222,13 +245,109 @@ namespace peerreviewproject
                 e.Row.Cells[4].Enabled = false;
                 e.Row.Cells[5].Enabled = false;
             }
-
         }
 
         protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             SubmitBttn.Visible = true;
             clearText();
+            //int[] arr = CurrentQuestionSet_listbox.Items.;
+            DataView dv = SetList_Datatable.DefaultView;
+            //dv.Sort = "questionSet";
         }
+
+        private void setDueDate(SqlConnection sqlCon, int setNumber)
+        {
+            string AlreadyExistQuery = "SELECT COUNT(1) FROM SetDueDates_table WHERE courseID=@courseID AND questionSet=@questionSet";
+            SqlCommand checkCMD = new SqlCommand(AlreadyExistQuery, sqlCon);
+            checkCMD.Parameters.AddWithValue("@courseID", Course_listbox.SelectedValue);
+            checkCMD.Parameters.AddWithValue("@questionSet", setNumber);
+            int exist = Convert.ToInt32(checkCMD.ExecuteScalar());
+            if (exist > 0)                  //if a due date already exists for that question set, ignore inserting new one
+            {
+                return;
+            }
+            string SetDueDateTime = DueDateTB.Text + " 11:59:59 PM";
+            string InsertDueDateQuery = "INSERT INTO SetDueDates_table ([courseID], [dueDate], [questionSet]) VALUES (@courseID, @dueDate, @questionSet)";
+            SqlCommand cmd = new SqlCommand(InsertDueDateQuery, sqlCon);
+            cmd.Parameters.AddWithValue("@courseID", Course_listbox.SelectedValue);
+            cmd.Parameters.AddWithValue("@dueDate", SetDueDateTime);
+            cmd.Parameters.AddWithValue("@questionSet", setNumber);
+            cmd.ExecuteNonQuery();
+        }
+
+        protected void CurrentQuestionSet_listbox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Panel2.Enabled = true;
+            dueDatelbl.Text = "Current due date for Set# " + CurrentQuestionSet_listbox.SelectedValue.ToString();
+            getDate();
+        }
+
+        private void getDate()
+        {
+            string query = "SELECT dueDate FROM SetDueDates_table WHERE courseID=@courseID AND questionSet=@questionSet";
+            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            {
+                sqlCon.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlCon);
+                cmd.Parameters.AddWithValue("@courseID", Course_listbox.SelectedValue);
+                cmd.Parameters.AddWithValue("@questionSet", CurrentQuestionSet_listbox.SelectedValue);
+                    if (cmd.ExecuteScalar() != null)
+                    { 
+                       string year = cmd.ExecuteScalar().ToString();            //fix new set from duplicates
+                       DateFormat(year);
+                    }
+                
+                sqlCon.Close();
+            }
+        }
+
+        protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            string deletequery = "DELETE FROM Response_table WHERE reviewQuestionID=@reviewQuestionID";
+            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))     //manually deleting from response table since cascade won't work
+            {
+                sqlCon.Open();
+                SqlCommand cmd = new SqlCommand(deletequery, sqlCon);
+                cmd.Parameters.AddWithValue("@reviewQuestionID", e.Keys[0]);
+                cmd.ExecuteNonQuery();
+                sqlCon.Close();
+            }    
+            //grabs recently deleted set number
+            check = Convert.ToInt32(e.Values[4]);
+        }
+        protected void GridView1_RowDeleted(object sender, GridViewDeletedEventArgs e)
+        {
+            GridView1.DataBind();                   //if all questions belonging to the set are deleted then the set is removed from the SetDueDate table
+            if (GridView1.Rows.Count == 0)
+            {
+                string query = "DELETE FROM SetDueDates_table WHERE courseID=@courseID AND questionSet=@questionSet";
+                using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+                 {
+                    sqlCon.Open();
+                    SqlCommand cmd = new SqlCommand(query, sqlCon);
+                    cmd.Parameters.AddWithValue("@courseID", Course_listbox.SelectedValue);
+                    cmd.Parameters.AddWithValue("@questionSet", check);
+                    cmd.ExecuteNonQuery();
+                    sqlCon.Close();
+                 }
+            }
+        }
+
+        protected void DueDateTB_TextChanged(object sender, EventArgs e)        //update due date for selected set
+        {
+            string query = "UPDATE SetDueDates_table SET dueDate = @dueDate WHERE courseID=@courseID AND questionSet=@questionSet";
+            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            {
+                sqlCon.Open();
+                SqlCommand cmd = new SqlCommand(query, sqlCon);
+                cmd.Parameters.AddWithValue("@dueDate", DueDateTB.Text + " 11:59:59 PM");
+                cmd.Parameters.AddWithValue("@courseID", Course_listbox.SelectedValue);
+                cmd.Parameters.AddWithValue("@questionSet", CurrentQuestionSet_listbox.SelectedValue);
+                cmd.ExecuteNonQuery();
+                sqlCon.Close();
+            }
+        }
+
     }
 }

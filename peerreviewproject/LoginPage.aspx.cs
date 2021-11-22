@@ -17,8 +17,6 @@ namespace peerreviewproject
             
         }
 
-     
-
         protected void loginButton_Click(object sender, EventArgs e)
         {
             using (SqlConnection sqlCon = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;Integrated Security=True;

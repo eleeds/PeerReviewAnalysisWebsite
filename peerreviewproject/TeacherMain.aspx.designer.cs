@@ -33,13 +33,13 @@ namespace peerreviewproject
         protected global::System.Web.UI.WebControls.Label lblprofessor;
 
         /// <summary>
-        /// GridView1 control.
+        /// TeacherCourseGridview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::System.Web.UI.WebControls.GridView TeacherCourseGridview;
 
         /// <summary>
         /// SqlDataSource1 control.
@@ -60,39 +60,39 @@ namespace peerreviewproject
         protected global::System.Web.UI.WebControls.Button logoutButton;
 
         /// <summary>
-        /// Button1 control.
+        /// EditCoursesbttn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button EditCoursesbttn;
 
         /// <summary>
-        /// Button2 control.
+        /// CourseStudentsbttn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.Button CourseStudentsbttn;
 
         /// <summary>
-        /// Button3 control.
+        /// CourseReviewsbttn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button3;
+        protected global::System.Web.UI.WebControls.Button CourseReviewsbttn;
 
         /// <summary>
-        /// Button4 control.
+        /// Groupsbttn control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button4;
+        protected global::System.Web.UI.WebControls.Button Groupsbttn;
     }
 }
