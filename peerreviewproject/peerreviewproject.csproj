@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AddUserstoClass.aspx" />
+    <Content Include="AdminPage.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -172,6 +173,13 @@
     </Compile>
     <Compile Include="AddUserstoClass.aspx.designer.cs">
       <DependentUpon>AddUserstoClass.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminPage.aspx.cs">
+      <DependentUpon>AdminPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPage.aspx.designer.cs">
+      <DependentUpon>AdminPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />

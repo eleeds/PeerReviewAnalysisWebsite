@@ -33,7 +33,7 @@
                 
             </table>
             <table style="margin: auto"><tr><td><asp:Button ID="loginButton" runat="server" Text="Login"
-                OnClick="loginButton_Click" />&nbsp;&nbsp;
+                OnClick="LoginButton_Click" />&nbsp;&nbsp;
                 <asp:Button ID="Button1" runat="server" OnClick="ForgotBttn_click" Text="Forgot Password" />
                 </td></tr></table>
             <table style="margin: auto"><tr><td><asp:Label ID="lblError" runat="server" Text="the email or password entered is incorrect" 

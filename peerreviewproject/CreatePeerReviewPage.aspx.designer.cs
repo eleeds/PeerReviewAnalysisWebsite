@@ -60,6 +60,15 @@ namespace peerreviewproject
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource2;
 
         /// <summary>
+        /// Panel3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel Panel3;
+
+        /// <summary>
         /// Panel2 control.
         /// </summary>
         /// <remarks>
@@ -87,13 +96,58 @@ namespace peerreviewproject
         protected global::System.Web.UI.WebControls.TextBox DueDateTB;
 
         /// <summary>
-        /// Button1 control.
+        /// CheckBoxLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Label CheckBoxLabel;
+
+        /// <summary>
+        /// NoCheckBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox NoCheckBox;
+
+        /// <summary>
+        /// YesCheckBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox YesCheckBox;
+
+        /// <summary>
+        /// NoCheckBoxStudents control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox NoCheckBoxStudents;
+
+        /// <summary>
+        /// YesCheckBoxStudents control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox YesCheckBoxStudents;
+
+        /// <summary>
+        /// NewSetButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button NewSetButton;
 
         /// <summary>
         /// Label1 control.
@@ -105,13 +159,13 @@ namespace peerreviewproject
         protected global::System.Web.UI.WebControls.Label Label1;
 
         /// <summary>
-        /// GridView1 control.
+        /// QuestionsInSetGridview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::System.Web.UI.WebControls.GridView QuestionsInSetGridview;
 
         /// <summary>
         /// SqlDataSource4 control.

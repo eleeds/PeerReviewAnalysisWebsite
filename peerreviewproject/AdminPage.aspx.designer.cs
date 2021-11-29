@@ -11,7 +11,7 @@ namespace peerreviewproject
 {
 
 
-    public partial class TeacherMain
+    public partial class AdminPage
     {
 
         /// <summary>
@@ -24,40 +24,76 @@ namespace peerreviewproject
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// lblprofessor control.
+        /// Table1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblprofessor;
+        protected global::System.Web.UI.WebControls.Table Table1;
 
         /// <summary>
-        /// ChangePassButton control.
+        /// ProfessorFirstNameLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ChangePassButton;
+        protected global::System.Web.UI.WebControls.Label ProfessorFirstNameLabel;
 
         /// <summary>
-        /// AdminButton control.
+        /// FirstNameTB control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AdminButton;
+        protected global::System.Web.UI.WebControls.TextBox FirstNameTB;
 
         /// <summary>
-        /// TeacherCourseGridview control.
+        /// ProfessorLastNameLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView TeacherCourseGridview;
+        protected global::System.Web.UI.WebControls.Label ProfessorLastNameLabel;
+
+        /// <summary>
+        /// LastNameTB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox LastNameTB;
+
+        /// <summary>
+        /// EmailLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label EmailLabel;
+
+        /// <summary>
+        /// EmailTB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox EmailTB;
+
+        /// <summary>
+        /// GridView1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView1;
 
         /// <summary>
         /// SqlDataSource1 control.
@@ -69,48 +105,12 @@ namespace peerreviewproject
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
 
         /// <summary>
-        /// logoutButton control.
+        /// CreateUserButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button logoutButton;
-
-        /// <summary>
-        /// EditCoursesbttn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button EditCoursesbttn;
-
-        /// <summary>
-        /// CourseStudentsbttn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CourseStudentsbttn;
-
-        /// <summary>
-        /// CourseReviewsbttn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CourseReviewsbttn;
-
-        /// <summary>
-        /// Groupsbttn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Groupsbttn;
+        protected global::System.Web.UI.WebControls.Button CreateUserButton;
     }
 }

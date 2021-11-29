@@ -14,6 +14,14 @@ namespace peerreviewproject
         protected void Page_Load(object sender, EventArgs e)
         {
             Session["userID"] = Session["userID"];
+            if (IsPostBack)
+            {
+                if (GroupMembersGridview.SelectedIndex == -1)
+                {
+                    Panel1.Visible = false;
+                }
+                GroupMembersGridview.DataBind();
+            }
 
         }
 
@@ -24,8 +32,6 @@ namespace peerreviewproject
                 CourseDropDown.SelectedIndex = CourseDropDown.Items.IndexOf(CourseDropDown.Items.FindByText(Session["course"].ToString()));
             }
         }
-
-
 
         protected void ResultsGridview_DataBound(object sender, EventArgs e)
         {
@@ -54,7 +60,7 @@ namespace peerreviewproject
                         {
                             TypeandScores.Add(ResultsGridview.Rows[i].Cells[4].Text, Convert.ToDouble(ResultsGridview.Rows[i].Cells[2].Text));
                         }
-                        catch           //fix later
+                        catch           
                         {
                             CommentsDatatable.Rows.Add(ResultsGridview.Rows[i].Cells[2].Text, ResultsGridview.Rows[i].Cells[5].Text, ResultsGridview.Rows[i].Cells[7].Text);
                         }
@@ -78,16 +84,16 @@ namespace peerreviewproject
                 }
                 RatingGridview.DataSource = RatingsDatatable;
                 RatingGridview.DataBind();
-                RatingGridview.Visible = true;
-                CommentsGridview.Visible = true;
+                Panel1.Visible = true;
 
                 CommentsGridview.DataSource = CommentsDatatable;
                 CommentsGridview.DataBind();
+                ResultsGridview.Caption = "Reviews for " + GroupMembersGridview.SelectedRow.Cells[1].Text;
             }
             else
             {
-                RatingGridview.Visible = false;
-                CommentsGridview.Visible = false;
+                Panel1.Visible = false;
+                ResultsGridview.Caption = "";
             }
             if (GroupListbox.SelectedIndex != -1)
             {
@@ -95,15 +101,23 @@ namespace peerreviewproject
                 CommentsGridview.EmptyDataText = "No reviews for student";
             }
 
-            
         }
 
         protected void GroupListbox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GroupMembersGridview.SelectedIndex = -1;
-            RatingGridview.Visible = false;
-            CommentsGridview.Visible = false;
-            ResultsGridview.EmptyDataText = "Select student for reviews";
+            if (GroupMembersGridview.Rows.Count > 0)
+            {
+                GroupMembersGridview.SelectedIndex = 0;
+            }
+            else
+            {
+                GroupMembersGridview.SelectedIndex = -1;
+            }
+            
+            ClassSurveyGridView.Visible = false;
+            ResultsGridview.Visible = true;
+
+            CourseSurveyListBox.SelectedIndex = -1;
         }
 
 
@@ -113,14 +127,19 @@ namespace peerreviewproject
             if (GroupListbox.Items.Count > 0)
                 GroupListbox.SelectedIndex = 0;
             GroupMembersGridview.DataBind();
+            if (GroupMembersGridview.Rows.Count > 0)
+                GroupMembersGridview.SelectedIndex = 0;
+            Panel1.Visible = false;
+            ClassSurveyGridView.Visible = false;
         }
 
-        protected void GroupListbox_DataBound(object sender, EventArgs e)
+        protected void CourseSurveyListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (ListItem item in GroupListbox.Items)
-            {
-                item.Text = "Team " + item.Text;
-            }
+            GroupListbox.SelectedIndex = -1;
+            ResultsGridview.Visible = false;
+            Panel1.Visible = false;
+            ClassSurveyGridView.Visible = true;
         }
+
     }
 }

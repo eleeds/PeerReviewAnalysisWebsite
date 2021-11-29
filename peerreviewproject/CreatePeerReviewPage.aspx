@@ -9,6 +9,9 @@
         .auto-style1 {
             width: 922px;
         }
+        .auto-style2 {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -33,26 +36,58 @@
                 </SelectParameters>
             </asp:SqlDataSource>
         </p>
+        <asp:Panel ID="Panel3" runat="server" HorizontalAlign="Center">
+            <br />
+        </asp:Panel>
         <asp:Panel ID="Panel2" runat="server" Enabled="False" HorizontalAlign="Right" Width="1166px">
             <asp:Label ID="dueDatelbl" runat="server" Font-Bold="True" ForeColor="Red"></asp:Label>
             &nbsp;
             <asp:TextBox ID="DueDateTB" runat="server" TextMode="Date" AutoPostBack="True" OnTextChanged="DueDateTB_TextChanged" ></asp:TextBox>
+            <br />
+            <br />
+            <br />
+            <asp:Label ID="CheckBoxLabel" runat="server" Font-Bold="True" Text="Make set a Class Survey?"></asp:Label>
+            <br />
+            <asp:CheckBox ID="NoCheckBox" runat="server" AutoPostBack="True" Font-Bold="False" OnCheckedChanged="NoCheckBox_CheckedChanged" Text="No" />
+            &nbsp;
+            <asp:CheckBox ID="YesCheckBox" runat="server" AutoPostBack="True" Font-Bold="False" OnCheckedChanged="YesCheckBox_CheckedChanged" Text="Yes" />
+            <br />
+            <br />
+            <span class="auto-style2">Show set to students?
+            <br />
+            </span>
+            <asp:CheckBox ID="NoCheckBoxStudents" runat="server" AutoPostBack="True" Font-Bold="False" OnCheckedChanged="NoCheckBoxStudents_CheckedChanged" Text="No" />
+            <asp:CheckBox ID="YesCheckBoxStudents" runat="server" AutoPostBack="True" Font-Bold="False" OnCheckedChanged="YesCheckBoxStudents_CheckedChanged" Text="Yes" />
         </asp:Panel>
         <p>
-            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click1" Text="Add new set" />
+            <asp:Button ID="NewSetButton" runat="server" OnClick="NewSetButton_click" Text="Add new set" />
             <asp:Label ID="Label1" runat="server"></asp:Label>
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource4" Width="1109px" AutoGenerateEditButton="True" DataKeyNames="reviewQuestionID" OnRowEditing="GridView1_RowEditing" OnRowUpdated="GridView1_RowUpdated" EmptyDataText="No questions added yet" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnRowDataBound="GridView1_RowDataBound" OnRowUpdating="GridView1_RowUpdating" OnRowDeleted="GridView1_RowDeleted" OnRowDeleting="GridView1_RowDeleting">
+            <asp:GridView ID="QuestionsInSetGridview" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource4" Width="1109px" AutoGenerateEditButton="True" DataKeyNames="reviewQuestionID,classSurvey" OnRowEditing="QuestionsInSetGridview_RowEditing" OnRowUpdated="QuestionsInSetGridview_RowUpdated" EmptyDataText="No questions added yet" OnRowCancelingEdit="QuestionsInSetGridview_RowCancelingEdit" OnRowDataBound="QuestionsInSetGridview_RowDataBound" OnRowUpdating="QuestionsInSetGridview_RowUpdating" OnRowDeleted="QuestionsInSetGridview_RowDeleted" OnRowDeleting="QuestionsInSetGridview_RowDeleting" CellPadding="4" ForeColor="#333333" GridLines="None">
+                <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField DataField="reviewQuestionID" HeaderText="reviewQuestionID" SortExpression="reviewQuestionID" InsertVisible="False" ReadOnly="True" Visible="False" />
-                    <asp:BoundField DataField="question" HeaderText="Description" SortExpression="question" />
+                    <asp:BoundField DataField="question" HeaderText="Question" SortExpression="question" />
                     <asp:BoundField DataField="type" HeaderText="Type" SortExpression="type" />
                     <asp:BoundField DataField="correctResponses" HeaderText="Accepted Responses" SortExpression="correctResponses" /> 
                     <asp:BoundField DataField="questionName" HeaderText="Name" SortExpression="questionName" />
-                    <asp:BoundField DataField="questionSet" HeaderText="Set" SortExpression="questionSet" />
-                    <asp:CommandField ShowDeleteButton="True" />
+                    <asp:BoundField DataField="questionSet" HeaderText="Set" SortExpression="questionSet" >
+                    <ItemStyle HorizontalAlign="Center" />
+                    </asp:BoundField>
+                    <asp:CheckBoxField DataField="classSurvey" HeaderText="classSurvey" SortExpression="classSurvey" Visible="False" >
+                    </asp:CheckBoxField>
                 </Columns>
+                <EditRowStyle BackColor="#2461BF" />
+                <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+                <RowStyle BackColor="#EFF3FB" />
+                <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                <SortedDescendingHeaderStyle BackColor="#4870BE" />
             </asp:GridView>
-            <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:Peer_ReviewConnectionString2 %>" SelectCommand="SELECT questions_table.reviewQuestionID, questions_table.question, questions_table.type, questions_table.correctResponses, questions_table.questionName, questions_table.questionSet FROM questions_table INNER JOIN Course_table ON questions_table.courseID = Course_table.courseID AND questions_table.courseID = Course_table.courseID WHERE (questions_table.questionSet = @questionSet) AND (questions_table.courseID = @course)" DeleteCommand="DELETE FROM [questions_table] WHERE [reviewQuestionID] = @reviewQuestionID" InsertCommand="INSERT INTO [questions_table] ([courseID], [question], [type], [correctResponses], [questionName], [questionSet]) VALUES (@courseID, @question, @type, @correctResponses, @questionName, @questionSet)" UpdateCommand="UPDATE questions_table SET question = @question, type = @type, correctResponses = @correctResponses, questionName = @questionName, questionSet = @questionSet WHERE (reviewQuestionID = @reviewQuestionID)">
+            <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:Peer_ReviewConnectionString2 %>" SelectCommand="SELECT questions_table.reviewQuestionID, questions_table.question, questions_table.type, questions_table.correctResponses, questions_table.questionName, questions_table.questionSet, questions_table.classSurvey FROM Course_table INNER JOIN questions_table ON Course_table.courseID = questions_table.courseID AND Course_table.courseID = questions_table.courseID WHERE (questions_table.questionSet = @questionSet) AND (questions_table.courseID = @course)" DeleteCommand="DELETE FROM [questions_table] WHERE [reviewQuestionID] = @reviewQuestionID" InsertCommand="INSERT INTO [questions_table] ([courseID], [question], [type], [correctResponses], [questionName], [questionSet]) VALUES (@courseID, @question, @type, @correctResponses, @questionName, @questionSet)" UpdateCommand="UPDATE questions_table SET question = @question, type = @type, correctResponses = @correctResponses, questionName = @questionName, questionSet = @questionSet WHERE (reviewQuestionID = @reviewQuestionID)">
                 <DeleteParameters>
                     <asp:Parameter Name="reviewQuestionID" Type="Int32" />
                 </DeleteParameters>
@@ -62,10 +97,10 @@
                     <asp:Parameter Name="type" Type="String" />
                     <asp:Parameter Name="correctResponses" Type="String" />
                     <asp:Parameter Name="questionName" Type="String" />
-                    <asp:Parameter Name="questionSet" Type="Int32" />
+                    <asp:Parameter Name="questionSet" Type="String" />
                 </InsertParameters>
                 <SelectParameters>
-                    <asp:ControlParameter ControlID="CurrentQuestionSet_listbox" Name="questionSet" PropertyName="SelectedValue" Type="Int32" />
+                    <asp:ControlParameter ControlID="CurrentQuestionSet_listbox" Name="questionSet" PropertyName="SelectedValue" Type="String" />
                     <asp:ControlParameter ControlID="Course_listbox" Name="course" PropertyName="SelectedValue" />
                 </SelectParameters>
                 <UpdateParameters>
@@ -74,7 +109,7 @@
                     <asp:Parameter Name="correctResponses" />
                     <asp:Parameter Name="questionName" />
                     <asp:Parameter Name="questionSet" />
-                    <asp:Parameter Name="reviewQuestionID" Type="Int32" />
+                    <asp:Parameter Name="reviewQuestionID" Type="Int32"/>
                 </UpdateParameters>
             </asp:SqlDataSource>
         </p>
@@ -86,8 +121,8 @@
         <p>
             <asp:RadioButtonList ID="type_radiobttn" runat="server" OnSelectedIndexChanged="type_radiobttn_SelectedIndexChanged" AutoPostBack="True" CausesValidation="True">
                 <asp:ListItem Selected="True">Comment Response</asp:ListItem>
-                <asp:ListItem>1-4 Score Rating</asp:ListItem>
-                <asp:ListItem>1-5 Score Rating</asp:ListItem>
+                <asp:ListItem Value="1-4 Score Rating">1-4 Score Rating/Multiple Choice</asp:ListItem>
+                <asp:ListItem Value="1-5 Score Rating">1-5 Score Rating/Multiple Choice</asp:ListItem>
             </asp:RadioButtonList>        
 
         <asp:Panel ID="Panel1" runat="server" Height="150px" HorizontalAlign="Left" Visible="False" Width="400px" Font-Bold="True">

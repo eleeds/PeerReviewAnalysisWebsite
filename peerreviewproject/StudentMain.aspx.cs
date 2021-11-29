@@ -16,8 +16,11 @@ namespace peerreviewproject
         protected void Page_Load(object sender, EventArgs e)
         {
 
-           // Session["userID"] = 2550;          //for testing
+            Session["userID"] = 2550;          //for testing
+            //Session["userID"] = Session["userID"];
             lblStudentDetails.Text = "User ID: " + Session["email"];
+            Session["email"] = Session["email"];
+            Session["type"] = "Student";
             Check();
              
         }
@@ -47,46 +50,78 @@ namespace peerreviewproject
             using (SqlConnection sqlCon = new SqlConnection(connectionString))
             {
                 sqlCon.Open();
-                string teamMembers = "SELECT COUNT(1) FROM UserTeam_table WHERE teamID=@teamID AND @userID NOT IN (userID)"; //amount of group members
-                SqlCommand sqlCmd_members = new SqlCommand(teamMembers, sqlCon);
-                sqlCmd_members.Parameters.AddWithValue("@teamID", StudentReviewsGridview.DataKeys[rowIndex].Values[1]);
-                sqlCmd_members.Parameters.AddWithValue("@userID", Session["userID"]);
-                int membersCount = Convert.ToInt32(sqlCmd_members.ExecuteScalar());
 
-                string getReviewIDsQuery = "SELECT COUNT(reviewQuestionID) FROM questions_table WHERE courseID=@courseID AND questionSet=@questionSet";
-                SqlCommand sqlCmd_IDs = new SqlCommand(getReviewIDsQuery, sqlCon);                                          //questions count in set
-                sqlCmd_IDs.Parameters.AddWithValue("@courseID", StudentReviewsGridview.DataKeys[rowIndex].Value);
-                sqlCmd_IDs.Parameters.AddWithValue("@questionSet", StudentReviewsGridview.Rows[rowIndex].Cells[3].Text);
-                int questionsCount = Convert.ToInt32(sqlCmd_IDs.ExecuteScalar());
-
-                string userReponses = "SELECT COUNT(1) FROM Response_table WHERE userID=@userID AND questionSet=@questionSet";
-                SqlCommand sql_reponses = new SqlCommand(userReponses, sqlCon);                                             //questions completed by student
-                sql_reponses.Parameters.AddWithValue("@userID", Session["userID"]);
-                sql_reponses.Parameters.AddWithValue("@questionSet", StudentReviewsGridview.Rows[rowIndex].Cells[3].Text);
-                int responseCount = Convert.ToInt32(sql_reponses.ExecuteScalar());
-                sqlCon.Close();
-                if (responseCount == membersCount * questionsCount)
+                string ifSurvey = "SELECT classSurvey FROM questions_table WHERE courseID=@courseID AND questionSet=@questionSet";
+                SqlCommand ifSurveyQuery = new SqlCommand(ifSurvey, sqlCon);
+                ifSurveyQuery.Parameters.AddWithValue("@courseID", StudentReviewsGridview.DataKeys[rowIndex].Value);
+                ifSurveyQuery.Parameters.AddWithValue("@questionSet", StudentReviewsGridview.Rows[rowIndex].Cells[3].Text);
+                string surveyCheck = ifSurveyQuery.ExecuteScalar().ToString();
+                if (surveyCheck == "True")
                 {
-                    return true;
+                    string getReviewIDsQuery = "SELECT COUNT(reviewQuestionID) FROM questions_table WHERE courseID=@courseID AND questionSet=@questionSet";
+                    SqlCommand sqlCmd_IDs = new SqlCommand(getReviewIDsQuery, sqlCon);                                          //questions count in set
+                    sqlCmd_IDs.Parameters.AddWithValue("@courseID", StudentReviewsGridview.DataKeys[rowIndex].Value);
+                    sqlCmd_IDs.Parameters.AddWithValue("@questionSet", StudentReviewsGridview.Rows[rowIndex].Cells[3].Text);
+                    int questionsCount = Convert.ToInt32(sqlCmd_IDs.ExecuteScalar());
+
+                    string userResponses = "SELECT COUNT(1) FROM Response_table WHERE userID=@userID AND questionSet=@questionSet";
+                    SqlCommand sql_responses = new SqlCommand(userResponses, sqlCon);                                             //questions completed by student
+                    sql_responses.Parameters.AddWithValue("@userID", Session["userID"]);
+                    sql_responses.Parameters.AddWithValue("@questionSet", StudentReviewsGridview.Rows[rowIndex].Cells[3].Text);
+                    int responseCount = Convert.ToInt32(sql_responses.ExecuteScalar());
+
+                    if (responseCount == questionsCount)
+                    {
+                        return true;
+                    }
+                    else return false;
                 }
-                else return false;
+                else
+                {
+                    string teamMembers = "SELECT COUNT(1) FROM UserTeam_table WHERE teamID=@teamID AND @userID NOT IN (userID)"; //amount of group members
+                    SqlCommand sqlCmd_members = new SqlCommand(teamMembers, sqlCon);
+                    sqlCmd_members.Parameters.AddWithValue("@teamID", StudentReviewsGridview.DataKeys[rowIndex].Values[1]);
+                    sqlCmd_members.Parameters.AddWithValue("@userID", Session["userID"]);
+                    int membersCount = Convert.ToInt32(sqlCmd_members.ExecuteScalar());
+                    
+                    string getReviewIDsQuery = "SELECT COUNT(reviewQuestionID) FROM questions_table WHERE courseID=@courseID AND questionSet=@questionSet";
+                    SqlCommand sqlCmd_IDs = new SqlCommand(getReviewIDsQuery, sqlCon);                                          //questions count in set
+                    sqlCmd_IDs.Parameters.AddWithValue("@courseID", StudentReviewsGridview.DataKeys[rowIndex].Value);
+                    sqlCmd_IDs.Parameters.AddWithValue("@questionSet", StudentReviewsGridview.Rows[rowIndex].Cells[3].Text);
+                    int questionsCount = Convert.ToInt32(sqlCmd_IDs.ExecuteScalar());
+
+                    string userResponses = "SELECT COUNT(1) FROM Response_table WHERE userID=@userID AND questionSet=@questionSet AND teamID=@teamID";
+                    SqlCommand sql_responses = new SqlCommand(userResponses, sqlCon);                                             //questions completed by student
+                    sql_responses.Parameters.AddWithValue("@userID", Session["userID"]);
+                    sql_responses.Parameters.AddWithValue("@questionSet", StudentReviewsGridview.Rows[rowIndex].Cells[3].Text);
+                    sql_responses.Parameters.AddWithValue("@teamID", StudentReviewsGridview.DataKeys[rowIndex].Values[1]);
+                    int responseCount = Convert.ToInt32(sql_responses.ExecuteScalar());
+                    sqlCon.Close();
+                    if (responseCount == membersCount * questionsCount)
+                    {
+                        return true;
+                    }
+                    else return false;
+                }
             }
         }
 
-       
-
-        protected void GridView2_SelectedIndexChanged(object sender, EventArgs e)
+        protected void StudentReviewsGridView_SelectedIndexChanged(object sender, EventArgs e)
         {        
-            Session["userID"] = Session["userID"];
             Session["courseID"] = StudentReviewsGridview.SelectedValue;
             Session["questionSet"] = StudentReviewsGridview.SelectedRow.Cells[3].Text;
             Session["teamID"] = StudentReviewsGridview.DataKeys[StudentReviewsGridview.SelectedIndex].Values[1];
             Response.Redirect("StudentResponsePage.aspx");
         }
 
-        protected void GridView2_DataBound(object sender, EventArgs e)
+        protected void StudentReviewsGridView_DataBound(object sender, EventArgs e)
         {
             Check();
+        }
+
+        protected void ChangePass_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ChangePass.aspx");
         }
     }
 }

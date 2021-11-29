@@ -122,7 +122,7 @@ namespace peerreviewproject
             using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
             {
                 sqlCon.Open();
-                string DoesTeamExist_Query = "Select teamID FROM teams_table WHERE courseID=@courseID AND name=@name";
+                string DoesTeamExist_Query = "Select COUNT(teamID) FROM teams_table WHERE courseID=@courseID AND name=@name";
                 SqlCommand teamCheck = new SqlCommand(DoesTeamExist_Query, sqlCon);
                 teamCheck.Parameters.AddWithValue("@courseID", courseID);
                 teamCheck.Parameters.AddWithValue("@name", team);

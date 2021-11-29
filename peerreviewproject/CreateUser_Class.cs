@@ -72,31 +72,24 @@ namespace peerreviewproject
 
             }
 
-        } //can combine these two constructors as one once admin page created
+        } 
 
-        public CreateUser_Class(string fName, string lName, string userEmail) //professor uses this constructor Student account
-        {
-            if (!DoesUserExist(userEmail)) //check for user in database
-            {
-                FirstName = fName;
-                LastName = lName;
-                Email_ = userEmail;
-                PermissionType = "Student";
-                UsertoDataBase(FirstName, LastName, userEmail, PermissionType);
-
-            }
-          
-        }
-        public CreateUser_Class(string fName, string lName, string userEmail, string type) //Admin uses this constructor to create Professor account
+        public CreateUser_Class(string fName, string lName, string userEmail, string type) 
         {
             if (!DoesUserExist(userEmail))
             {
                 FirstName = fName;
                 LastName = lName;
                 Email_ = userEmail;
-                PermissionType = "Professor";
+                if (type == "Admin")
+                {
+                    PermissionType = "Professor";
+                }
+                else
+                {
+                    PermissionType = "Student";
+                }
                 UsertoDataBase(FirstName, LastName, userEmail, PermissionType);
-
             }
         }
 

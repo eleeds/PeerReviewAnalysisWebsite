@@ -81,7 +81,7 @@
             
             <br />
             
-            <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" EmptyDataText="No current students" OnRowDeleting="GridView2_RowDeleting" CellPadding="4" DataKeyNames="userID" ForeColor="#333333" GridLines="None" ShowHeaderWhenEmpty="True" OnRowDataBound="GridView2_RowDataBound">
+            <asp:GridView ID="CurrentRosterGridView" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" EmptyDataText="No current students" OnRowDeleting="GridView2_RowDeleting" CellPadding="4" DataKeyNames="userID" ForeColor="#333333" GridLines="None" ShowHeaderWhenEmpty="True" OnRowDataBound="GridView2_RowDataBound">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField DataField="Student" HeaderText="Student" ReadOnly="True" SortExpression="Student" />
@@ -128,7 +128,7 @@
 
             &nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:Label ID="Label2" runat="server" ForeColor="#009933"></asp:Label>
+            <asp:Label ID="SuccessLabel" runat="server" ForeColor="#009933"></asp:Label>
             <br />
             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:Peer_ReviewConnectionString2 %>" SelectCommand="SELECT User_table.firstName + ' ' + User_table.lastName AS Student, Course_access_table.userID FROM User_table INNER JOIN Course_access_table ON User_table.ID = Course_access_table.userID INNER JOIN Course_table ON Course_table.courseID = Course_access_table.courseID WHERE (User_table.type = 'Student') AND (Course_table.courseID = @courseID)" DeleteCommand="_removeStudentFromClass" DeleteCommandType="StoredProcedure">
                 <DeleteParameters>
@@ -152,11 +152,11 @@
 </asp:TableCell>
                     <asp:TableCell runat="server">
                         
-                    <asp:Label ID="Label6" runat="server" Text="Last Name"></asp:Label>
+                    <asp:Label ID="Last" runat="server" Text="Last Name"></asp:Label>
 </asp:TableCell>
                     <asp:TableCell runat="server">
                         
-                    <asp:Label ID="Label7" runat="server" Text="Email"></asp:Label>
+                    <asp:Label ID="EmailLabel" runat="server" Text="Email"></asp:Label>
 </asp:TableCell>
                     <asp:TableCell runat="server">
                         <asp:Label ID="teamlbl" runat="server" Text="Team#"></asp:Label>
@@ -214,16 +214,16 @@
             <asp:Table ID="Table2" runat="server" BackColor="#CCCCCC" Font-Bold="True" BorderStyle="Groove">
                 <asp:TableRow runat="server">
                     <asp:TableCell runat="server">
-                        <asp:Label ID="Label8" runat="server" Font-Bold="True">Upload a CSV file: </asp:Label></asp:TableCell>
+                        <asp:Label ID="UploadfileLabel" runat="server" Font-Bold="True">Upload a CSV file: </asp:Label></asp:TableCell>
                     <asp:TableCell runat="server">
                         <asp:FileUpload ID="FileUpload1" runat="server" accept=".csv" /></asp:TableCell>
                     <asp:TableCell>
-                        <asp:Button ID="Button1" runat="server" OnClick="Import_bttn_click" Text="Import file" /></asp:TableCell>
+                        <asp:Button ID="ImportBttn" runat="server" OnClick="Import_bttn_click" Text="Import file" /></asp:TableCell>
                 </asp:TableRow>
                 <asp:TableRow runat="server">
                     <asp:TableCell runat="server"></asp:TableCell>
                     <asp:TableCell runat="server">
-                        <asp:Label ID="Label1" runat="server" ForeColor="Red"></asp:Label>
+                        <asp:Label ID="WarningLabel" runat="server" ForeColor="Red"></asp:Label>
                     </asp:TableCell>
                 </asp:TableRow>
             </asp:Table>

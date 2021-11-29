@@ -8,13 +8,21 @@ namespace peerreviewproject
 {                                                   
     public class CreateCourse_Class
     {
+        private int CourseProfessor;
         private string CourseDepartment;
         private string CourseNumber;
         private string CourseName;
+        private string CourseSemester;
+        private int CourseYear;
         public string sqlConnection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
                         Integrated Security=True;
                         Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
+        public int CourseProf
+        {
+            get { return CourseProfessor; }
+            set { CourseProfessor = value; }
+        }
         public string Coursedept
         {
             get { return CourseDepartment; }
@@ -31,17 +39,31 @@ namespace peerreviewproject
             set { CourseName = value; }
         }
 
-        public CreateCourse_Class(int ProfessorID, string Dept, string CNumber, string CName) 
+        public string CourseSemester_
         {
+            get { return CourseSemester; }
+            set { CourseSemester = value; }
+        }
+        public int CourseYear_
+        {
+            get { return CourseYear; }
+            set { CourseYear = value; }
+        }
+
+        public CreateCourse_Class(int ProfessorID, string Dept, string CNumber, string CName, string semester, int year) 
+        {
+            CourseProf = ProfessorID;
             Coursedept = Dept;
             CourseNum = CNumber;
             CourseName_ = CName;
+            CourseSemester_ = semester;
+            CourseYear_ = year;
            if(!DoesClassExist(Coursedept,CourseNum,CourseName_))
             {
                 CreateCourse();
                 CourseAccess();
             }
-            //maybe add date to course table
+            
 
         }
         public void CreateCourse()
@@ -49,11 +71,13 @@ namespace peerreviewproject
             using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
             {
                 sqlCon.Open();
-                string createCourse_query = "INSERT INTO Course_table ([courseDepartment], [courseNumber], [courseName]) VALUES(@department, @courseNum, @courseName)";
+                string createCourse_query = "INSERT INTO Course_table ([courseDepartment], [courseNumber], [courseName], [courseSemester], [year]) VALUES(@department, @courseNum, @courseName, @courseSemester, @year)";
                 SqlCommand sqlCmd = new SqlCommand(createCourse_query, sqlCon);
                 sqlCmd.Parameters.AddWithValue("@department", Coursedept);
                 sqlCmd.Parameters.AddWithValue("@courseNum", CourseNum);
                 sqlCmd.Parameters.AddWithValue("@courseName", CourseName_);
+                sqlCmd.Parameters.AddWithValue("@courseSemester", CourseSemester_);
+                sqlCmd.Parameters.AddWithValue("@year", CourseYear_);
                 sqlCmd.ExecuteNonQuery();
                 sqlCon.Close();
                 
@@ -67,7 +91,7 @@ namespace peerreviewproject
             using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
             {
                 sqlCon.Open();                      
-                string userCourseAccess_query = "INSERT INTO Course_access_table ([userID], [courseID], [permissionType]) VALUES(500, @courseID, N'Professor')";
+                string userCourseAccess_query = "INSERT INTO Course_access_table ([userID], [courseID], [permissionType]) VALUES(@userID, @courseID, N'Professor')";
                 string courseID_query = "Select courseID FROM Course_table WHERE courseDepartment =@department AND courseNumber =@courseNum AND courseName =@courseName";
                 SqlCommand courseAccess_sqlCmd = new SqlCommand(userCourseAccess_query, sqlCon);
                 SqlCommand courseID_sqlCmd = new SqlCommand(courseID_query, sqlCon);
@@ -78,6 +102,7 @@ namespace peerreviewproject
                 int ID = Convert.ToInt32(courseID_sqlCmd.ExecuteScalar());
 
                 courseAccess_sqlCmd.Parameters.AddWithValue("@courseID", ID);
+                courseAccess_sqlCmd.Parameters.AddWithValue("@userID", CourseProf);
                 courseAccess_sqlCmd.ExecuteNonQuery();
                 sqlCon.Close();
 

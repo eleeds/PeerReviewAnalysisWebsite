@@ -18,7 +18,6 @@ namespace peerreviewproject
         public string fileName;
         public string filePath;
         public DataTable CSV_Datatable = new DataTable();
-        string user;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -28,7 +27,6 @@ namespace peerreviewproject
                 CurrentRoster_lbl.Text = "Current Student Roster for " + CourseAvailable_dropdownlist.SelectedItem.Text;
                 StudentToClass_bttn.Text = "Add students to " + CourseAvailable_dropdownlist.SelectedItem.Text;
             
-            user = Session["userID"].ToString();
 
             if (ViewState["data"] != null)
             {
@@ -85,10 +83,10 @@ namespace peerreviewproject
                         FileUpload1.SaveAs(filePath);
                         Read_from_csv(fileName, filePath);
                     }
-                    Label1.Text = fileName + " was imported successfully!";
+                    SuccessLabel.Text = fileName + " was imported successfully!";
                     File.Delete(filePath);                                  //remove import file after reading data
                 }
-                else Label1.Text = "Please select a CSV file";
+                else WarningLabel.Text = "Please select a CSV file";
 
             }
 
@@ -104,27 +102,26 @@ namespace peerreviewproject
 
             if (CSV_Datatable == null || CSV_Datatable.Rows.Count == 0)
             {
-                Label2.Text = "Add students first";
+                SuccessLabel.Text = "Add students first";
                 return;
             }
             foreach (DataRow row in CSV_Datatable.Rows)
-            {                    
-                                                // [0]first name, [1]last name, [2]email, [3]team
-                _ = new CreateUser_Class(row[0].ToString(), row[1].ToString(), row[2].ToString());
+            {
+                                        // [0]first name, [1]last name, [2]email, [3]team
+                _ = new CreateUser_Class(row[0].ToString(), row[1].ToString(), row[2].ToString(), "Professor");
                 _ = new StudentTo_Class(courseID, row[2].ToString(), row[3].ToString());
                 
             }
-            Label2.Text = "New users added";
+            SuccessLabel.Text = "New users added";
             CSV_Datatable.Clear();
             GridView1.DataBind();
-            GridView2.DataBind();
+            CurrentRosterGridView.DataBind();
         }
 
 
         public void Read_from_csv(string fileName, string filePath)
         {
             string csvreader = File.ReadAllText(filePath);
-
 
             foreach (string row in csvreader.Split('\n'))
             {
@@ -205,11 +202,7 @@ namespace peerreviewproject
 
         protected void Dropdownchange(object sender, EventArgs e)
         {
-            // if (ListBox1.Items.Count == 0)
-            //{
-            //  ListBox1.Items.Add("No students");
-            // }
-            Label2.Visible = false;
+            SuccessLabel.Visible = false;
         }
 
 

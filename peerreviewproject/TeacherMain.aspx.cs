@@ -14,6 +14,20 @@ namespace peerreviewproject
         {
             lblprofessor.Text = "Welcome " + Session["email"];
             user = Convert.ToInt32(Session["userID"]);
+            Session["userID"] = Session["userID"];
+            if (Session["type"].ToString() == "Admin")
+            {
+                AdminButton.Visible = true;
+                AdminButton.Enabled = true;
+                Session["type"] = "Admin";
+            }
+            else 
+            {
+                Session["type"] = "Professor";
+            }
+            
+            Session["email"] = Session["email"];
+            
         }
 
         protected void logoutButton_Click(object sender, EventArgs e)
@@ -51,6 +65,17 @@ namespace peerreviewproject
             Session["userID"] = user;
             Session["course"] = TeacherCourseGridview.Rows[TeacherCourseGridview.SelectedIndex].Cells[1].Text;
             Response.Redirect("CourseReviews.aspx");
+        }
+
+        protected void ChangePassButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ChangePass.aspx");
+        }
+
+        protected void AdminButton_Click(object sender, EventArgs e)
+        {
+            if (Session["type"].ToString() == "Admin")
+                Response.Redirect("AdminPage.aspx");
         }
     }
 }
