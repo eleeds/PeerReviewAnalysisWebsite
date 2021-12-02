@@ -7,7 +7,7 @@
     <title></title>
     <style type="text/css">
         .auto-style1 {
-            height: 966px;
+            height: 1305px;
         }
     </style>
 </head>
@@ -15,13 +15,21 @@
     <form id="form1" runat="server">
         <div style="font-size: 42px" class="auto-style1">
             <asp:Label ID="Label4" runat="server" BackColor="#CCCCCC" Text="Create new course"></asp:Label>
-            <asp:GridView ID="CurrentCourseGridView" runat="server" AutoGenerateColumns="False" Caption="Current Courses" CellPadding="4" DataKeyNames="courseID" DataSourceID="SqlDataSource1" EmptyDataText="No classes" ForeColor="#333333" HorizontalAlign="Right" ShowHeaderWhenEmpty="True">
+            <asp:GridView ID="CurrentCourseGridView" runat="server" AutoGenerateColumns="False" Caption="Current Courses" CellPadding="4" DataKeyNames="courseID" DataSourceID="SqlDataSource1" EmptyDataText="No classes" ForeColor="#333333" HorizontalAlign="Right" ShowHeaderWhenEmpty="True" AllowSorting="True" OnDataBound="CurrentCourseGridView_DataBound" ToolTip="Class contains multiple Professors if underlined">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField DataField="courseName" HeaderText="Course" SortExpression="courseName" />
                     <asp:BoundField DataField="courseID" HeaderText="courseID" InsertVisible="False" ReadOnly="True" SortExpression="courseID" Visible="False" />
-                    <asp:BoundField DataField="courseSemester" HeaderText="Semester" SortExpression="courseSemester" />
-                    <asp:BoundField DataField="year" HeaderText="Year" SortExpression="year" />
+                    <asp:BoundField DataField="courseNumber" HeaderText="Course Number" SortExpression="courseNumber" >
+                    <ItemStyle HorizontalAlign="Center" />
+                    </asp:BoundField>
+                    <asp:BoundField DataField="courseSemester" HeaderText="Semester" SortExpression="courseSemester" >
+                    <ItemStyle HorizontalAlign="Center" />
+                    </asp:BoundField>
+                    <asp:BoundField DataField="year" HeaderText="Year" SortExpression="year">
+                    <ItemStyle HorizontalAlign="Center" />
+                    </asp:BoundField>
+                    <asp:CommandField ShowDeleteButton="True" />
                 </Columns>
                 <EditRowStyle BackColor="#7C6F57" />
                 <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
@@ -88,11 +96,19 @@
                         <asp:DropDownList ID="YearDropList" runat="server"></asp:DropDownList>
                     </asp:TableCell>
                 </asp:TableRow>
+                <asp:TableRow runat="server">
+                    <asp:TableCell runat="server">
+                        <asp:Label ID="AnotherProfessorLabel" runat="server" Text="If Co-Teaching enter other Professor's email"></asp:Label>
+                    </asp:TableCell>
+                    <asp:TableCell runat="server">
+                        <asp:TextBox ID="AnotherProfessorTextBox" runat="server" TextMode="Email"></asp:TextBox>
+                    </asp:TableCell>
+                </asp:TableRow>
             </asp:Table>
             
             
             
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:Peer_ReviewConnectionString2 %>" DeleteCommand="DELETE FROM Course_table WHERE (courseID = @courseID)" SelectCommand="SELECT a.courseName, a.courseID, a.courseSemester, a.year FROM Course_table AS a INNER JOIN Course_access_table AS b ON a.courseID = b.courseID WHERE (b.userID = @user )">
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:Peer_ReviewConnectionString2 %>" DeleteCommand="DELETE FROM Course_table WHERE (courseID = @courseID)" SelectCommand="SELECT a.courseName, a.courseID, a.courseNumber, a.courseSemester, a.year FROM Course_table AS a INNER JOIN Course_access_table AS b ON a.courseID = b.courseID WHERE (b.userID = @user )">
                 <DeleteParameters>
                     <asp:Parameter Name="courseID" />
                 </DeleteParameters>

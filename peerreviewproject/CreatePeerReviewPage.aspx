@@ -69,12 +69,15 @@
                     <asp:BoundField DataField="question" HeaderText="Question" SortExpression="question" />
                     <asp:BoundField DataField="type" HeaderText="Type" SortExpression="type" />
                     <asp:BoundField DataField="correctResponses" HeaderText="Accepted Responses" SortExpression="correctResponses" /> 
-                    <asp:BoundField DataField="questionName" HeaderText="Name" SortExpression="questionName" />
+                    <asp:BoundField DataField="questionName" HeaderText="Name" SortExpression="questionName" >
+                    <ItemStyle HorizontalAlign="Center" />
+                    </asp:BoundField>
                     <asp:BoundField DataField="questionSet" HeaderText="Set" SortExpression="questionSet" >
                     <ItemStyle HorizontalAlign="Center" />
                     </asp:BoundField>
                     <asp:CheckBoxField DataField="classSurvey" HeaderText="classSurvey" SortExpression="classSurvey" Visible="False" >
                     </asp:CheckBoxField>
+                    <asp:CommandField ShowDeleteButton="True" />
                 </Columns>
                 <EditRowStyle BackColor="#2461BF" />
                 <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
@@ -116,7 +119,7 @@
         <p draggable="true">
             &nbsp;</p>
         <p style="font-weight: bold">
-            <asp:TextBox ID="questDescriptionTB" runat="server" Height="100px" Width="500px" EnableTheming="True" TextMode="MultiLine"></asp:TextBox>
+            <asp:TextBox ID="questDescriptionTB" runat="server" Height="100px" Width="500px"  EnableTheming="True" TextMode="MultiLine"></asp:TextBox>
             Question Description</p>
         <p>
             <asp:RadioButtonList ID="type_radiobttn" runat="server" OnSelectedIndexChanged="type_radiobttn_SelectedIndexChanged" AutoPostBack="True" CausesValidation="True">

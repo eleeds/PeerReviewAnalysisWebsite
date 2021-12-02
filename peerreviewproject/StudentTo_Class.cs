@@ -95,10 +95,11 @@ namespace peerreviewproject
                 sqlCon.Open();
                 string toGroup_Query = "INSERT INTO UserTeam_table ([userID], [teamID], [courseID]) VALUES(@userID, @teamID, @courseID)";
                 string StudentID_Query = "Select ID FROM User_table WHERE email =@email";
-                string teamID_Query = "Select teamID FROM teams_table WHERE name=@name";
+                string teamID_Query = "Select teamID FROM teams_table WHERE name=@name AND courseID=@courseID";
 
                 SqlCommand team = new SqlCommand(teamID_Query, sqlCon);
                 team.Parameters.AddWithValue("@name", name);
+                team.Parameters.AddWithValue("@courseID", classID);
                 int teamID = Convert.ToInt32(team.ExecuteScalar());
 
                 SqlCommand StudentIDCMD = new SqlCommand(StudentID_Query, sqlCon);

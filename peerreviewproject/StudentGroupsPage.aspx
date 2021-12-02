@@ -19,7 +19,7 @@
             
                 
                 <br />
-                <asp:GridView ID="GridView3" runat="server" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSource3" HorizontalAlign="Center" EmptyDataText="No Students" ShowHeaderWhenEmpty="True" AllowSorting="True" Caption="Class Roster" DataKeyNames="ID" OnRowUpdating="GridView3_RowUpdating1" OnRowDataBound="GridView3_RowDataBound" ForeColor="#333333" Width="545px">
+                <asp:GridView ID="RosterGridView" runat="server" AutoGenerateColumns="False" CellPadding="4" DataSourceID="SqlDataSource3" HorizontalAlign="Center" EmptyDataText="No Students" ShowHeaderWhenEmpty="True" AllowSorting="True" Caption="Course Roster" DataKeyNames="ID" OnRowUpdating="RosterGridView_RowUpdating1" OnRowDataBound="RosterGridView_RowDataBound" ForeColor="#333333" Width="545px">
                     <Columns>
                         <asp:BoundField DataField="Student" HeaderText="Student" ReadOnly="True" SortExpression="Student" />
                         <asp:BoundField DataField="Team#" HeaderText="Team#" SortExpression="Team#" >
@@ -29,7 +29,9 @@
                         </asp:BoundField>
                         <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" Visible="False" />
                         <asp:BoundField DataField="teamID" HeaderText="teamID" SortExpression="teamID" Visible="False" />
-                        <asp:CommandField ShowEditButton="True" EditText="Change Team" />
+                        <asp:CommandField ShowEditButton="True" EditText="Change Team" >
+                        <ItemStyle HorizontalAlign="Center" />
+                        </asp:CommandField>
                     </Columns>
                     <EditRowStyle BackColor="#7C6F57" />
                     <FooterStyle BackColor="#1C5E55" ForeColor="White" Font-Bold="True" />

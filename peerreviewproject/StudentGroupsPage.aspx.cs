@@ -21,7 +21,7 @@ namespace peerreviewproject
 
         protected void GridView1_RowUpdated(object sender, GridViewUpdatedEventArgs e)
         {
-            GridView3.DataBind();
+            RosterGridView.DataBind();
         }
 
         protected void AddTeamBttn_click(object sender, EventArgs e)
@@ -49,13 +49,13 @@ namespace peerreviewproject
 
             }
             GridView1.DataBind();
-            GridView3.DataBind();
+            RosterGridView.DataBind();
             TextBox1.Text = string.Empty;
             Label1.Text = "Team created";
             Label1.Visible = true;
         }
 
-        protected void GridView3_RowUpdating1(object sender, GridViewUpdateEventArgs e)
+        protected void RosterGridView_RowUpdating1(object sender, GridViewUpdateEventArgs e)
         {
             bool flag = false;
             int i = 0;
@@ -94,7 +94,7 @@ namespace peerreviewproject
                 cmd.Parameters.AddWithValue("@name", Convert.ToInt32(e.NewValues[0]));
                 cmd.ExecuteNonQuery();
                 sqlCon.Close();
-                GridView3.DataBind();
+                RosterGridView.DataBind();
 
             }
         }
@@ -113,14 +113,13 @@ namespace peerreviewproject
                 cmd.ExecuteNonQuery();
                 sqlCon.Close();
                 
-                GridView3.DataBind();
-                
+                RosterGridView.DataBind();
 
             }
            
         }
 
-        protected void GridView3_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void RosterGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             
             if (e.Row.RowState.ToString().Contains("Edit"))
@@ -136,16 +135,16 @@ namespace peerreviewproject
                 
             }
             Label1.Visible = false;
-
+            RosterGridView.Caption = "Course Roster - " + RosterGridView.Rows.Count.ToString() + " Total Students";
         }
 
 
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            for (int i = 0; i < GridView3.Rows.Count; i++)
+            for (int i = 0; i < RosterGridView.Rows.Count; i++)
             {
                 
-                if (GridView3.Rows[i].Cells[1].Text == e.Values[0].ToString())
+                if (RosterGridView.Rows[i].Cells[1].Text == e.Values[0].ToString())
                 {
                     Label1.Text = "Remove students from team before deleting";
                     Label1.Visible = true;

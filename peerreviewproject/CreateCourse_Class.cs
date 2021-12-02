@@ -50,6 +50,7 @@ namespace peerreviewproject
             set { CourseYear = value; }
         }
 
+
         public CreateCourse_Class(int ProfessorID, string Dept, string CNumber, string CName, string semester, int year) 
         {
             CourseProf = ProfessorID;
@@ -80,8 +81,6 @@ namespace peerreviewproject
                 sqlCmd.Parameters.AddWithValue("@year", CourseYear_);
                 sqlCmd.ExecuteNonQuery();
                 sqlCon.Close();
-                
-
             }
         }
 

@@ -206,10 +206,12 @@ namespace peerreviewproject
                 e.Row.Cells[4].Enabled = false;
                 e.Row.Cells[5].Enabled = false;
                 getClassSurvey();
-                if (e.Row.RowIndex != 0 && e.Row.Cells[7].Text != "Class Survey")
-                {
-                    e.Row.Cells[6].Visible = false;
-                    e.Row.Cells[7].Visible = false;
+                if (e.Row.RowIndex > 0)
+                { 
+                    if (e.Row.RowIndex % 2 == 0)                                                        //hides other set numbers for cleaner look
+                        e.Row.Cells[6].ForeColor = System.Drawing.ColorTranslator.FromHtml("#EFF3FB");
+                    else 
+                        e.Row.Cells[6].ForeColor = System.Drawing.Color.White;
                 }
                
             }

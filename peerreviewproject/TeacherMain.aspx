@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TeacherMain.aspx.cs" Inherits="peerreviewproject.TeacherMain" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TeacherMain.aspx.cs" Inherits="peerreviewproject.TeacherMain" EnableSessionState="True" %>
 
 <!DOCTYPE html>
 
@@ -21,6 +21,8 @@
             <tr>
                 <td>
                     
+                    <asp:Button ID="logoutButton" runat="server" Text="Logout" OnClick="logoutButton_Click" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    
                     <asp:Button ID="ChangePassButton" runat="server" OnClick="ChangePassButton_Click" Text="Change Password" />
                     
                     <asp:Button ID="AdminButton" runat="server" Enabled="False" Text="Admin" Visible="False" OnClick="AdminButton_Click" />
@@ -33,7 +35,7 @@
                <tr><td><asp:GridView ID="TeacherCourseGridview" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" OnSelectedIndexChanged="TeacherCourseGridview_SelectedIndexChanged" AllowPaging="True" AllowSorting="True" CellPadding="4" ForeColor="#333333">
                    <AlternatingRowStyle BackColor="White" />
                <Columns>
-                   <asp:CommandField ShowSelectButton="True" />
+                   <asp:CommandField ShowSelectButton="True" SelectText="View Reviews" />
                    <asp:BoundField DataField="Course" HeaderText="Course" SortExpression="Course" />
                    <asp:BoundField DataField="courseNumber" HeaderText="Course Number" SortExpression="courseNumber" />
                    <asp:BoundField DataField="Semester" HeaderText="Semester" SortExpression="Semester" />
@@ -57,17 +59,17 @@
                        </SelectParameters>
                    </asp:SqlDataSource>
                    </td></tr>
-               <tr><td><asp:Button ID="logoutButton" runat="server" Text="Logout" OnClick="logoutButton_Click" /></td></tr>
+               <tr><td>&nbsp;</td></tr>
                <tr><td>
                    <asp:Button ID="EditCoursesbttn" runat="server" OnClick="EditClassesbttn_Click" Text="Edit Courses" />
+                   <asp:Button ID="CourseStudentsbttn" runat="server" OnClick="EditStudentsbttn_Click" Text="Edit Course Students" />
                    </td></tr>
                <tr><td>
-                   <asp:Button ID="CourseStudentsbttn" runat="server" OnClick="EditStudentsbttn_Click" Text="Edit Course Students" />
                    <br />
-                   <br />
-                   <asp:Button ID="CourseReviewsbttn" runat="server" OnClick="EditReviewsbttn_Click" Text="Edit Course Reviews" />
-                   &nbsp;
                    <asp:Button ID="Groupsbttn" runat="server" OnClick="EditGroupsbttn_Click" Text="Edit Groups" />
+                   <asp:Button ID="CourseReviewsbttn" runat="server" OnClick="EditReviewsbttn_Click" Text="Edit Course Reviews" />
+                   <br />
+                   &nbsp;
                    </td></tr>
                <tr><td>
                    &nbsp;</td></tr>

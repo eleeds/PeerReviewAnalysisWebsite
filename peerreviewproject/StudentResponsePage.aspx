@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="StudentResponsePage.aspx.cs" Inherits="peerreviewproject.StudentResponsePage" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="StudentResponsePage.aspx.cs" Inherits="peerreviewproject.StudentResponsePage"  EnableSessionState="True"%>
 
 <!DOCTYPE html>
 
@@ -15,7 +15,7 @@
     <form id="form1" runat="server">
         <div>
             <asp:Label ID="MemberNamelbl" runat="server" Font-Bold="True"></asp:Label>
-            <asp:GridView ID="StudentGridview" runat="server" DataSourceID="SqlDataSource1" AutoGenerateColumns="False" Caption="Team Members" Visible="False" DataKeyNames="userID,teamID">
+            <asp:GridView ID="StudentGridview" runat="server" DataSourceID="StudentGridDataSource" AutoGenerateColumns="False" Caption="Team Members" Visible="False" DataKeyNames="userID,teamID">
                 <Columns>
                     <asp:BoundField DataField="Student" HeaderText="Student" ReadOnly="True" SortExpression="Student" />
                     <asp:BoundField DataField="userID" HeaderText="userID" SortExpression="userID" Visible="False" />
@@ -23,8 +23,8 @@
                 </Columns>
             </asp:GridView>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:Label ID="Questionlbl" runat="server" Text="Label" Font-Bold="True"></asp:Label>
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:Peer_ReviewConnectionString2 %>" SelectCommand="SELECT { fn CONCAT(User_table.firstName, { fn CONCAT(' ', User_table.lastName) }) } AS Student, UserTeam_table.userID, UserTeam_table.teamID FROM teams_table INNER JOIN UserTeam_table ON teams_table.teamID = UserTeam_table.teamID INNER JOIN User_table ON UserTeam_table.userID = User_table.ID WHERE (teams_table.teamID = @teamID) AND (@userID NOT IN (UserTeam_table.userID))">
+                <asp:Label ID="Questionlbl" runat="server" Font-Bold="True"></asp:Label>
+            <asp:SqlDataSource ID="StudentGridDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:Peer_ReviewConnectionString2 %>" SelectCommand="SELECT { fn CONCAT(User_table.firstName, { fn CONCAT(' ', User_table.lastName) }) } AS Student, UserTeam_table.userID, UserTeam_table.teamID FROM teams_table INNER JOIN UserTeam_table ON teams_table.teamID = UserTeam_table.teamID INNER JOIN User_table ON UserTeam_table.userID = User_table.ID WHERE (teams_table.teamID = @teamID) AND (@userID NOT IN (UserTeam_table.userID))">
                 <SelectParameters>
                     <asp:SessionParameter Name="teamID" SessionField="teamID" />
                     <asp:SessionParameter Name="userID" SessionField="userID" />

@@ -15,14 +15,9 @@ namespace peerreviewproject
         string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         protected void Page_Load(object sender, EventArgs e)
         {
-
             Session["userID"] = 2550;          //for testing
-            //Session["userID"] = Session["userID"];
             lblStudentDetails.Text = "User ID: " + Session["email"];
-            Session["email"] = Session["email"];
-            Session["type"] = "Student";
-            Check();
-             
+            Session["type"] = "Student"; 
         }
 
       
@@ -105,7 +100,6 @@ namespace peerreviewproject
                 }
             }
         }
-
         protected void StudentReviewsGridView_SelectedIndexChanged(object sender, EventArgs e)
         {        
             Session["courseID"] = StudentReviewsGridview.SelectedValue;

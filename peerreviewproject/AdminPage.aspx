@@ -38,14 +38,38 @@
             </asp:Table>
             
             
+            <br />
+            <asp:Button ID="CreateUserButton" runat="server" OnClick="CreateUserButton_Click" Text="Create User" />
             
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Caption="Users" CellPadding="4" DataKeyNames="ID" DataSourceID="SqlDataSource1" EmptyDataText="Nothing" ForeColor="#333333" HorizontalAlign="Right" OnRowDeleted="GridView1_RowDeleted" ShowHeaderWhenEmpty="True" OnRowDeleting="GridView1_RowDeleting" AllowPaging="True">
+            
+            
+            <br />
+            <asp:GridView ID="UserGridview" runat="server" AllowPaging="True" AllowSorting="True" Caption="Users" CellPadding="4" ForeColor="#333333" GridLines="None" HorizontalAlign="Center" OnPageIndexChanging="OnPaging" OnRowDeleting="UserGridView_RowDeleting">
+                <AlternatingRowStyle BackColor="White" />
+                <Columns>
+                    <asp:CommandField ShowDeleteButton="True" />
+                </Columns>
+                <EditRowStyle BackColor="#2461BF" />
+                <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+                <RowStyle BackColor="#EFF3FB" />
+                <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                <SortedDescendingHeaderStyle BackColor="#4870BE" />
+            </asp:GridView>
+            
+            
+            <asp:TextBox ID="txtSearch" runat="server" OnTextChanged="Search" AutoPostBack="true">Search box</asp:TextBox>
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Caption="Ignore for now" CellPadding="4" DataKeyNames="ID" DataSourceID="SqlDataSource1" EmptyDataText="Nothing" ForeColor="#333333" HorizontalAlign="Right" OnRowDeleted="GridView1_RowDeleted" ShowHeaderWhenEmpty="True" OnRowDeleting="GridView1_RowDeleting" AllowPaging="True" AllowSorting="True" Visible="False">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField DataField="Name" HeaderText="Name" ReadOnly="True" SortExpression="Name" />
-                    <asp:BoundField DataField="email" HeaderText="Email" SortExpression="email" />
-                    <asp:BoundField DataField="type" HeaderText="Type" SortExpression="type" />
-                    <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" Visible="False" />
+                    <asp:BoundField DataField="email" HeaderText="email" SortExpression="email" />
+                    <asp:BoundField DataField="type" HeaderText="type" SortExpression="type" />
+                    <asp:BoundField DataField="ID" HeaderText="ID" InsertVisible="False" ReadOnly="True" SortExpression="ID" />
                     <asp:CommandField ShowDeleteButton="True" />
                 </Columns>
                 <EditRowStyle BackColor="#2461BF" />
@@ -65,7 +89,6 @@
                 </DeleteParameters>
             </asp:SqlDataSource>
             <br />
-            <asp:Button ID="CreateUserButton" runat="server" OnClick="CreateUserButton_Click" Text="Create User" />
             
             
             

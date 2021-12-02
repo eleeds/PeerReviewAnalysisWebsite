@@ -33,6 +33,15 @@ namespace peerreviewproject
         protected global::System.Web.UI.WebControls.Label lblprofessor;
 
         /// <summary>
+        /// logoutButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button logoutButton;
+
+        /// <summary>
         /// ChangePassButton control.
         /// </summary>
         /// <remarks>
@@ -69,15 +78,6 @@ namespace peerreviewproject
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
 
         /// <summary>
-        /// logoutButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button logoutButton;
-
-        /// <summary>
         /// EditCoursesbttn control.
         /// </summary>
         /// <remarks>
@@ -96,15 +96,6 @@ namespace peerreviewproject
         protected global::System.Web.UI.WebControls.Button CourseStudentsbttn;
 
         /// <summary>
-        /// CourseReviewsbttn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CourseReviewsbttn;
-
-        /// <summary>
         /// Groupsbttn control.
         /// </summary>
         /// <remarks>
@@ -112,5 +103,14 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Groupsbttn;
+
+        /// <summary>
+        /// CourseReviewsbttn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CourseReviewsbttn;
     }
 }
