@@ -53,7 +53,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Numerics" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -214,7 +213,6 @@
       <DependentUpon>CreatePeerReviewPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="CreateUser_Class.cs" />
-    <Compile Include="EmailClass.cs" />
     <Compile Include="ForgotPass.aspx.cs">
       <DependentUpon>ForgotPass.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

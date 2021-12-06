@@ -33,7 +33,7 @@
             
             <asp:Table ID="Table3" runat="server" HorizontalAlign="Right">
                 <asp:TableRow runat="server">
-                    <asp:TableCell runat="server"><asp:GridView ID="StudentsToAddGridview" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" Height="283px" Width="676px" AutoGenerateEditButton="True" OnRowEditing="StudentsToAddGridview_RowEditing" OnRowCancelingEdit="StudentToAddGridView_RowCancelingEdit" OnRowDataBound="StudentsToAddGridview_RowDataBound" OnRowDeleting="StudentsToAddGridview_RowDeleting" OnRowUpdating="StudentsToAddGridview_RowUpdating" Caption="Students to be added" CaptionAlign="Top" Font-Bold="True" HorizontalAlign="Right" EmptyDataText=" " CssClass="auto-style3" BorderStyle="Groove">
+                    <asp:TableCell runat="server"><asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" Height="283px" Width="676px" AutoGenerateEditButton="True" OnRowEditing="GridView1_RowEditing" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnRowDataBound="GridView1_RowDataBound" OnRowDeleting="GridView1_RowDeleting" OnRowUpdating="GridView1_RowUpdating" Caption="Students to be added" CaptionAlign="Top" Font-Bold="True" HorizontalAlign="Right" EmptyDataText=" " CssClass="auto-style3" BorderStyle="Groove">
 <AlternatingRowStyle BackColor="White" />
 <Columns>
 <asp:BoundField DataField="First Name" HeaderText="First Name" NullDisplayText="insert" />
@@ -81,10 +81,10 @@
             
             <br />
             
-            <asp:GridView ID="CurrentRosterGridView" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" EmptyDataText="No current students" OnRowDeleting="CurrentRosterGridView_RowDeleting" CellPadding="4" DataKeyNames="userID" ForeColor="#333333" GridLines="None" ShowHeaderWhenEmpty="True" OnRowDataBound="CurrentRosterGridview_RowDataBound" AutoGenerateEditButton="True" OnRowUpdating="CurrentRosterGridView_RowUpdating">
+            <asp:GridView ID="CurrentRosterGridView" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" EmptyDataText="No current students" OnRowDeleting="GridView2_RowDeleting" CellPadding="4" DataKeyNames="userID" ForeColor="#333333" GridLines="None" ShowHeaderWhenEmpty="True" OnRowDataBound="GridView2_RowDataBound">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
-                    <asp:BoundField DataField="Student" HeaderText="Student" SortExpression="Student" />
+                    <asp:BoundField DataField="Student" HeaderText="Student" ReadOnly="True" SortExpression="Student" />
                     <asp:BoundField DataField="userID" HeaderText="userID" SortExpression="userID" Visible="False" />
                     
                     <asp:TemplateField ShowHeader="False"><ItemTemplate>
@@ -130,7 +130,7 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <asp:Label ID="SuccessLabel" runat="server" ForeColor="#009933"></asp:Label>
             <br />
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:Peer_ReviewConnectionString2 %>" SelectCommand="SELECT User_table.firstName + ' ' + User_table.lastName AS Student, Course_access_table.userID FROM User_table INNER JOIN Course_access_table ON User_table.ID = Course_access_table.userID INNER JOIN Course_table ON Course_table.courseID = Course_access_table.courseID WHERE (User_table.type = 'Student') AND (Course_table.courseID = @courseID)" DeleteCommand="_removeStudentFromClass" DeleteCommandType="StoredProcedure" UpdateCommand="UPDATE User_table SET firstName =@firstName, lastName =@lastName WHERE CONCAT(firstName, CONCAT(' ', lastName)) =@oldValues">
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:Peer_ReviewConnectionString2 %>" SelectCommand="SELECT User_table.firstName + ' ' + User_table.lastName AS Student, Course_access_table.userID FROM User_table INNER JOIN Course_access_table ON User_table.ID = Course_access_table.userID INNER JOIN Course_table ON Course_table.courseID = Course_access_table.courseID WHERE (User_table.type = 'Student') AND (Course_table.courseID = @courseID)" DeleteCommand="_removeStudentFromClass" DeleteCommandType="StoredProcedure">
                 <DeleteParameters>
                     <asp:Parameter Name="userID" />
                     <asp:Parameter Name="courseID" Type="Int32" />
@@ -138,11 +138,6 @@
                 <SelectParameters>
                     <asp:ControlParameter ControlID="CourseAvailable_dropdownlist" Name="courseID" PropertyName="SelectedValue" />
                 </SelectParameters>
-                <UpdateParameters>
-                    <asp:Parameter Name="firstName" />
-                    <asp:Parameter Name="lastName" />
-                    <asp:Parameter Name="oldValues" />
-                </UpdateParameters>
             </asp:SqlDataSource>
             <asp:Label ID="Label12" runat="server" Font-Bold="True" Text="Upload CSV file to insert student infomation"></asp:Label>
             <asp:Label ID="Label11" runat="server" Font-Bold="True" Text="Enter student info to add to list"></asp:Label>

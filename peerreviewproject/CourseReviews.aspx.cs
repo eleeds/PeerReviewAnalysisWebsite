@@ -15,6 +15,7 @@ namespace peerreviewproject
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            Session["userID"] = Session["userID"];
             if (IsPostBack)
             {
                 if (GroupMembersGridview.SelectedIndex == -1)
@@ -24,6 +25,12 @@ namespace peerreviewproject
                 GroupMembersGridview.DataBind();
             }
 
+            if (!IsPostBack)
+            {
+                //TemplateField tfield = new TemplateField();
+                //tfield.HeaderText = "Country";
+                //ClassSurveyGridView.Columns.Add(tfield);
+            }
 
         }
 
@@ -37,7 +44,6 @@ namespace peerreviewproject
 
         protected void ResultsGridview_DataBound(object sender, EventArgs e)
         {
-            
             if (ResultsGridview.Rows.Count > 0)
             {
                 DataTable RatingsDatatable = new DataTable();
@@ -94,26 +100,15 @@ namespace peerreviewproject
                 CommentsGridview.DataBind();
                 ResultsGridview.Caption = "Reviews for " + GroupMembersGridview.SelectedRow.Cells[1].Text;
             }
-            else if (GroupMembersGridview.SelectedIndex == -1)
+            else
             {
-                RatingGridview.DataBind();
-                CommentsGridview.DataBind();
-                //ResultsGridview.Caption = ""
-                RatingGridview.EmptyDataText = "No scores for student";
-                ResultsGridview.EmptyDataText = "No members to review";
-                CommentsGridview.EmptyDataText = "No members to review";
-                Panel1.Visible = true;
+                Panel1.Visible = false;
+                ResultsGridview.Caption = "";
             }
-           else
+            if (GroupListbox.SelectedIndex != -1)
             {
-                //Panel1.Visible = false;
-                RatingGridview.DataBind();
-                CommentsGridview.DataBind();
-                ResultsGridview.Caption = "Reviews for " + GroupMembersGridview.SelectedRow.Cells[1].Text;
-                RatingGridview.EmptyDataText = "No scores for student";
                 ResultsGridview.EmptyDataText = "No reviews for student";
                 CommentsGridview.EmptyDataText = "No reviews for student";
-                Panel1.Visible = true;
             }
 
         }
@@ -138,32 +133,19 @@ namespace peerreviewproject
 
         protected void CourseDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GridView1.DataBind();
-           
-            if (GridView1.Rows.Count > 0)
-                GridView1.SelectedIndex = 0;
+            GroupListbox.DataBind();
+            if (GroupListbox.Items.Count > 0)
+                GroupListbox.SelectedIndex = 0;
             GroupMembersGridview.DataBind();
-
             if (GroupMembersGridview.Rows.Count > 0)
-            {
                 GroupMembersGridview.SelectedIndex = 0;
-                ResultsGridview.DataBind();
-                RatingGridview.DataBind();
-                CommentsGridview.DataBind();
-                Panel1.Visible = true;
-                GroupMembersGridview.Visible = true;
-            }
-            else
-            {
-                ResultsGridview.Visible = false;
-                GroupMembersGridview.Visible = false;
-            }
-
+            Panel1.Visible = false;
             ClassSurveyGridView.Visible = false;
         }
 
         protected void CourseSurveyListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            GroupListbox.SelectedIndex = -1;
             GroupMembersGridview.SelectedIndex = -1;
             ResultsGridview.Visible = false;
             Panel1.Visible = false;
@@ -269,8 +251,6 @@ namespace peerreviewproject
 
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GroupMembersGridview.DataBind();
-            
             if (GroupMembersGridview.Rows.Count > 0)
             {
                 GroupMembersGridview.SelectedIndex = 0;
@@ -299,11 +279,6 @@ namespace peerreviewproject
                 txtCountry.Width = 300;
                 e.Row.Cells[0].Controls.Add(txtCountry);
             }
-        }
-
-        protected void GroupMembersGridview_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ResultsGridview.DataBind();
         }
     }
 }

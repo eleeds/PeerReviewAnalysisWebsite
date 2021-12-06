@@ -13,7 +13,6 @@ namespace peerreviewproject
     public partial class StudentMain : System.Web.UI.Page
     {
         string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        string groupMembers;
         protected void Page_Load(object sender, EventArgs e)
         {
             Session["userID"] = 2550;          //for testing
@@ -34,16 +33,7 @@ namespace peerreviewproject
             {
                 if (SetComplete(i))
                 {
-                    if (groupMembers == "Exist")
-                    {
-                        StudentReviewsGridview.Rows[i].Cells[7].Text = "Complete";
-                       // StudentReviewsGridview.Rows[i].Cells[0].Visible = true;
-                       // StudentReviewsGridview.Rows[i].Cells[0].Enabled = false;
-                    }
-                    else
-                    {
-                        StudentReviewsGridview.Rows[i].Cells[7].Text = "No group members yet";
-                    }
+                    StudentReviewsGridview.Rows[i].Cells[7].Text = "Complete";
                     StudentReviewsGridview.Rows[i].Cells[0].Visible = true;
                     StudentReviewsGridview.Rows[i].Cells[0].Enabled = false;
                 }
@@ -52,7 +42,6 @@ namespace peerreviewproject
         }
         private bool SetComplete(int rowIndex)      //if true applys complete status to gridview
         {
-            groupMembers = "Exist";
             using (SqlConnection sqlCon = new SqlConnection(connectionString))
             {
                 sqlCon.Open();
@@ -103,12 +92,6 @@ namespace peerreviewproject
                     sql_responses.Parameters.AddWithValue("@teamID", StudentReviewsGridview.DataKeys[rowIndex].Values[1]);
                     int responseCount = Convert.ToInt32(sql_responses.ExecuteScalar());
                     sqlCon.Close();
-
-                    if (membersCount == 0)
-                    {
-                        groupMembers = "none";
-                        return true;
-                    }
                     if (responseCount == membersCount * questionsCount)
                     {
                         return true;
