@@ -26,7 +26,7 @@ namespace peerreviewproject
 
         protected void AddTeamBttn_click(object sender, EventArgs e)
         {
-            
+
             for (int i = 0; i < GridView1.Rows.Count; i++)
             {
                 if (GridView1.Rows[i].Cells[2].Text == TextBox1.Text)
@@ -59,10 +59,11 @@ namespace peerreviewproject
         {
             bool flag = false;
             int i = 0;
-            try {                                           //alert if letters are entered in team slot
+            try
+            {                                           //alert if letters are entered in team slot
                 Convert.ToInt32(e.NewValues[0]);
-                }
-            catch 
+            }
+            catch
             {
                 e.Cancel = true;
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "Message Box", "<script language = 'javascript'>alert('Numbers Only')</script>");
@@ -104,7 +105,7 @@ namespace peerreviewproject
             using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
             {
                 string query = "UPDATE teams_table SET name = @name WHERE (courseID = @courseID) AND (name = @old)";
-                
+
                 sqlCon.Open();
                 SqlCommand cmd = new SqlCommand(query, sqlCon);
                 cmd.Parameters.AddWithValue("@old", Convert.ToInt32(e.OldValues[0]));
@@ -112,27 +113,27 @@ namespace peerreviewproject
                 cmd.Parameters.AddWithValue("@courseID", DropDownList1.SelectedValue);
                 cmd.ExecuteNonQuery();
                 sqlCon.Close();
-                
+
                 RosterGridView.DataBind();
 
             }
-           
+
         }
 
         protected void RosterGridView_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            
+
             if (e.Row.RowState.ToString().Contains("Edit"))
             {
                 return;
             }
-            if (e.Row.RowType == DataControlRowType.DataRow) 
+            if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 if (Convert.ToInt32(e.Row.Cells[1].Text) % 2 == 0)
                 {
                     e.Row.BackColor = System.Drawing.Color.White;
                 }
-                
+
             }
             Label1.Visible = false;
             RosterGridView.Caption = "Course Roster - " + RosterGridView.Rows.Count.ToString() + " Total Students";
@@ -143,7 +144,7 @@ namespace peerreviewproject
         {
             for (int i = 0; i < RosterGridView.Rows.Count; i++)
             {
-                
+
                 if (RosterGridView.Rows[i].Cells[1].Text == e.Values[0].ToString())
                 {
                     Label1.Text = "Remove students from team before deleting";

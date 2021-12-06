@@ -23,11 +23,11 @@ namespace peerreviewproject
                 if (check())
                 {
                     GetNextQuestion();
-                    Questionlbl.Text = "Survey Question# " + (currentquestion + 1).ToString() + " out of " + Session["questionCount"] + " for current student";
+                    Questionlbl.Text = "Survey Question# " + (currentquestion + 1).ToString() + " out of " + Session["questionCount"];
                     QuestionInfo(questionArray);
                     Session["currentQuestion"] = currentquestion;
                     Session["reviewQuestionID"] = questionArray[0];
-                    
+
                 }
                 else
                 {
@@ -39,12 +39,12 @@ namespace peerreviewproject
 
                 }
             }
-            
+
         }
 
         private bool check()
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlconn)) 
+            using (SqlConnection sqlCon = new SqlConnection(sqlconn))
             {
                 sqlCon.Open();
                 string nextQuestionQuery = "SELECT COUNT(1) FROM questions_table WHERE courseID=@courseID AND questionSet=@questionSet AND classSurvey = 1";
@@ -54,10 +54,10 @@ namespace peerreviewproject
                 int count = Convert.ToInt32(sqlCmd.ExecuteScalar());
                 sqlCon.Close();
                 if (count > 0)
-                {                                         
+                {
                     Session["teamID"] = null;        //question set is survey  
                     return true;                    //teamID isn't required
-                                                                    
+
                 }
                 else return false;          //question set is not a survey
             }
@@ -88,7 +88,7 @@ namespace peerreviewproject
                         Session["currentQuestion"] = currentquestion;
                         break;
                     }
-                    if (reviewIDs[i] == reviewIDs[reviewIDs.Count - 1] && Session["teamID"] != null )   //reset questions back to 0
+                    if (reviewIDs[i] == reviewIDs[reviewIDs.Count - 1] && Session["teamID"] != null)   //reset questions back to 0
                     {
 
                         ChangeTeamMember();
@@ -96,10 +96,10 @@ namespace peerreviewproject
                     }
                 }
 
-              
+
                 string nextQuestionQuery = "SELECT * FROM questions_table WHERE reviewQuestionID=@reviewQuestionID";
                 SqlCommand sqlCmd = new SqlCommand(nextQuestionQuery, sqlCon);
-                sqlCmd.Parameters.AddWithValue("@reviewQuestionID", reviewIDs[currentquestion]);                        
+                sqlCmd.Parameters.AddWithValue("@reviewQuestionID", reviewIDs[currentquestion]);
 
                 SqlDataReader reader = sqlCmd.ExecuteReader();                  //reads current question information and saves to array
                 while (reader.Read())
@@ -117,8 +117,8 @@ namespace peerreviewproject
                 Session["questionCount"] = reviewIDs.Count;
                 Session["reviewQuestionID"] = questionArray[0];
 
-                QuestionInfo(questionArray);    
-                
+                QuestionInfo(questionArray);
+
             }
         }
 
@@ -144,7 +144,17 @@ namespace peerreviewproject
                     itemNum++;
                 }
                 RadioBttns1to4.Visible = true;
-                
+
+            }
+            else if (question[3] == "Yes or No")
+            {
+                string[] items = question[4].Split(',');
+                foreach (string s in items)
+                {
+                    RadiobttnsYesorNo.Items[itemNum].Text = s;
+                    itemNum++;
+                }
+                RadiobttnsYesorNo.Visible = true;
             }
             else                    //type = response
             {
@@ -152,46 +162,46 @@ namespace peerreviewproject
             }
             Errorlbl.Text = question[2];
             TextBox1.Text = question[2];
-            
+
         }
 
         protected void SubmitBttnClick(object sender, EventArgs e)
         {
-            if(!AnswerProvided())
+            if (!AnswerProvided())
             {
                 return;
             }
             SubmitResponse();
 
             if (Session["teamID"] == null)
-            {     
-                    currentquestion = Convert.ToInt32(Session["currentQuestion"]);
-                    
-                    if (currentquestion < Convert.ToInt32(Session["questionCount"]) - 1)    //means reviewer needs to answer more questions for current student
-                    {
-                        ClearSelections();
-                        GetNextQuestion();
-                    }
-                    else                         //reviewer has finished, return to main student page
-                    {
-                        Response.Redirect("StudentMain.aspx");
-                    }
+            {
+                currentquestion = Convert.ToInt32(Session["currentQuestion"]);
+
+                if (currentquestion < Convert.ToInt32(Session["questionCount"]) - 1)    //means reviewer needs to answer more questions for current student
+                {
+                    ClearSelections();
+                    GetNextQuestion();
+                }
+                else                         //reviewer has finished, return to main student page
+                {
+                    Response.Redirect("StudentMain.aspx");
+                }
                 Questionlbl.Text = "Survey Question# " + (currentquestion + 1).ToString() + " out of " + Session["questionCount"] + " for current student";
             }
-            else 
+            else
             {
                 teamMember = Convert.ToInt32(Session["teamMember"]);
                 ClearSelections();
                 GetNextQuestion();
                 Questionlbl.Text = "Question# " + (currentquestion + 1).ToString() + " out of " + Session["questionCount"] + " for current student";
             }
-            
+
         }
 
         private void ChangeTeamMember()
         {
 
-             if (teamMember + 1 < StudentGridview.Rows.Count)       //means reviewer is moving on to another student to review
+            if (teamMember + 1 < StudentGridview.Rows.Count)       //means reviewer is moving on to another student to review
             {
                 teamMember++;
                 Session["teamMember"] = teamMember;
@@ -223,22 +233,40 @@ namespace peerreviewproject
                 {
                     insertReviewQuery = "INSERT INTO Response_table (userID, reviewQuestionID, dateComplete, userResponse, questionSet)" +
                                         " VALUES (@userID, @reviewQuestionID, @dateComplete, @userResponse, @questionSet)";
+
+                    if (RadioBttns1to4.Visible)
+                    {
+                        response = RadioBttns1to4.SelectedItem.ToString();
+                    }
+                    else if (Radiobttns1to5.SelectedIndex != -1)
+                    {
+                        response = Radiobttns1to5.SelectedItem.ToString();
+                    }
+                    else if (RadiobttnsYesorNo.SelectedIndex != -1)
+                    {
+                        response = RadiobttnsYesorNo.SelectedItem.ToString();
+                    }
+                    else response = feedbackTxtbox.Text;
                 }
                 else
                 {                                  //inserts as peer review. student review contains a student
                     insertReviewQuery = "INSERT INTO Response_table (userID, teamID, reviewQuestionID, dateComplete, userResponse, studentReviewed, questionSet)" +
                     " VALUES (@userID, @teamID, @reviewQuestionID, @dateComplete, @userResponse, @studentReviewed, @questionSet)";
-                }
-                if (RadioBttns1to4.Visible)
-                {
-                    response = RadioBttns1to4.SelectedItem.ToString();
-                }
-                else if (Radiobttns1to5.SelectedIndex != -1)
-                {
-                    response = Radiobttns1to5.SelectedItem.ToString();
-                }
-                else response = feedbackTxtbox.Text;
 
+                    if (RadioBttns1to4.Visible)
+                    {
+                        response = RadioBttns1to4.SelectedValue.ToString();
+                    }
+                    else if (Radiobttns1to5.SelectedIndex != -1)
+                    {
+                        response = Radiobttns1to5.SelectedValue.ToString();
+                    }
+                    else
+                    {
+                        response = feedbackTxtbox.Text;
+                    }
+                }
+                
                 SqlCommand sqlInsert = new SqlCommand(insertReviewQuery, sqlCon);
                 sqlInsert.Parameters.AddWithValue("@userID", Session["userID"]);
                 sqlInsert.Parameters.AddWithValue("@reviewQuestionID", Session["reviewQuestionID"]);
@@ -270,12 +298,13 @@ namespace peerreviewproject
                 Errorlbl.Text = "Please choose a selection";
                 return false;
             }
-            else if (feedbackTxtbox.Visible && feedbackTxtbox.Text.Length < 5)
+          /*  else if (feedbackTxtbox.Visible && feedbackTxtbox.Text.Length < 5)
             {
                 Errorlbl.Visible = true;
                 Errorlbl.Text = "Response isn't long enough. Try Again";
                 return false;
             }
+          */
             return true;
         }
 
@@ -286,6 +315,8 @@ namespace peerreviewproject
             RadioBttns1to4.SelectedIndex = -1;
             Radiobttns1to5.Visible = false;
             Radiobttns1to5.SelectedIndex = -1;
+            RadiobttnsYesorNo.Visible = false;
+            RadiobttnsYesorNo.SelectedIndex = -1;
             feedbackTxtbox.Visible = false;
             feedbackTxtbox.Text = "";
         }
@@ -304,8 +335,8 @@ namespace peerreviewproject
             }
             else
             {
-             checkCompletionQuery = "SELECT COUNT(1) FROM Response_table WHERE studentReviewed=@studentReviewed AND questionSet=@questionSet " +
-                "AND teamID=@teamID AND userID=@userID AND reviewQuestionID=@reviewQuestionID";
+                checkCompletionQuery = "SELECT COUNT(1) FROM Response_table WHERE studentReviewed=@studentReviewed AND questionSet=@questionSet " +
+                   "AND teamID=@teamID AND userID=@userID AND reviewQuestionID=@reviewQuestionID";
             }
 
             SqlCommand QuestionDoneCheckSQL = new SqlCommand(checkCompletionQuery, sqlCon);
@@ -314,7 +345,7 @@ namespace peerreviewproject
                 QuestionDoneCheckSQL.Parameters.AddWithValue("@studentReviewed", Convert.ToInt32(StudentGridview.DataKeys[teamMember].Value));
                 QuestionDoneCheckSQL.Parameters.AddWithValue("@teamID", Convert.ToInt32(StudentGridview.DataKeys[0].Values[1]));
             }
-            
+
             QuestionDoneCheckSQL.Parameters.AddWithValue("@questionSet", Session["questionSet"]);
             QuestionDoneCheckSQL.Parameters.AddWithValue("@userID", Session["userID"]);
             QuestionDoneCheckSQL.Parameters.AddWithValue("@reviewQuestionID", reviewQuestion);

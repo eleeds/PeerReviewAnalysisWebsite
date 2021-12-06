@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 
 namespace peerreviewproject
-{                                                   
+{
     public class CreateCourse_Class
     {
         private int CourseProfessor;
@@ -51,7 +51,7 @@ namespace peerreviewproject
         }
 
 
-        public CreateCourse_Class(int ProfessorID, string Dept, string CNumber, string CName, string semester, int year) 
+        public CreateCourse_Class(int ProfessorID, string Dept, string CNumber, string CName, string semester, int year)
         {
             CourseProf = ProfessorID;
             Coursedept = Dept;
@@ -59,12 +59,12 @@ namespace peerreviewproject
             CourseName_ = CName;
             CourseSemester_ = semester;
             CourseYear_ = year;
-           if(!DoesClassExist(Coursedept,CourseNum,CourseName_))
+            if (!DoesClassExist(Coursedept, CourseNum, CourseName_))
             {
                 CreateCourse();
                 CourseAccess();
             }
-            
+
 
         }
         public void CreateCourse()
@@ -86,10 +86,10 @@ namespace peerreviewproject
 
         public void CourseAccess()
         {
-            
+
             using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
             {
-                sqlCon.Open();                      
+                sqlCon.Open();
                 string userCourseAccess_query = "INSERT INTO Course_access_table ([userID], [courseID], [permissionType]) VALUES(@userID, @courseID, N'Professor')";
                 string courseID_query = "Select courseID FROM Course_table WHERE courseDepartment =@department AND courseNumber =@courseNum AND courseName =@courseName";
                 SqlCommand courseAccess_sqlCmd = new SqlCommand(userCourseAccess_query, sqlCon);

@@ -159,6 +159,33 @@ namespace peerreviewproject
         protected global::System.Web.UI.WebControls.Label Label1;
 
         /// <summary>
+        /// DuplicateBttn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button DuplicateBttn;
+
+        /// <summary>
+        /// duplicateTB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox duplicateTB;
+
+        /// <summary>
+        /// SubmitDuplicateBttn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SubmitDuplicateBttn;
+
+        /// <summary>
         /// QuestionsInSetGridview control.
         /// </summary>
         /// <remarks>
@@ -222,6 +249,15 @@ namespace peerreviewproject
         protected global::System.Web.UI.WebControls.TextBox tb2;
 
         /// <summary>
+        /// score3lbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label score3lbl;
+
+        /// <summary>
         /// tb3 control.
         /// </summary>
         /// <remarks>
@@ -229,6 +265,15 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tb3;
+
+        /// <summary>
+        /// score4lbl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label score4lbl;
 
         /// <summary>
         /// tb4 control.

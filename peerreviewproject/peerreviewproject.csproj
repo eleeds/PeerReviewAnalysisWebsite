@@ -214,6 +214,7 @@
       <DependentUpon>CreatePeerReviewPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="CreateUser_Class.cs" />
+    <Compile Include="EmailClass.cs" />
     <Compile Include="ForgotPass.aspx.cs">
       <DependentUpon>ForgotPass.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

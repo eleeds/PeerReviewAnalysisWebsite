@@ -26,24 +26,24 @@ namespace peerreviewproject
 
         private void SearchUsers()
         {
-            
+
             using (SqlConnection sqlCon = new SqlConnection(sqlconn))
             {
                 sqlCon.Open();
                 SqlCommand cmd = new SqlCommand();
                 string sql = "SELECT { fn CONCAT(firstName, { fn CONCAT(' ', lastName) }) } AS Name, email FROM User_table WHERE (type NOT IN ('Admin'))  ORDER BY type";
-                   if (!string.IsNullOrEmpty(txtSearch.Text.Trim()) && txtSearch.Text.Trim() != "Search box") 
-                   {
-                        sql = "SELECT { fn CONCAT(firstName, { fn CONCAT(' ', lastName) }) } AS Name, email FROM User_table WHERE (type NOT IN ('Admin'))" +
-                            " AND (firstName LIKE @search + '%') OR (lastName LIKE @search + '%') ORDER BY type";
-                        cmd.Parameters.AddWithValue("@search", txtSearch.Text.Trim());
-                   }
+                if (!string.IsNullOrEmpty(txtSearch.Text.Trim()) && txtSearch.Text.Trim() != "Search box")
+                {
+                    sql = "SELECT { fn CONCAT(firstName, { fn CONCAT(' ', lastName) }) } AS Name, email FROM User_table WHERE (type NOT IN ('Admin'))" +
+                        " AND (firstName LIKE @search + '%') OR (lastName LIKE @search + '%') ORDER BY type";
+                    cmd.Parameters.AddWithValue("@search", txtSearch.Text.Trim());
+                }
                 cmd.CommandText = sql;
                 cmd.Connection = sqlCon;
 
                 DataTable userDataTable = new DataTable();
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
-                       
+
                 da.Fill(userDataTable);
                 UserGridview.DataSource = userDataTable;
                 UserGridview.DataBind();
@@ -98,7 +98,7 @@ namespace peerreviewproject
                 sqlCmd.Parameters.AddWithValue("@name", e.Values[0]);
                 int user = Convert.ToInt32(sqlCmd.ExecuteScalar());
 
-                
+
                 string deleteQuery = "DELETE FROM User_table WHERE CONCAT(firstName, CONCAT(' ', lastName)) = @name";
                 SqlCommand sqlCmd2 = new SqlCommand(deleteQuery, sqlCon);
                 sqlCmd2.Parameters.AddWithValue("@name", e.Values[0]);

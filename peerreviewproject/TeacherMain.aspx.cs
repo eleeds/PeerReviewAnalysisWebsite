@@ -9,7 +9,7 @@ namespace peerreviewproject
 {
     public partial class TeacherMain : System.Web.UI.Page
     {
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             lblprofessor.Text = "Welcome " + Session["email"];
@@ -20,7 +20,7 @@ namespace peerreviewproject
                 AdminButton.Enabled = true;
                 Session["type"] = "Admin";
             }
-            else 
+            else
             {
                 Session["type"] = "Professor";
             }
@@ -39,25 +39,25 @@ namespace peerreviewproject
 
         protected void EditStudentsbttn_Click(object sender, EventArgs e)
         {
-            
+
             Response.Redirect("AddUserstoClass.aspx");
         }
 
         protected void EditReviewsbttn_Click(object sender, EventArgs e)
         {
-            
+
             Response.Redirect("CreatePeerReviewPage.aspx");
         }
 
         protected void EditGroupsbttn_Click(object sender, EventArgs e)
         {
-            
+
             Response.Redirect("StudentGroupsPage.aspx");
         }
 
         protected void TeacherCourseGridview_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
             Session["course"] = TeacherCourseGridview.Rows[TeacherCourseGridview.SelectedIndex].Cells[1].Text;
             Response.Redirect("CourseReviews.aspx");
         }

@@ -11,7 +11,7 @@ namespace peerreviewproject
     public partial class CreateClassPage : System.Web.UI.Page
     {
         int user;
-                public string sqlConnection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
+        public string sqlConnection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
                         Integrated Security=True;
                         Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         protected void Page_Load(object sender, EventArgs e)
@@ -22,7 +22,7 @@ namespace peerreviewproject
 
         protected void CreateCourse_btnclick(object sender, EventArgs e)
         {
-            if(CourseNumberTB.Text == "" || CourseNameTB.Text == "")    
+            if (CourseNumberTB.Text == "" || CourseNameTB.Text == "")
             {
                 WarningLabel.Text = "Please complete each section";
                 WarningLabel.Visible = true;
@@ -68,7 +68,7 @@ namespace peerreviewproject
                     Clear();
                 }
             }
-            catch 
+            catch
             {
                 WarningLabel.Text = "Course not created";
                 WarningLabel.ForeColor = System.Drawing.Color.Red;

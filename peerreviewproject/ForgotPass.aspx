@@ -46,6 +46,8 @@
             <asp:Button ID="UsersubmitBttn" runat="server" OnClick="UsersubmitBttn_Click" Text="Submit" />
             <br />
             <asp:Label ID="Label1" runat="server" Text="Email sent to user with password instructions" Visible="False"></asp:Label>
+            <br />
+            <asp:Label ID="tokenLabel" runat="server" ForeColor="Red" Text="Token has expired! Please create a new one by entering Email again."></asp:Label>
         </div>
     </form>
 </body>

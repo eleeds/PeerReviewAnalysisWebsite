@@ -117,6 +117,9 @@
         <div class="row center-text">
             <asp:Button ID="NewSetButton" runat="server" OnClick="NewSetButton_click" Text="Add new set" />
             <asp:Label ID="Label1" runat="server"></asp:Label>
+            <asp:Button ID="DuplicateBttn" runat="server" Text="Duplicate Set?" OnClick="Duplicate_Click" />
+            <asp:TextBox ID="duplicateTB" runat="server" Visible="False"></asp:TextBox>
+            <asp:Button ID="SubmitDuplicateBttn" runat="server" Text="Submit" OnClick="SubmitDuplicate_Click" />
         </div>
         <br />
             
@@ -183,15 +186,19 @@
                 <asp:ListItem Selected="True">Comment Response</asp:ListItem>
                 <asp:ListItem Value="1-4 Score Rating">1-4 Score Rating/Multiple Choice</asp:ListItem>
                 <asp:ListItem Value="1-5 Score Rating">1-5 Score Rating/Multiple Choice</asp:ListItem>
+                <asp:ListItem>Yes or No</asp:ListItem>
             </asp:RadioButtonList>        
 
         <asp:Panel ID="Panel1" runat="server" Height="150px" HorizontalAlign="Center" Visible="False" Width="400px" Font-Bold="True">
             1 <asp:TextBox ID="tb1" runat="server"></asp:TextBox>
             <br />
             2 <asp:TextBox ID="tb2" runat="server"></asp:TextBox>
-            <br /> 3 <asp:TextBox ID="tb3" runat="server"></asp:TextBox>
+            <br /> 
+            <asp:Label ID="score3lbl" runat="server" Font-Bold="True" Text="3"></asp:Label>
+            <asp:TextBox ID="tb3" runat="server"></asp:TextBox>
             <br />
-            4 <asp:TextBox ID="tb4" runat="server"></asp:TextBox>
+            <asp:Label ID="score4lbl" runat="server" Font-Bold="True" Text="4"></asp:Label>
+            <asp:TextBox ID="tb4" runat="server"></asp:TextBox>
             <br />
             <asp:Label ID="score5lbl" runat="server" Font-Bold="True" Text="5"></asp:Label>
             <asp:TextBox ID="tb5" runat="server"></asp:TextBox>

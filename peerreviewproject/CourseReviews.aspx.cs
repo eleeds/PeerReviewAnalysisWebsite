@@ -15,7 +15,6 @@ namespace peerreviewproject
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Session["userID"] = Session["userID"];
             if (IsPostBack)
             {
                 if (GroupMembersGridview.SelectedIndex == -1)
@@ -25,12 +24,6 @@ namespace peerreviewproject
                 GroupMembersGridview.DataBind();
             }
 
-            if (!IsPostBack)
-            {
-                //TemplateField tfield = new TemplateField();
-                //tfield.HeaderText = "Country";
-                //ClassSurveyGridView.Columns.Add(tfield);
-            }
 
         }
 
@@ -44,6 +37,7 @@ namespace peerreviewproject
 
         protected void ResultsGridview_DataBound(object sender, EventArgs e)
         {
+
             if (ResultsGridview.Rows.Count > 0)
             {
                 DataTable RatingsDatatable = new DataTable();
@@ -70,9 +64,12 @@ namespace peerreviewproject
                         {
                             TypeandScores.Add(ResultsGridview.Rows[i].Cells[4].Text, Convert.ToDouble(ResultsGridview.Rows[i].Cells[2].Text)); //review is a number
                         }
-                        catch           
+                        catch
                         {
-                            CommentsDatatable.Rows.Add(ResultsGridview.Rows[i].Cells[2].Text, ResultsGridview.Rows[i].Cells[5].Text, ResultsGridview.Rows[i].Cells[7].Text);    //review is a string/comment
+                            if (ResultsGridview.Rows[i].Cells[2].Text != "&nbsp;")
+                            { 
+                                CommentsDatatable.Rows.Add(ResultsGridview.Rows[i].Cells[2].Text, ResultsGridview.Rows[i].Cells[5].Text, ResultsGridview.Rows[i].Cells[7].Text);    //review is a string/comment
+                            }
                         }
                     }
                     else
@@ -99,53 +96,71 @@ namespace peerreviewproject
                 CommentsGridview.DataSource = CommentsDatatable;
                 CommentsGridview.DataBind();
                 ResultsGridview.Caption = "Reviews for " + GroupMembersGridview.SelectedRow.Cells[1].Text;
+
+                if (RatingGridview.Rows.Count > 0 && CommentsGridview.Rows.Count < 1)
+                {
+                    CommentsGridview.EmptyDataText = "No reviews for student";
+                }
+                else if (RatingGridview.Rows.Count < 1 && CommentsGridview.Rows.Count > 1)
+                {
+                    RatingGridview.EmptyDataText = "No reviews for student";
+                }
+            }
+            else if (GroupMembersGridview.SelectedIndex == -1)
+            {
+                RatingGridview.DataBind();
+                CommentsGridview.DataBind();
+                //ResultsGridview.Caption = ""
+                RatingGridview.EmptyDataText = "No members to review";
+                ResultsGridview.EmptyDataText = "No members to review";
+                CommentsGridview.EmptyDataText = "No members to review";
+                Panel1.Visible = true;
             }
             else
             {
-                Panel1.Visible = false;
-                ResultsGridview.Caption = "";
-            }
-            if (GroupListbox.SelectedIndex != -1)
-            {
+                //Panel1.Visible = false;
+                RatingGridview.DataBind();
+                CommentsGridview.DataBind();
+                ResultsGridview.Caption = "Reviews for " + GroupMembersGridview.SelectedRow.Cells[1].Text;
+                RatingGridview.EmptyDataText = "No scores for student";
                 ResultsGridview.EmptyDataText = "No reviews for student";
                 CommentsGridview.EmptyDataText = "No reviews for student";
+                Panel1.Visible = true;
             }
 
-        }
-
-        protected void GroupListbox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (GroupMembersGridview.Rows.Count > 0)
-            {
-                GroupMembersGridview.SelectedIndex = 0;
-            }
-            else
-            {
-                GroupMembersGridview.SelectedIndex = -1;
-            }
             
-            ClassSurveyGridView.Visible = false;
-            ResultsGridview.Visible = true;
 
-            CourseSurveyListBox.SelectedIndex = -1;
         }
 
 
         protected void CourseDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GroupListbox.DataBind();
-            if (GroupListbox.Items.Count > 0)
-                GroupListbox.SelectedIndex = 0;
+            GridView1.DataBind();
+
+            if (GridView1.Rows.Count > 0)
+                GridView1.SelectedIndex = 0;
             GroupMembersGridview.DataBind();
+
             if (GroupMembersGridview.Rows.Count > 0)
+            {
                 GroupMembersGridview.SelectedIndex = 0;
-            Panel1.Visible = false;
+                ResultsGridview.DataBind();
+                RatingGridview.DataBind();
+                CommentsGridview.DataBind();
+                Panel1.Visible = true;
+                GroupMembersGridview.Visible = true;
+            }
+            else
+            {
+                ResultsGridview.Visible = false;
+                GroupMembersGridview.Visible = false;
+            }
+
             ClassSurveyGridView.Visible = false;
         }
 
         protected void CourseSurveyListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GroupListbox.SelectedIndex = -1;
             GroupMembersGridview.SelectedIndex = -1;
             ResultsGridview.Visible = false;
             Panel1.Visible = false;
@@ -173,7 +188,7 @@ namespace peerreviewproject
             ClassSurveyGridView.Caption = "Class Survey for Set " + CourseSurveyListBox.SelectedValue;
             ClassSurveyGridView.HeaderRow.Visible = false;
             //ClassSurveyGridView.Columns[0].it
-            
+
         }
 
         private void TallyVotes(DataTable VotesDataTable)
@@ -182,6 +197,7 @@ namespace peerreviewproject
                         Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
             {
                 sqlCon.Open();
+
                 string GetReviewQuestionsquery = "SELECT reviewQuestionID, question FROM questions_table WHERE courseID=@courseID AND questionSet=@questionSet";
 
 
@@ -197,8 +213,22 @@ namespace peerreviewproject
                 }
                 SurveyQuestionsReader.Close();     //question ids now in list
 
+
                 for (int i = 0; i < QuestionsDictionary.Count; i++)
                 {
+                    string submitsExist = "SELECT COUNT(userID) AS number FROM Response_table AS Response_table_1 WHERE (questionSet = @questionSet)" +
+                    " AND (reviewQuestionID = @review)";
+                    SqlCommand check = new SqlCommand(submitsExist, sqlCon);
+                    check.Parameters.AddWithValue("@questionSet", CourseSurveyListBox.SelectedValue);
+                    check.Parameters.AddWithValue("@review", QuestionsDictionary.ElementAt(i).Key);
+                    int count = Convert.ToInt32(check.ExecuteScalar());
+                    if (count == 0)
+                    {
+                        sqlCon.Close();
+                        ClassSurveyGridView.EmptyDataText = "No submissions yet";
+                        return;
+                    }
+
                     string GetVotesQuery = "SELECT FORMAT(CONVERT (float, COUNT(Response_table.userResponse) / (numberOfSubmits.number * .1 * 10)), 'P') AS Votes," +
                     "Response_table.userResponse, numberOfSubmits.number FROM questions_table INNER JOIN Response_table ON questions_table.reviewQuestionID = Response_table.reviewQuestionID " +
                     "CROSS JOIN (SELECT COUNT(userID) AS number FROM Response_table AS Response_table_1 WHERE (questionSet = @questionSet)" +
@@ -221,7 +251,7 @@ namespace peerreviewproject
                     for (int k = 0; k < StudentVotesList.Count; k++)
                     {
                         VotesDataTable.Rows[i][k + 1] = StudentVotesList[k];
-                        VotesDataTable.Rows[i][VotesDataTable.Columns.Count - 1] =  NumberOfVotes[k];
+                        VotesDataTable.Rows[i][VotesDataTable.Columns.Count - 1] = NumberOfVotes[k];
                     }
 
                 }
@@ -251,6 +281,8 @@ namespace peerreviewproject
 
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            GroupMembersGridview.DataBind();
+
             if (GroupMembersGridview.Rows.Count > 0)
             {
                 GroupMembersGridview.SelectedIndex = 0;
@@ -270,15 +302,20 @@ namespace peerreviewproject
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                TextBox txtCountry = new TextBox();
-                txtCountry.ReadOnly = true;
-                txtCountry.Columns = 3;
-                txtCountry.TextMode = TextBoxMode.MultiLine;
-                txtCountry.ID = "txtCountry";
-                txtCountry.Text = (e.Row.DataItem as DataRowView).Row["Question"].ToString();
-                txtCountry.Width = 300;
-                e.Row.Cells[0].Controls.Add(txtCountry);
+                TextBox txtQuestion = new TextBox();
+                txtQuestion.ReadOnly = true;
+                txtQuestion.Columns = 3;
+                txtQuestion.TextMode = TextBoxMode.MultiLine;
+                txtQuestion.ID = "txtQuestion";
+                txtQuestion.Text = (e.Row.DataItem as DataRowView).Row["Question"].ToString();
+                txtQuestion.Width = 300;
+                e.Row.Cells[0].Controls.Add(txtQuestion);
             }
+        }
+
+        protected void GroupMembersGridview_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ResultsGridview.DataBind();
         }
     }
 }

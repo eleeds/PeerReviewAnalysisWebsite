@@ -96,7 +96,7 @@
             
             <asp:Table ID="Table3" runat="server" HorizontalAlign="Center">
                 <asp:TableRow runat="server">
-                    <asp:TableCell runat="server"><asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" Height="283px" Width="676px" AutoGenerateEditButton="True" OnRowEditing="GridView1_RowEditing" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnRowDataBound="GridView1_RowDataBound" OnRowDeleting="GridView1_RowDeleting" OnRowUpdating="GridView1_RowUpdating" Caption="Students to be added" CaptionAlign="Top" Font-Bold="True" HorizontalAlign="Right" EmptyDataText=" " CssClass="auto-style3" BorderStyle="Groove">
+                    <asp:TableCell runat="server"><asp:GridView ID="StudentsToAddGridview" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" Height="283px" Width="676px" AutoGenerateEditButton="True" OnRowEditing="StudentsToAddGridview_RowEditing" OnRowCancelingEdit="StudentToAddGridView_RowCancelingEdit" OnRowDataBound="StudentsToAddGridview_RowDataBound" OnRowDeleting="StudentsToAddGridview_RowDeleting" OnRowUpdating="StudentsToAddGridview_RowUpdating" Caption="Students to be added" CaptionAlign="Top" Font-Bold="True" HorizontalAlign="Right" EmptyDataText=" " CssClass="auto-style3" BorderStyle="Groove">
 <AlternatingRowStyle BackColor="White" />
 <Columns>
 <asp:BoundField DataField="First Name" HeaderText="First Name" NullDisplayText="insert" />
@@ -144,7 +144,7 @@
             
             <br />
             
-            <asp:GridView ID="CurrentRosterGridView" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" HorizontalAlign="Center" EmptyDataText="No current students" OnRowDeleting="GridView2_RowDeleting" CellPadding="4" DataKeyNames="userID" ForeColor="#333333" GridLines="None" ShowHeaderWhenEmpty="True" OnRowDataBound="GridView2_RowDataBound">
+            <asp:GridView ID="CurrentRosterGridView" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" HorizontalAlign="Center" EmptyDataText="No current students" OnRowDeleting="CurrentRosterGridView_RowDeleting" CellPadding="4" DataKeyNames="userID" ForeColor="#333333" GridLines="None" ShowHeaderWhenEmpty="True" OnRowDataBound="CurrentRosterGridview_RowDataBound">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField DataField="Student" HeaderText="Student" ReadOnly="True" SortExpression="Student" />

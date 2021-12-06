@@ -87,6 +87,10 @@
                 <asp:ListItem Value="4"></asp:ListItem>
                 <asp:ListItem Value="5"></asp:ListItem>
             </asp:RadioButtonList>
+            <asp:RadioButtonList ID="RadiobttnsYesorNo" runat="server" Visible="False">
+                <asp:ListItem Value="Yes">Yes</asp:ListItem>
+                <asp:ListItem Value="No">No</asp:ListItem>
+            </asp:RadioButtonList>
             <br />
             <asp:Button ID="Button1" runat="server" Text="Submit" OnClick="SubmitBttnClick" />
             &nbsp;&nbsp;
