@@ -5,17 +5,63 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <style type="text/css">
-        .auto-style1 {
-            height: 1305px;
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit" />
+    <style>
+          html, body {
+            margin: 0;
+            height: 100%;
+            font-family: "Outfit", sans-serif;
+           
+            background-image: linear-gradient(lightsteelblue, white);
+            
+            background-attachment: fixed;
         }
+
+        .bg-container {
+            width: 100%;
+            height: 100%;
+            
+            box-sizing: border-box;
+            background-image: url("backgroundUSI.png");
+            
+            background-repeat: no-repeat;
+            background-position: top;
+        }
+
+        .centered {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+        }
+
+        .center-text{
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+        }
+
+        .child {
+            display: flex;
+            justify-content: center;
+        }
+
     </style>
-</head>
+    </head>
 <body>
     <form id="form1" runat="server">
-        <div style="font-size: 42px" class="auto-style1">
-            <asp:Label ID="Label4" runat="server" BackColor="#CCCCCC" Text="Create new course"></asp:Label>
-            <asp:GridView ID="CurrentCourseGridView" runat="server" AutoGenerateColumns="False" Caption="Current Courses" CellPadding="4" DataKeyNames="courseID" DataSourceID="SqlDataSource1" EmptyDataText="No classes" ForeColor="#333333" HorizontalAlign="Right" ShowHeaderWhenEmpty="True" AllowSorting="True" OnDataBound="CurrentCourseGridView_DataBound" ToolTip="Class contains multiple Professors if underlined">
+        <div>
+            <div class="center-text">
+                <h1>CREATE A NEW COURSE</h1>
+            </div>
+            
+            <div class="row center-text">
+                <table><tr><td><h3>Current Courses</h3></td></tr></table>
+            </div>
+            
+                <asp:GridView ID="CurrentCourseGridView" runat="server" AutoGenerateColumns="False"  CellPadding="4" DataKeyNames="courseID" DataSourceID="SqlDataSource1" EmptyDataText="No classes" ForeColor="#333333" HorizontalAlign="Center" ShowHeaderWhenEmpty="True" AllowSorting="True" OnDataBound="CurrentCourseGridView_DataBound" ToolTip="Class contains multiple Professors if underlined" GridLines="None">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField DataField="courseName" HeaderText="Course" SortExpression="courseName" />
@@ -31,20 +77,22 @@
                     </asp:BoundField>
                     <asp:CommandField ShowDeleteButton="True" />
                 </Columns>
-                <EditRowStyle BackColor="#7C6F57" />
-                <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
-                <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
-                <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
-                <RowStyle BackColor="#E3EAEB" />
-                <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
-                <SortedAscendingCellStyle BackColor="#F8FAFA" />
-                <SortedAscendingHeaderStyle BackColor="#246B61" />
-                <SortedDescendingCellStyle BackColor="#D4DFE1" />
-                <SortedDescendingHeaderStyle BackColor="#15524A" />
+                <EditRowStyle BackColor="#2461BF" />
+                <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+                <RowStyle BackColor="#EFF3FB" />
+                <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                <SortedDescendingHeaderStyle BackColor="#4870BE" />
             </asp:GridView>
+            
+            
             <br />
             <br />
-            <asp:Table ID="Table1" runat="server" GridLines="Both" Width="696px" Height="385px" BorderStyle="Double">
+            <asp:Table ID="Table1" runat="server" GridLines="Both" Width="696px" Height="385px" BorderStyle="Double" HorizontalAlign="Center">
                 <asp:TableRow runat="server">
                     <asp:TableCell runat="server">
                         <asp:Label ID="CollegeLabel" runat="server" Text="College"></asp:Label>
@@ -118,18 +166,23 @@
             </asp:SqlDataSource>
             
             
+           <div class="row child">
+               <div class="col-sm-12">
+                   <asp:Label ID="WarningLabel" runat="server" BackColor="White" Visible="False"></asp:Label>
             
-            <asp:Label ID="WarningLabel" runat="server" BackColor="White" Visible="False"></asp:Label>
             
+            <asp:Button ID="BackButton" runat="server" OnClick="BackButton_Click" Text="Back" />
             
+            <asp:Button ID="CreateCourse_btn" runat="server" Text="Create Course" OnClick="CreateCourse_btnclick"/>
+               </div>
+
+           </div> 
             
-            <br />
-            <asp:Button ID="CreateCourse_btn" runat="server" Text="Create Course" BorderStyle="Inset" OnClick="CreateCourse_btnclick" />
             
             
             
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <asp:Button ID="BackButton" runat="server" OnClick="BackButton_Click" Text="Back" />
+            
             
             
             

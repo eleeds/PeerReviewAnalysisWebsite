@@ -5,17 +5,43 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit" />
     <style>
-        body{
-            background-color: white;
+          html, body {
+            margin: 0;
+            height: 100%;
+            font-family: "Outfit", sans-serif;
+            overflow: hidden;
+            background-image: linear-gradient(lightsteelblue, white);
+            
+            background-attachment: fixed;
         }
+
+        .bg-container {
+            width: 100%;
+            height: 100%;
+            
+            box-sizing: border-box;
+            background-image: url("backgroundUSI.png");
+            
+            background-repeat: no-repeat;
+            background-position: top;
+        }
+
+        .centered {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+        }
+
     </style>
 </head>
 <body>
-    <form id="form1" runat="server">
-        <div>
-            <table style="margin: auto"><tr><td><b>USI PEER REVIEW APPLICATION</b></td></tr></table>
-            <table style="margin: auto; border: 5px solid white">
+    <form id="form1" runat="server" class="bg-container">
+        <div class="centered">
+            <table style="margin: auto"><tr><td><h1>PEER REVIEW APPLICATION</h1></td></tr></table>
+            <table style="margin: auto">
                 
                 <tr>
                     <td>

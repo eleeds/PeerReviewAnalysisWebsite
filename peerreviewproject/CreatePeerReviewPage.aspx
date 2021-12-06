@@ -4,42 +4,96 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-<title></title>  
-    <style type="text/css">
-        .auto-style1 {
-            width: 922px;
+<title></title> 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit" />
+    <style>
+          html, body {
+            margin: 0;
+            height: 100%;
+            font-family: "Outfit", sans-serif;
+            
+            background-image: linear-gradient(lightsteelblue, white);
+            background-attachment: fixed;
+            
         }
-        .auto-style2 {
-            font-weight: bold;
+
+        .bg-container {
+            width: 100%;
+            height: 100%;
+            
+            box-sizing: border-box;
+            background-image: url("backgroundUSI.png");
+            
+            background-repeat: no-repeat;
+            background-position: top;
         }
+
+        .centered {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+        }
+
+        .center-text{
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+        }
+
+        .child {
+            display: flex;
+            justify-content: center;
+        }
+
     </style>
+    
 </head>
 <body>
     <form id="form1" runat="server">
-        <p style="font-weight: bold">
-            Select Class</p>
-        <p>
-            <asp:ListBox ID="Course_listbox" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource1" DataTextField="courseName" DataValueField="courseID" Width="399px" OnSelectedIndexChanged="Course_listbox_SelectedIndexChanged"></asp:ListBox>
+        <div class="center-text">
+            <h1>CREATE PEER REVEIW</h1>
+        </div>
+        <div class="center-text">
+            <h2>Select Class</h2>
+            
+            
+            
+        </div>
+
+        <div class="row center-text">
+                <asp:ListBox ID="Course_listbox" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource1" DataTextField="courseName" DataValueField="courseID" Width="399px" OnSelectedIndexChanged="Course_listbox_SelectedIndexChanged"></asp:ListBox>
             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:Peer_ReviewConnectionString2 %>" SelectCommand="SELECT DISTINCT a.courseName, a.courseID FROM Course_table AS a INNER JOIN Course_access_table AS b ON a.courseID = b.courseID WHERE (b.userID = @user )">
                 <SelectParameters>
                     <asp:SessionParameter Name="user" SessionField="userID" />
                 </SelectParameters>
             </asp:SqlDataSource>
-        </p>
-        <p style="font-weight: bold">
-            Select existing review set or create new set</p>
-        <p class="auto-style1">
+            </div>
+        
+        
+            
+        
+        <div class="center-text">
+            <h2>Select existing review set or create new set</h2>
+        </div>
+
+        <div class="row center-text">
             <asp:ListBox ID="CurrentQuestionSet_listbox" runat="server" Width="405px" AutoPostBack="True" OnSelectedIndexChanged="CurrentQuestionSet_listbox_SelectedIndexChanged"></asp:ListBox>
             <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:Peer_ReviewConnectionString2 %>" SelectCommand="SELECT DISTINCT questionSet FROM questions_table WHERE (courseID = @courseID)">
                 <SelectParameters>
                     <asp:ControlParameter ControlID="Course_listbox" Name="courseID" PropertyName="SelectedValue" Type="Int32" />
                 </SelectParameters>
             </asp:SqlDataSource>
-        </p>
+        </div>
+        
+            
+        
         <asp:Panel ID="Panel3" runat="server" HorizontalAlign="Center">
             <br />
         </asp:Panel>
-        <asp:Panel ID="Panel2" runat="server" Enabled="False" HorizontalAlign="Right" Width="1166px">
+        <asp:Panel ID="Panel2" runat="server" Enabled="False" HorizontalAlign="Center" Width="100%">
             <asp:Label ID="dueDatelbl" runat="server" Font-Bold="True" ForeColor="Red"></asp:Label>
             &nbsp;
             <asp:TextBox ID="DueDateTB" runat="server" TextMode="Date" AutoPostBack="True" OnTextChanged="DueDateTB_TextChanged" ></asp:TextBox>
@@ -59,10 +113,14 @@
             <asp:CheckBox ID="NoCheckBoxStudents" runat="server" AutoPostBack="True" Font-Bold="False" OnCheckedChanged="NoCheckBoxStudents_CheckedChanged" Text="No" />
             <asp:CheckBox ID="YesCheckBoxStudents" runat="server" AutoPostBack="True" Font-Bold="False" OnCheckedChanged="YesCheckBoxStudents_CheckedChanged" Text="Yes" />
         </asp:Panel>
-        <p>
+        
+        <div class="row center-text">
             <asp:Button ID="NewSetButton" runat="server" OnClick="NewSetButton_click" Text="Add new set" />
             <asp:Label ID="Label1" runat="server"></asp:Label>
-            <asp:GridView ID="QuestionsInSetGridview" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource4" Width="1109px" AutoGenerateEditButton="True" DataKeyNames="reviewQuestionID,classSurvey" OnRowEditing="QuestionsInSetGridview_RowEditing" OnRowUpdated="QuestionsInSetGridview_RowUpdated" EmptyDataText="No questions added yet" OnRowCancelingEdit="QuestionsInSetGridview_RowCancelingEdit" OnRowDataBound="QuestionsInSetGridview_RowDataBound" OnRowUpdating="QuestionsInSetGridview_RowUpdating" OnRowDeleted="QuestionsInSetGridview_RowDeleted" OnRowDeleting="QuestionsInSetGridview_RowDeleting" CellPadding="4" ForeColor="#333333" GridLines="None">
+        </div>
+        <br />
+            
+            <asp:GridView ID="QuestionsInSetGridview" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource4" Width="1109px" HorizontalAlign="Center" AutoGenerateEditButton="True" DataKeyNames="reviewQuestionID,classSurvey" OnRowEditing="QuestionsInSetGridview_RowEditing" OnRowUpdated="QuestionsInSetGridview_RowUpdated" EmptyDataText="No questions added yet" OnRowCancelingEdit="QuestionsInSetGridview_RowCancelingEdit" OnRowDataBound="QuestionsInSetGridview_RowDataBound" OnRowUpdating="QuestionsInSetGridview_RowUpdating" OnRowDeleted="QuestionsInSetGridview_RowDeleted" OnRowDeleting="QuestionsInSetGridview_RowDeleting" CellPadding="4" ForeColor="#333333" GridLines="None">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField DataField="reviewQuestionID" HeaderText="reviewQuestionID" SortExpression="reviewQuestionID" InsertVisible="False" ReadOnly="True" Visible="False" />
@@ -115,20 +173,19 @@
                     <asp:Parameter Name="reviewQuestionID" Type="Int32"/>
                 </UpdateParameters>
             </asp:SqlDataSource>
-        </p>
+        
         <p draggable="true">
             &nbsp;</p>
-        <p style="font-weight: bold">
-            <asp:TextBox ID="questDescriptionTB" runat="server" Height="100px" Width="500px"  EnableTheming="True" TextMode="MultiLine"></asp:TextBox>
-            Question Description</p>
-        <p>
+        <div class="center-text">
+            <asp:TextBox ID="questDescriptionTB" runat="server" Height="100px" Width="500px" EnableTheming="True" TextMode="MultiLine"></asp:TextBox>
+            
             <asp:RadioButtonList ID="type_radiobttn" runat="server" OnSelectedIndexChanged="type_radiobttn_SelectedIndexChanged" AutoPostBack="True" CausesValidation="True">
                 <asp:ListItem Selected="True">Comment Response</asp:ListItem>
                 <asp:ListItem Value="1-4 Score Rating">1-4 Score Rating/Multiple Choice</asp:ListItem>
                 <asp:ListItem Value="1-5 Score Rating">1-5 Score Rating/Multiple Choice</asp:ListItem>
             </asp:RadioButtonList>        
 
-        <asp:Panel ID="Panel1" runat="server" Height="150px" HorizontalAlign="Left" Visible="False" Width="400px" Font-Bold="True">
+        <asp:Panel ID="Panel1" runat="server" Height="150px" HorizontalAlign="Center" Visible="False" Width="400px" Font-Bold="True">
             1 <asp:TextBox ID="tb1" runat="server"></asp:TextBox>
             <br />
             2 <asp:TextBox ID="tb2" runat="server"></asp:TextBox>
@@ -139,25 +196,25 @@
             <asp:Label ID="score5lbl" runat="server" Font-Bold="True" Text="5"></asp:Label>
             <asp:TextBox ID="tb5" runat="server"></asp:TextBox>
         </asp:Panel>
-
-        <p>
+            
+        
+        </div>
+        <div class="center-text">
+                <p>
             <asp:TextBox ID="name_tb" runat="server"></asp:TextBox>
         &nbsp;&nbsp;&nbsp; Name of Question&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            
+        </p>
+            </div>
+        <br />
+        <div class="center-text" style="padding-bottom: 100px">
             <asp:Button ID="SubmitBttn" runat="server" OnClick="SubmitBttn_Click" Text="Submit" />
-        </p>
-        <p>
-            &nbsp;</p>
-        <p>
-            &nbsp;</p>
-        <p>
-            &nbsp;</p>
-        <p>
-            &nbsp;</p>
-        <p>
-            &nbsp;
-        </p>
-        <p>
-            &nbsp;</p>
+        </div>
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
+        
     </form>
 </body>
 </html>

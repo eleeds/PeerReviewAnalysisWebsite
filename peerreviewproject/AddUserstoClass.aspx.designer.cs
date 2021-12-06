@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace peerreviewproject
-{
-
-
-    public partial class AddUserstoClass
-    {
-
+namespace peerreviewproject {
+    
+    
+    public partial class AddUserstoClass {
+        
         /// <summary>
         /// form1 control.
         /// </summary>
@@ -22,25 +20,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-
-        /// <summary>
-        /// Label3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
-
-        /// <summary>
-        /// Label9 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label9;
-
+        
         /// <summary>
         /// CourseAvailable_dropdownlist control.
         /// </summary>
@@ -49,7 +29,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList CourseAvailable_dropdownlist;
-
+        
         /// <summary>
         /// CurrentRoster_lbl control.
         /// </summary>
@@ -58,7 +38,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label CurrentRoster_lbl;
-
+        
         /// <summary>
         /// Table3 control.
         /// </summary>
@@ -67,7 +47,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table Table3;
-
+        
         /// <summary>
         /// GridView1 control.
         /// </summary>
@@ -76,7 +56,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridView1;
-
+        
         /// <summary>
         /// StudentToClass_bttn control.
         /// </summary>
@@ -85,7 +65,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button StudentToClass_bttn;
-
+        
         /// <summary>
         /// CurrentRosterGridView control.
         /// </summary>
@@ -94,7 +74,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView CurrentRosterGridView;
-
+        
         /// <summary>
         /// Peer_review_datasource control.
         /// </summary>
@@ -103,7 +83,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource Peer_review_datasource;
-
+        
         /// <summary>
         /// SuccessLabel control.
         /// </summary>
@@ -112,7 +92,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label SuccessLabel;
-
+        
         /// <summary>
         /// SqlDataSource1 control.
         /// </summary>
@@ -121,16 +101,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
-
-        /// <summary>
-        /// Label12 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label12;
-
+        
         /// <summary>
         /// Label11 control.
         /// </summary>
@@ -139,7 +110,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label11;
-
+        
         /// <summary>
         /// Table1 control.
         /// </summary>
@@ -148,7 +119,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table Table1;
-
+        
         /// <summary>
         /// Label5 control.
         /// </summary>
@@ -157,7 +128,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label5;
-
+        
         /// <summary>
         /// Last control.
         /// </summary>
@@ -166,7 +137,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Last;
-
+        
         /// <summary>
         /// EmailLabel control.
         /// </summary>
@@ -175,7 +146,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label EmailLabel;
-
+        
         /// <summary>
         /// teamlbl control.
         /// </summary>
@@ -184,7 +155,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label teamlbl;
-
+        
         /// <summary>
         /// FirstnameTB control.
         /// </summary>
@@ -193,7 +164,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox FirstnameTB;
-
+        
         /// <summary>
         /// LastnameTB control.
         /// </summary>
@@ -202,7 +173,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox LastnameTB;
-
+        
         /// <summary>
         /// EmailTB control.
         /// </summary>
@@ -211,7 +182,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox EmailTB;
-
+        
         /// <summary>
         /// TeamTB control.
         /// </summary>
@@ -220,7 +191,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TeamTB;
-
+        
         /// <summary>
         /// AddStudent_bttn control.
         /// </summary>
@@ -229,7 +200,16 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button AddStudent_bttn;
-
+        
+        /// <summary>
+        /// Label12 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label12;
+        
         /// <summary>
         /// Table2 control.
         /// </summary>
@@ -238,7 +218,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table Table2;
-
+        
         /// <summary>
         /// UploadfileLabel control.
         /// </summary>
@@ -247,7 +227,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label UploadfileLabel;
-
+        
         /// <summary>
         /// FileUpload1 control.
         /// </summary>
@@ -256,7 +236,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
-
+        
         /// <summary>
         /// ImportBttn control.
         /// </summary>
@@ -265,7 +245,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ImportBttn;
-
+        
         /// <summary>
         /// WarningLabel control.
         /// </summary>

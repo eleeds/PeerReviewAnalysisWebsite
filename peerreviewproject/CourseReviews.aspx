@@ -5,17 +5,56 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <style type="text/css">
-        .auto-style1 {
-            width: 2700px;
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit" />
+    <style>
+        body{
+             margin: 0;
+            height: 100%;
+            font-family: "Outfit", sans-serif;
+            overflow: hidden;
+            background-image: linear-gradient(lightsteelblue, white);
+            
+            background-attachment: fixed;
+           
+            
         }
+
+        .centered {
+            position: fixed;
+            
+            left: 30%;
+            padding-top: 150px;
+            
+        }
+
+        .aside{
+            position: fixed;
+            
+            left: 46%;
+            padding-top: 150px;
+        }
+
+        .centered-text {
+            position: fixed;
+            align-content: center;
+            left: 40%;
+            padding-top: 50px;
+            
+        }
+
+        
     </style>
+    
 </head>
 <body>
     <form id="form1" runat="server">
-        <div class="auto-style1">
+        <table><tr><td><h1 class="centered-text">COURSE REVIEWS</h1></td></tr></table>
+        <div class="centered">
+            <table><tr><td><h3>Course Selection</h3></td></tr></table>
             <asp:DropDownList ID="CourseDropDown" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource1" DataTextField="courseName" DataValueField="courseID" OnDataBound="DropDownList1_DataBound" OnSelectedIndexChanged="CourseDropDown_SelectedIndexChanged">
             </asp:DropDownList>
+            <div class="row"></div>
+            <table><tr><td><h3>Team Selection</h3></td></tr></table>
             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CellPadding="4" DataKeyNames="teamID" DataSourceID="SqlDataSource2" ForeColor="#333333" GridLines="None" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
@@ -50,11 +89,16 @@
                 </SelectParameters>
             </asp:SqlDataSource>
             <br />
-            <asp:Panel ID="Panel3" runat="server" HorizontalAlign="Right" Width="1000px">
+            <div class="row">
+
+            </div>
+            <table><tr><td><h3>Survey Selection</h3></td></tr></table>
+            <asp:Panel ID="Panel3" runat="server" HorizontalAlign="Right" Width="225px">
                 <asp:ListBox ID="CourseSurveyListBox" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource6" DataTextField="questionSet" DataValueField="questionSet" OnSelectedIndexChanged="CourseSurveyListBox_SelectedIndexChanged" Width="237px"></asp:ListBox>
             </asp:Panel>
         </div>
-        <asp:GridView ID="GroupMembersGridview" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSource3" Caption="Group Members" CellPadding="4" ForeColor="#333333" GridLines="None">
+        <div class="aside">
+            <asp:GridView ID="GroupMembersGridview" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSource3" CellPadding="4" ForeColor="#333333" GridLines="None">
             <AlternatingRowStyle BackColor="White" />
             <Columns>
                 <asp:CommandField SelectText="View" ShowSelectButton="True" />
@@ -180,6 +224,8 @@
             </asp:GridView>
             <br />
         </asp:Panel>
+        </div>
+        
     </form>
 </body>
 </html>

@@ -5,11 +5,64 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit" />
+    <style>
+          html, body {
+            margin: 0;
+            height: 100%;
+            font-family: "Outfit", sans-serif;
+            
+            background-image: linear-gradient(lightsteelblue, white);
+            
+            
+        }
+
+        .bg-container {
+            width: 100%;
+            height: 100%;
+            
+            box-sizing: border-box;
+            background-image: url("backgroundUSI.png");
+            
+            background-repeat: no-repeat;
+            background-position: top;
+        }
+
+        .centered {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+        }
+
+        .center-text{
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+        }
+
+        .child {
+            display: flex;
+            justify-content: center;
+        }
+
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
+        <div class="row" style="padding-top: 50px">
+            <div class="center-text">
+                <h1>ADMINISTRATION MANAGEMENT</h1>
+            </div>
+        </div>
+        <div class="row" style="padding-top: 125px">
+
+        </div>
         <div>
-            <asp:Table ID="Table1" runat="server" GridLines="Both" Width="400px" Height="150px" BorderStyle="Double">
+            <asp:Table ID="Table1" runat="server" GridLines="Both" Width="400px" Height="150px" BorderStyle="Double" HorizontalAlign="Center">
 
                 <asp:TableRow runat="server">
                     <asp:TableCell runat="server">
@@ -39,7 +92,12 @@
             
             
             <br />
-            <asp:Button ID="CreateUserButton" runat="server" OnClick="CreateUserButton_Click" Text="Create User" />
+            <div class="row">
+                <div class="center-text">
+                <asp:Button ID="CreateUserButton" runat="server" OnClick="CreateUserButton_Click" Text="Create User" />
+                    </div>
+            </div>
+            
             
             
             
@@ -61,8 +119,15 @@
                 <SortedDescendingHeaderStyle BackColor="#4870BE" />
             </asp:GridView>
             
+            <div class="row">
+                <div class="center-text">
+                    <asp:TextBox ID="txtSearch" runat="server" OnTextChanged="Search" AutoPostBack="true">Search box</asp:TextBox>
+
+                </div>
+            </div>
             
-            <asp:TextBox ID="txtSearch" runat="server" OnTextChanged="Search" AutoPostBack="true">Search box</asp:TextBox>
+
+
             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Caption="Ignore for now" CellPadding="4" DataKeyNames="ID" DataSourceID="SqlDataSource1" EmptyDataText="Nothing" ForeColor="#333333" HorizontalAlign="Right" OnRowDeleted="GridView1_RowDeleted" ShowHeaderWhenEmpty="True" OnRowDeleting="GridView1_RowDeleting" AllowPaging="True" AllowSorting="True" Visible="False">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>

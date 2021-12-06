@@ -5,15 +5,54 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <style type="text/css">
-        .auto-style1 {
-            margin-left: 900px;
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit" />
+    <style>
+          html, body {
+            margin: 0;
+            height: 100%;
+            font-family: "Outfit", sans-serif;
+            
+            background-image: linear-gradient(lightsteelblue, white);
+            
+            
         }
+
+        .bg-container {
+            width: 100%;
+            height: 100%;
+            
+            box-sizing: border-box;
+            background-image: url("backgroundUSI.png");
+            
+            background-repeat: no-repeat;
+            background-position: top;
+        }
+
+        .centered {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -75%);
+        }
+
+        .center-text{
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+        }
+
+        .child {
+            display: flex;
+            justify-content: center;
+        }
+
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
+        <div class="centered">
             <asp:Label ID="MemberNamelbl" runat="server" Font-Bold="True"></asp:Label>
             <asp:GridView ID="StudentGridview" runat="server" DataSourceID="StudentGridDataSource" AutoGenerateColumns="False" Caption="Team Members" Visible="False" DataKeyNames="userID,teamID">
                 <Columns>

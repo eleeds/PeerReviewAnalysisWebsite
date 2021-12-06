@@ -5,10 +5,41 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit" />
+    <style>
+          html, body {
+            margin: 0;
+            height: 100%;
+            font-family: "Outfit", sans-serif;
+            overflow: hidden;
+            background-image: linear-gradient(lightsteelblue, white);
+            
+            background-attachment: fixed;
+        }
+
+        .bg-container {
+            width: 100%;
+            height: 100%;
+            
+            box-sizing: border-box;
+            background-image: url("backgroundUSI.png");
+            
+            background-repeat: no-repeat;
+            background-position: top;
+        }
+
+        .centered {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+        }
+
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
+        <div class="centered">
             Enter Username<br />
             <asp:TextBox ID="UsernameTB" runat="server"></asp:TextBox>
 &nbsp;&nbsp;&nbsp;

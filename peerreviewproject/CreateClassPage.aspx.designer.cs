@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace peerreviewproject
-{
-
-
-    public partial class CreateClassPage
-    {
-
+namespace peerreviewproject {
+    
+    
+    public partial class CreateClassPage {
+        
         /// <summary>
         /// form1 control.
         /// </summary>
@@ -22,16 +20,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-
-        /// <summary>
-        /// Label4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
-
+        
         /// <summary>
         /// CurrentCourseGridView control.
         /// </summary>
@@ -40,7 +29,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView CurrentCourseGridView;
-
+        
         /// <summary>
         /// Table1 control.
         /// </summary>
@@ -49,7 +38,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table Table1;
-
+        
         /// <summary>
         /// CollegeLabel control.
         /// </summary>
@@ -58,7 +47,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label CollegeLabel;
-
+        
         /// <summary>
         /// CollegeDroplist control.
         /// </summary>
@@ -67,7 +56,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList CollegeDroplist;
-
+        
         /// <summary>
         /// CourseNumLabel control.
         /// </summary>
@@ -76,7 +65,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label CourseNumLabel;
-
+        
         /// <summary>
         /// CourseNumberTB control.
         /// </summary>
@@ -85,7 +74,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox CourseNumberTB;
-
+        
         /// <summary>
         /// NameLabel control.
         /// </summary>
@@ -94,7 +83,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label NameLabel;
-
+        
         /// <summary>
         /// CourseNameTB control.
         /// </summary>
@@ -103,7 +92,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox CourseNameTB;
-
+        
         /// <summary>
         /// SemesterLabel control.
         /// </summary>
@@ -112,7 +101,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label SemesterLabel;
-
+        
         /// <summary>
         /// SemesterDropDown control.
         /// </summary>
@@ -121,7 +110,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList SemesterDropDown;
-
+        
         /// <summary>
         /// YearLabel control.
         /// </summary>
@@ -130,7 +119,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label YearLabel;
-
+        
         /// <summary>
         /// YearDropList control.
         /// </summary>
@@ -139,7 +128,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList YearDropList;
-
+        
         /// <summary>
         /// AnotherProfessorLabel control.
         /// </summary>
@@ -148,7 +137,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label AnotherProfessorLabel;
-
+        
         /// <summary>
         /// AnotherProfessorTextBox control.
         /// </summary>
@@ -157,7 +146,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox AnotherProfessorTextBox;
-
+        
         /// <summary>
         /// SqlDataSource1 control.
         /// </summary>
@@ -166,7 +155,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
-
+        
         /// <summary>
         /// WarningLabel control.
         /// </summary>
@@ -175,16 +164,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label WarningLabel;
-
-        /// <summary>
-        /// CreateCourse_btn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CreateCourse_btn;
-
+        
         /// <summary>
         /// BackButton control.
         /// </summary>
@@ -193,5 +173,14 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BackButton;
+        
+        /// <summary>
+        /// CreateCourse_btn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CreateCourse_btn;
     }
 }

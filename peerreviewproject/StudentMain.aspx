@@ -5,12 +5,66 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>STUDENT DASHBOARD</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit" />
+    <style>
+          html, body {
+            margin: 0;
+            height: 100%;
+            font-family: "Outfit", sans-serif;
+            
+            background-image: linear-gradient(lightsteelblue, white);
+            
+            
+        }
+
+        .bg-container {
+            width: 100%;
+            height: 100%;
+            
+            box-sizing: border-box;
+            background-image: url("backgroundUSI.png");
+            
+            background-repeat: no-repeat;
+            background-position: top;
+        }
+
+        .centered {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -75%);
+        }
+
+        .center-text{
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+        }
+
+        .child {
+            display: flex;
+            justify-content: center;
+        }
+
+    </style>
 </head>
 <body>
    <form id="form1" runat="server">
-       <div>
-        <table style="margin: auto">
-        <tr><td>USI PEER REVIEW APPLICATION STUDENT DASHBOARD</td></tr>
+       <div class="centered">
+           <div class="row">
+           <div class="center-text">
+               <h1>USI PEER REVIEW STUDENT PAGE</h1>
+           </div>
+       </div>
+
+       <div class="row">
+           <div>
+               <div>
+        <table style="align-content:baseline">
+        
             <tr>
                 <td>
                 <asp:Label ID="lblStudentDetails" runat="server" Text=""></asp:Label>
@@ -63,6 +117,11 @@
            
        
    </div>
+           </div>
+       </div>
+       </div>
+       
+       
    </form>
     </body>
 </html>

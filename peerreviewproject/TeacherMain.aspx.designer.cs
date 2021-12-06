@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace peerreviewproject
-{
-
-
-    public partial class TeacherMain
-    {
-
+namespace peerreviewproject {
+    
+    
+    public partial class TeacherMain {
+        
         /// <summary>
         /// form1 control.
         /// </summary>
@@ -22,7 +20,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-
+        
         /// <summary>
         /// lblprofessor control.
         /// </summary>
@@ -31,7 +29,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblprofessor;
-
+        
         /// <summary>
         /// logoutButton control.
         /// </summary>
@@ -40,7 +38,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button logoutButton;
-
+        
         /// <summary>
         /// ChangePassButton control.
         /// </summary>
@@ -49,7 +47,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ChangePassButton;
-
+        
         /// <summary>
         /// AdminButton control.
         /// </summary>
@@ -58,7 +56,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button AdminButton;
-
+        
         /// <summary>
         /// TeacherCourseGridview control.
         /// </summary>
@@ -67,7 +65,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView TeacherCourseGridview;
-
+        
         /// <summary>
         /// SqlDataSource1 control.
         /// </summary>
@@ -76,7 +74,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
-
+        
         /// <summary>
         /// EditCoursesbttn control.
         /// </summary>
@@ -85,7 +83,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button EditCoursesbttn;
-
+        
         /// <summary>
         /// CourseStudentsbttn control.
         /// </summary>
@@ -94,16 +92,7 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button CourseStudentsbttn;
-
-        /// <summary>
-        /// Groupsbttn control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Groupsbttn;
-
+        
         /// <summary>
         /// CourseReviewsbttn control.
         /// </summary>
@@ -112,5 +101,14 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button CourseReviewsbttn;
+        
+        /// <summary>
+        /// Groupsbttn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Groupsbttn;
     }
 }

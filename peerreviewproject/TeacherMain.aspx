@@ -5,12 +5,43 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Professor DASHBOARD</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit" />
+    <style>
+        html,body{
+            margin: 0;
+            height: 100%;
+            font-family: "Outfit", sans-serif;
+            
+            background-image: linear-gradient(lightsteelblue, white);
+            
+            
+        }
+
+        #test1,#test2,#test3,#test4,#test5 {
+            display: inline-block;
+            vertical-align: top;
+            
+        }
+
+        .child {
+            display: flex;
+            justify-content: center;
+        }
+
+        .centered {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -75%);
+        }
+    </style>
 </head>
 <body>
    <form id="form1" runat="server">
-       <div>
+       <div class="centered">
         <table style="margin: auto">
-        <tr><td>USI PEER REVIEW APPLICATION PROFESSOR DASHBOARD</td></tr>
+        <tr><td><h1>USI PEER REVIEW APPLICATION</h1></td></tr>
+            <tr><td><h3 style="margin: auto">TEACHER DASHBOARD</h3></td></tr>
             <tr>
                 <td>
                 <asp:Label ID="lblprofessor" runat="server"></asp:Label>
@@ -60,21 +91,20 @@
                    </asp:SqlDataSource>
                    </td></tr>
                <tr><td>&nbsp;</td></tr>
-               <tr><td>
-                   <asp:Button ID="EditCoursesbttn" runat="server" OnClick="EditClassesbttn_Click" Text="Edit Courses" />
-                   <asp:Button ID="CourseStudentsbttn" runat="server" OnClick="EditStudentsbttn_Click" Text="Edit Course Students" />
-                   </td></tr>
-               <tr><td>
-                   <br />
-                   <asp:Button ID="Groupsbttn" runat="server" OnClick="EditGroupsbttn_Click" Text="Edit Groups" />
-                   <asp:Button ID="CourseReviewsbttn" runat="server" OnClick="EditReviewsbttn_Click" Text="Edit Course Reviews" />
-                   <br />
-                   &nbsp;
-                   </td></tr>
-               <tr><td>
-                   &nbsp;</td></tr>
+               
            </table>
-           
+           <div class="row child">
+                <div class="col-sm-12">
+                    
+                    <asp:Button ID="EditCoursesbttn" runat="server" OnClick="EditClassesbttn_Click" Text="Edit Courses" />
+                    <asp:Button ID="CourseStudentsbttn" runat="server" OnClick="EditStudentsbttn_Click" Text="Edit Course Students" />
+                    <asp:Button ID="CourseReviewsbttn" runat="server" OnClick="EditReviewsbttn_Click" Text="Edit Course Reviews" />
+                    <asp:Button ID="Groupsbttn" runat="server" OnClick="EditGroupsbttn_Click" Text="Edit Groups" />
+                    
+                    
+                </div>
+                
+               </div>
            
        
    </div>

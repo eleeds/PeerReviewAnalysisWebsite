@@ -5,33 +5,96 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <style type="text/css">
-        .auto-style1 {
-            height: 1422px;
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Outfit" />
+    <style>
+          html, body {
+            margin: 0;
+            height: 100%;
+            font-family: "Outfit", sans-serif;
+            
+            background-image: linear-gradient(lightsteelblue, white);
+            
+            
         }
-        .auto-style2 {
-            margin-right: 0px;
+
+        .bg-container {
+            width: 100%;
+            height: 100%;
+            
+            box-sizing: border-box;
+            background-image: url("backgroundUSI.png");
+            
+            background-repeat: no-repeat;
+            background-position: top;
         }
-        </style>
+
+        .centered {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+        }
+
+        .center-text{
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+        }
+
+        .child {
+            display: flex;
+            justify-content: center;
+        }
+
+    </style>
     </head>
 <body>
     <form id="form1" runat="server">
-        <div class="auto-style1">
-            <asp:Label ID="Label3" runat="server" Font-Bold="True" Font-Size="Large">Add students to classes page</asp:Label>
+        <div>
+        <div class="center-text">
+             <h1>ADD STUDENTS TO CLASS</h1>
+            </div>
+            <div class="center-text">
+                <h3>Select the students you would like to add below</h3>
+            </div>
+        
+        </div>
+       
+        <div>
+            
             <br />
+           
+            
             <br />
-            <br />
-            <asp:Label ID="Label9" runat="server" Font-Bold="True" BackColor="#CCCCCC">Select the class you would like to add students to below</asp:Label>
-            <br />
-            <asp:DropDownList ID="CourseAvailable_dropdownlist" runat="server" DataSourceID="Peer_review_datasource" DataTextField="courseName" DataValueField="courseID" AutoPostBack="True" OnSelectedIndexChanged="Dropdownchange" ToolTip="View Current Classes">
+            <div class="center-text">
+                <asp:DropDownList ID="CourseAvailable_dropdownlist" runat="server" DataSourceID="Peer_review_datasource" DataTextField="courseName" DataValueField="courseID" AutoPostBack="True" OnSelectedIndexChanged="Dropdownchange" ToolTip="View Current Classes">
             </asp:DropDownList>
+                
+                
             <br />
             <br />
-            <asp:Label ID="CurrentRoster_lbl" runat="server" Font-Bold="True"></asp:Label>
+             
+
+            </div>
+            
+                
+            <br />
+             
+            
+            </div>
+            <div class="row center-text">
+
+                 <asp:Label ID="CurrentRoster_lbl" runat="server" Font-Bold="True"></asp:Label>
+
+                </div>
+        <br />
+        <br />
             
             
             
-            <asp:Table ID="Table3" runat="server" HorizontalAlign="Right">
+            <asp:Table ID="Table3" runat="server" HorizontalAlign="Center">
                 <asp:TableRow runat="server">
                     <asp:TableCell runat="server"><asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" Height="283px" Width="676px" AutoGenerateEditButton="True" OnRowEditing="GridView1_RowEditing" OnRowCancelingEdit="GridView1_RowCancelingEdit" OnRowDataBound="GridView1_RowDataBound" OnRowDeleting="GridView1_RowDeleting" OnRowUpdating="GridView1_RowUpdating" Caption="Students to be added" CaptionAlign="Top" Font-Bold="True" HorizontalAlign="Right" EmptyDataText=" " CssClass="auto-style3" BorderStyle="Groove">
 <AlternatingRowStyle BackColor="White" />
@@ -81,7 +144,7 @@
             
             <br />
             
-            <asp:GridView ID="CurrentRosterGridView" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" EmptyDataText="No current students" OnRowDeleting="GridView2_RowDeleting" CellPadding="4" DataKeyNames="userID" ForeColor="#333333" GridLines="None" ShowHeaderWhenEmpty="True" OnRowDataBound="GridView2_RowDataBound">
+            <asp:GridView ID="CurrentRosterGridView" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" HorizontalAlign="Center" EmptyDataText="No current students" OnRowDeleting="GridView2_RowDeleting" CellPadding="4" DataKeyNames="userID" ForeColor="#333333" GridLines="None" ShowHeaderWhenEmpty="True" OnRowDataBound="GridView2_RowDataBound">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField DataField="Student" HeaderText="Student" ReadOnly="True" SortExpression="Student" />
@@ -93,16 +156,16 @@
 </ItemTemplate>
 </asp:TemplateField>
                 </Columns>
-                <EditRowStyle BackColor="#7C6F57" />
-                <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
-                <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
-                <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
-                <RowStyle BackColor="#E3EAEB" />
-                <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
-                <SortedAscendingCellStyle BackColor="#F8FAFA" />
-                <SortedAscendingHeaderStyle BackColor="#246B61" />
-                <SortedDescendingCellStyle BackColor="#D4DFE1" />
-                <SortedDescendingHeaderStyle BackColor="#15524A" />
+                <EditRowStyle BackColor="#2461BF" />
+                <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+                <RowStyle BackColor="#EFF3FB" />
+                <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                <SortedDescendingHeaderStyle BackColor="#4870BE" />
             </asp:GridView>
             
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -139,11 +202,15 @@
                     <asp:ControlParameter ControlID="CourseAvailable_dropdownlist" Name="courseID" PropertyName="SelectedValue" />
                 </SelectParameters>
             </asp:SqlDataSource>
-            <asp:Label ID="Label12" runat="server" Font-Bold="True" Text="Upload CSV file to insert student infomation"></asp:Label>
+        
+        <div class="row center-text">
             <asp:Label ID="Label11" runat="server" Font-Bold="True" Text="Enter student info to add to list"></asp:Label>
+        </div>
+            
+            
             
             <br />
-            <asp:Table ID="Table1" runat="server" Height="67px" HorizontalAlign="Left" Width="600px" CssClass="auto-style2" Font-Bold="True" Font-Size="Large" BackColor="#CCCCCC" BorderStyle="Groove">
+            <asp:Table ID="Table1" runat="server" Height="67px" HorizontalAlign="Center" Width="600px" CssClass="auto-style2" Font-Bold="True" Font-Size="Large" BackColor="#CCCCCC" BorderStyle="Groove">
                 <asp:TableRow runat="server">
                     <asp:TableCell runat="server">
                         <asp:Label ID="Label5" runat="server" Text="First Name"></asp:Label>
@@ -190,7 +257,7 @@
                     <asp:TableCell runat="server"></asp:TableCell>
                     </asp:TableRow>
                 <asp:TableRow runat="server">
-                    <asp:TableCell runat="server"></asp:TableCell>
+                    
                     <asp:TableCell runat="server">
                         <asp:Button ID="AddStudent_bttn" runat="server" Text="Place student on list" OnClick="AddStudent_bttnclick" Font-Bold="False" BorderStyle="NotSet" ToolTip="Add Students Button" />
                     
@@ -203,15 +270,14 @@
             
             <br />
             <br />
-            <br />
-            <br />
-            <br />
-            <br />
             
             
+            <div class="row center-text">
+            <asp:Label ID="Label12" runat="server" Font-Bold="True" Text="Upload CSV file to insert student infomation"></asp:Label>
+            </div>
             
             
-            <asp:Table ID="Table2" runat="server" BackColor="#CCCCCC" Font-Bold="True" BorderStyle="Groove">
+            <asp:Table ID="Table2" runat="server" BackColor="#CCCCCC" Font-Bold="True" HorizontalAlign="Center" BorderStyle="Groove">
                 <asp:TableRow runat="server">
                     <asp:TableCell runat="server">
                         <asp:Label ID="UploadfileLabel" runat="server" Font-Bold="True">Upload a CSV file: </asp:Label></asp:TableCell>
