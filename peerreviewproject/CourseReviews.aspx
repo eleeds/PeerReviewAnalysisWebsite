@@ -148,7 +148,7 @@
                     <asp:ControlParameter ControlID="CourseDropDown" Name="courseID" PropertyName="SelectedValue" Type="Int32" />
                 </SelectParameters>
             </asp:SqlDataSource>
-            <asp:GridView ID="ResultsGridview" runat="server" AutoGenerateColumns="False" DataKeyNames="responseID,type" DataSourceID="SqlDataSource4" EmptyDataText="Select student to see reviews" OnDataBound="ResultsGridview_DataBound" ShowHeaderWhenEmpty="True" Font-Bold="False" CellPadding="4" ForeColor="#333333" Visible="False" AllowPaging="True" PageSize="8">
+            <asp:GridView ID="ResultsGridview" runat="server" AutoGenerateColumns="False" DataKeyNames="responseID,type" DataSourceID="SqlDataSource4" EmptyDataText="Select student to see reviews" OnDataBound="ResultsGridview_DataBound" ShowHeaderWhenEmpty="True" Font-Bold="False" CellPadding="4" ForeColor="#333333" Visible="False" AllowPaging="True">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField DataField="Student" HeaderText="Reviewed By" ReadOnly="True" SortExpression="Student" />

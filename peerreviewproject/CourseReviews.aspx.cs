@@ -92,7 +92,7 @@ namespace peerreviewproject
                 RatingGridview.DataSource = RatingsDatatable;
                 RatingGridview.DataBind();
                 Panel1.Visible = true;
-
+                
                 CommentsGridview.DataSource = CommentsDatatable;
                 CommentsGridview.DataBind();
                 ResultsGridview.Caption = "Reviews for " + GroupMembersGridview.SelectedRow.Cells[1].Text;
@@ -228,7 +228,7 @@ namespace peerreviewproject
                         ClassSurveyGridView.EmptyDataText = "No submissions yet";
                         return;
                     }
-
+                  
                     string GetVotesQuery = "SELECT FORMAT(CONVERT (float, COUNT(Response_table.userResponse) / (numberOfSubmits.number * .1 * 10)), 'P') AS Votes," +
                     "Response_table.userResponse, numberOfSubmits.number FROM questions_table INNER JOIN Response_table ON questions_table.reviewQuestionID = Response_table.reviewQuestionID " +
                     "CROSS JOIN (SELECT COUNT(userID) AS number FROM Response_table AS Response_table_1 WHERE (questionSet = @questionSet)" +
@@ -246,6 +246,7 @@ namespace peerreviewproject
                         StudentVotesList.Add(StudentVotesReader[0].ToString() + " " + StudentVotesReader[1].ToString());
                         NumberOfVotes.Add("(Based on " + StudentVotesReader[2].ToString() + " submits)");
                     }
+                    
                     StudentVotesReader.Close();
                     VotesDataTable.Rows.Add(QuestionsDictionary.ElementAt(i).Value);
                     for (int k = 0; k < StudentVotesList.Count; k++)

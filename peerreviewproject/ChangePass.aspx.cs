@@ -30,6 +30,7 @@ namespace peerreviewproject
                     Response.Redirect("https://localhost:44313/ForgotPass");
                     return;
                 }
+                return;
             }
             if (Session["type"].ToString().Length > 0)
             {
