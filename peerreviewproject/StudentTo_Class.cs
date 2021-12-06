@@ -9,27 +9,18 @@ namespace peerreviewproject
     public class StudentTo_Class
     {
         private int courseID;
-        private int userID;
+        private int professorID;
         public string sqlConnection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
                         Integrated Security=True;
                         Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        public int course_ID
-        {
-            get { return courseID; }
-            set {  courseID= value; }
-        }
-        public int userID_
-        {
-            get { return userID; }
-            set { userID = value; }
-        }
 
-        public StudentTo_Class(string class_ID, string email, string team)
+        public StudentTo_Class(string class_ID, string email, string team, int professor)
         {
             courseID = Convert.ToInt32(class_ID);
 
             if (!IsUserInClassAlready(class_ID, email))     //skips student if their already in the class
             {
+                professorID = professor;
                 courseInfo(courseID, email);
                 createTeam(courseID, Convert.ToInt32(team));
                 studentToGroup(class_ID, email, Convert.ToInt32(team));
@@ -40,28 +31,59 @@ namespace peerreviewproject
         {
             RemoveFromClass(Convert.ToInt32(userID), Convert.ToInt32(courseID));
         }
-        public void courseInfo(int ID, string email)
+
+        public void courseInfo(int courseID, string email)
         {
             using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
             {
-                                    //query to grab student's userID
-                                    //query to place student into class
-
                 sqlCon.Open();
-                string StudentToCourse_Query = "INSERT INTO Course_access_table ([userID], [courseID], [permissionType]) VALUES(@userID, @courseID, N'Student')";
-                string StudentID_Query = "Select ID FROM User_table WHERE email =@email";
-                SqlCommand ToCourseCMD = new SqlCommand(StudentToCourse_Query, sqlCon);
-                SqlCommand StudentIDCMD = new SqlCommand(StudentID_Query, sqlCon);
-
+                string[] studentInfo = new string[2];
+                string StudentInfo_Query = "Select ID, password FROM User_table WHERE email =@email";
+                SqlCommand StudentIDCMD = new SqlCommand(StudentInfo_Query, sqlCon);
                 StudentIDCMD.Parameters.AddWithValue("@email", email);
-                int userID = Convert.ToInt32(StudentIDCMD.ExecuteScalar());
+                SqlDataReader studentReader = StudentIDCMD.ExecuteReader();
+                while (studentReader.Read())
+                {
+                    studentInfo[0] = studentReader["ID"].ToString();
+                    studentInfo[1] = studentReader["password"].ToString();
+                }
+                studentReader.Close();
+                string[] professorInfo = new string[2];
+                string courseProfessor = "Select User_table.lastName, Course_table.courseName " +
+                "from User_table inner join Course_access_table on Course_access_table.userID = User_table.ID " +
+                "inner join Course_table on Course_access_table.courseID = Course_table.courseID " +
+                "WHERE Course_table.courseID=@courseID AND User_table.ID=@userID" ;
+                SqlCommand courseProfessorSQL = new SqlCommand(courseProfessor, sqlCon);
+                courseProfessorSQL.Parameters.AddWithValue("@courseID", courseID);
+                courseProfessorSQL.Parameters.AddWithValue("@userID", professorID);
+                SqlDataReader professorReader = courseProfessorSQL.ExecuteReader();
+                while (professorReader.Read())
+                {
+                    professorInfo[0] = professorReader["lastName"].ToString();
+                    professorInfo[1] = professorReader["courseName"].ToString();
+                }
+                professorReader.Close();
 
-                ToCourseCMD.Parameters.AddWithValue("@userID", userID);
-                ToCourseCMD.Parameters.AddWithValue("@courseID", ID);
+                string StudentToCourse_Query = "INSERT INTO Course_access_table ([userID], [courseID], [permissionType]) VALUES(@userID, @courseID, 'Student')";
+                SqlCommand ToCourseCMD = new SqlCommand(StudentToCourse_Query, sqlCon);
+                ToCourseCMD.Parameters.AddWithValue("@userID", Convert.ToInt32(studentInfo[0]));
+                ToCourseCMD.Parameters.AddWithValue("@courseID", courseID);
                 ToCourseCMD.ExecuteNonQuery();
+
+                
+                if (newStudent(studentInfo[0], sqlCon))
+                {
+                    
+                    EmailClass emailStudent = new EmailClass("newAccount", email, studentInfo[1], professorInfo[0], professorInfo[1]);
+                }
+                else
+                {
+                    EmailClass emailStudent = new EmailClass("newCourse", email, "", professorInfo[0], professorInfo[1]);
+                }
                 sqlCon.Close();
-                                    
+
             }
+            
         }
         public bool IsUserInClassAlready(string classID, string email)
         {
@@ -140,6 +162,19 @@ namespace peerreviewproject
                 sqlCon.Close();
 
             }
+        }
+
+        public bool newStudent(string userID, SqlConnection sqlCon)
+        {
+            string studentTemp = "Select tempPass from User_table WHERE ID=@userID";
+            SqlCommand studentSQL = new SqlCommand(studentTemp, sqlCon);
+            studentSQL.Parameters.AddWithValue("@userID", userID);
+            bool temp = Convert.ToBoolean(studentSQL.ExecuteScalar());
+            if (temp)
+            {
+                return true;
+            }
+            return false;
         }
 
         public void RemoveFromClass(int userID, int courseID)

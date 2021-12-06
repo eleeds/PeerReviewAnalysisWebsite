@@ -7,8 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Net.Mail;
-using System.Net;
+
 
 namespace peerreviewproject
 {
@@ -34,8 +33,8 @@ namespace peerreviewproject
             }
             else
             {
-                GridView1.DataSource = new string[] { };
-                GridView1.DataBind();
+                StudentsToAddGridview.DataSource = new string[] { };
+                StudentsToAddGridview.DataBind();
                 CSV_Datatable.Columns.AddRange(new DataColumn[4] 
                 {new DataColumn("First Name", typeof(string))
                 ,new DataColumn("Last Name", typeof(string))
@@ -109,12 +108,12 @@ namespace peerreviewproject
             {
                                         // [0]first name, [1]last name, [2]email, [3]team
                 _ = new CreateUser_Class(row[0].ToString(), row[1].ToString(), row[2].ToString(), "Professor");
-                _ = new StudentTo_Class(courseID, row[2].ToString(), row[3].ToString());
+                _ = new StudentTo_Class(courseID, row[2].ToString(), row[3].ToString(), Convert.ToInt32(Session["userID"]));
                 
             }
             SuccessLabel.Text = "New users added";
             CSV_Datatable.Clear();
-            GridView1.DataBind();
+            StudentsToAddGridview.DataBind();
             CurrentRosterGridView.DataBind();
         }
 
@@ -139,41 +138,41 @@ namespace peerreviewproject
                 }
             }
             ViewState["data"] = CSV_Datatable;
-            GridView1.DataSource = CSV_Datatable;
-            GridView1.DataBind();
+            StudentsToAddGridview.DataSource = CSV_Datatable;
+            StudentsToAddGridview.DataBind();
 
         }
 
 
-        protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
+        protected void StudentsToAddGridview_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            GridView1.EditIndex = e.NewEditIndex;
-            GridView1.DataSource = CSV_Datatable;
-            GridView1.DataBind();
+            StudentsToAddGridview.EditIndex = e.NewEditIndex;
+            StudentsToAddGridview.DataSource = CSV_Datatable;
+            StudentsToAddGridview.DataBind();
         }
 
-        protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e) //delete row
+        protected void StudentsToAddGridview_RowDeleting(object sender, GridViewDeleteEventArgs e) //delete row
         {
             CSV_Datatable = (DataTable)ViewState["data"];
             CSV_Datatable.Rows[e.RowIndex].Delete();
             CSV_Datatable.AcceptChanges();
             ViewState["data"] = CSV_Datatable;
-            GridView1.DataSource = CSV_Datatable;
-            GridView1.DataBind();
+            StudentsToAddGridview.DataSource = CSV_Datatable;
+            StudentsToAddGridview.DataBind();
 
         }
 
 
-        protected void GridView1_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e) //refresh gridview if edit cancel pressed
+        protected void StudentToAddGridView_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e) //refresh gridview if edit cancel pressed
         {
 
-            GridView1.EditIndex = -1;
-            GridView1.DataSource = CSV_Datatable;
-            GridView1.DataBind();
+            StudentsToAddGridview.EditIndex = -1;
+            StudentsToAddGridview.DataSource = CSV_Datatable;
+            StudentsToAddGridview.DataBind();
 
         }
 
-        protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)  //for updating cells to temp_table
+        protected void StudentsToAddGridview_RowUpdating(object sender, GridViewUpdateEventArgs e)  //for updating cells to temp_table
         {
            
             CSV_Datatable.Rows[e.RowIndex]["First Name"] = e.NewValues[0].ToString().Trim();
@@ -184,14 +183,14 @@ namespace peerreviewproject
            
             
             ViewState["data"] = CSV_Datatable;
-            GridView1.EditIndex = -1;
-            GridView1.DataSource = CSV_Datatable;
-            GridView1.DataBind();
+            StudentsToAddGridview.EditIndex = -1;
+            StudentsToAddGridview.DataSource = CSV_Datatable;
+            StudentsToAddGridview.DataBind();
 
 
         }
 
-        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)    //adds confirm message before remove
+        protected void StudentsToAddGridview_RowDataBound(object sender, GridViewRowEventArgs e)    //adds confirm message before remove
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
@@ -214,8 +213,8 @@ namespace peerreviewproject
             {
                 CSV_Datatable.Rows.Add(FirstnameTB.Text, LastnameTB.Text, EmailTB.Text, TeamTB.Text);
                 ViewState["data"] = CSV_Datatable;
-                GridView1.DataSource = CSV_Datatable;
-                GridView1.DataBind();
+                StudentsToAddGridview.DataSource = CSV_Datatable;
+                StudentsToAddGridview.DataBind();
 
             }
         }
@@ -238,13 +237,13 @@ namespace peerreviewproject
             else return true;
         }
 
-        protected void GridView2_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        protected void CurrentRosterGridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             _ = new StudentTo_Class(e.Keys[0].ToString(), CourseAvailable_dropdownlist.SelectedValue);
             
         }
 
-        protected void GridView2_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void CurrentRosterGridview_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
@@ -252,5 +251,23 @@ namespace peerreviewproject
                 Remove.Attributes.Add("onclick", string.Format("return confirm('Are you sure you want to remove {0} ?')", e.Row.Cells[0].Text));
             }
         }
+
+        protected void CurrentRosterGridView_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            using (SqlConnection sqlCon = new SqlConnection(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;Integrated Security=True;
+                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))
+            {
+                string[] firstLastNames = e.NewValues[0].ToString().Split(' ');
+                sqlCon.Open();
+                string query = "UPDATE User_table SET firstName =@firstName, lastName =@lastName WHERE CONCAT(firstName, CONCAT(' ', lastName)) =@oldValues";
+                SqlCommand NameEdit = new SqlCommand(query, sqlCon);
+                NameEdit.Parameters.AddWithValue("@firstName", firstLastNames[0]);
+                NameEdit.Parameters.AddWithValue("@lastName", firstLastNames[1]);
+                NameEdit.Parameters.AddWithValue("@oldValues", e.OldValues[0]);
+                NameEdit.ExecuteNonQuery();
+                sqlCon.Close();
+            }
+        }
+
     }
 }

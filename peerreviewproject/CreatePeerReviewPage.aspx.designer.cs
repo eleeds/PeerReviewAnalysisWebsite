@@ -159,6 +159,33 @@ namespace peerreviewproject
         protected global::System.Web.UI.WebControls.Label Label1;
 
         /// <summary>
+        /// DuplicateBttn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button DuplicateBttn;
+
+        /// <summary>
+        /// TextBox1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+
+        /// <summary>
+        /// SubmitDuplicateBttn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SubmitDuplicateBttn;
+
+        /// <summary>
         /// QuestionsInSetGridview control.
         /// </summary>
         /// <remarks>

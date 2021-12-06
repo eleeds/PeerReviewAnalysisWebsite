@@ -114,6 +114,7 @@ namespace peerreviewproject
         protected void Course_listbox_SelectedIndexChanged(object sender, EventArgs e)
         {
             GetQuestionSetsForCourse();
+            clearDuplicate();
         }
 
         protected void NewSetButton_click(object sender, EventArgs e)
@@ -130,10 +131,10 @@ namespace peerreviewproject
             }
             else
             {
-                for (int i = 0; i < CurrentQuestionSet_listbox.Items.Count - 1; i++)
+                for (int i = 0; i < CurrentQuestionSet_listbox.Items.Count; i++)
                 {
                     try
-                    {
+                    {       //makes sure list item is a number, if not skip and place number before list item
                         if (Convert.ToInt32(CurrentQuestionSet_listbox.Items[i].Value) + 1 != Convert.ToInt32(CurrentQuestionSet_listbox.Items[i + 1].Value))
                         {
                             SetList_Datatable.Rows.Add(Convert.ToInt32(CurrentQuestionSet_listbox.Items[i].Value) + 1);
@@ -147,8 +148,11 @@ namespace peerreviewproject
                         {
                             SetList_Datatable.Rows.Add(1);
                         }
-                        SetList_Datatable.Rows.Add(Convert.ToInt32(CurrentQuestionSet_listbox.Items[i].Value) + 1);
-                        SetIndex = Convert.ToInt32(CurrentQuestionSet_listbox.Items[i].Value) + 1;
+                        else
+                        {
+                            SetList_Datatable.Rows.Add(i + 2);
+                        }
+                        SetIndex = i + 1;
                         break;
                     }
                 }
@@ -230,6 +234,7 @@ namespace peerreviewproject
             Panel2.Enabled = true;
             dueDatelbl.Text = "Current due date for Set " + CurrentQuestionSet_listbox.SelectedValue.ToString();
             getDateandShowStudents();
+            clearDuplicate();
         }
 
         protected void QuestionsInSetGridview_RowDeleting(object sender, GridViewDeleteEventArgs e)
@@ -261,6 +266,7 @@ namespace peerreviewproject
                     cmd.ExecuteNonQuery();
                     sqlCon.Close();
                  }
+                GetQuestionSetsForCourse();
             }
         }
 
@@ -523,6 +529,78 @@ namespace peerreviewproject
                 UpdateForShowStudents(1);
                 QuestionsInSetGridview.DataBind();
             }
+        }
+
+        protected void Duplicate_Click(object sender, EventArgs e)
+        {
+            if (DuplicateBttn.Text == "Duplicate Set?")
+            {
+                DuplicateBttn.Text = "How many duplicates?";
+                TextBox1.Visible = true;
+                SubmitDuplicateBttn.Visible = true;
+            }
+            else 
+            {
+
+            }
+        }
+
+        protected void SubmitDuplicate_Click(object sender, EventArgs e)
+        {
+            if (TextBox1.Text != "")
+            {
+                int count = Convert.ToInt32(TextBox1.Text);
+                if (count <= 15)
+                {
+                    using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+                    {
+                        sqlCon.Open();
+                        for (int i = 0; i < count; i++)
+                        {
+                            foreach (GridViewRow shelp in QuestionsInSetGridview.Rows)
+                            {
+                                string InsertCopyQuery = "INSERT INTO questions_table ([courseID], [question], [type], " +
+                                    "[correctResponses], [questionName], [questionSet], [classSurvey])" +
+                                " VALUES (@courseID, @questionText, @type, @answers, @name, @set, @survey)";
+                                SqlCommand DuplicateSQL = new SqlCommand(InsertCopyQuery, sqlCon);
+                                DuplicateSQL.Parameters.AddWithValue("@courseID", Course_listbox.SelectedValue);
+                                DuplicateSQL.Parameters.AddWithValue("@questionText", shelp.Cells[2].Text);
+                                DuplicateSQL.Parameters.AddWithValue("@type", shelp.Cells[3].Text);
+                                DuplicateSQL.Parameters.AddWithValue("@answers", shelp.Cells[4].Text);
+                                DuplicateSQL.Parameters.AddWithValue("@name", shelp.Cells[5].Text);
+                                DuplicateSQL.Parameters.AddWithValue("@set", shelp.Cells[6].Text + " (" + (i + 2).ToString() + ")");
+                                DuplicateSQL.Parameters.AddWithValue("@survey", YesCheckBox.Checked.ToString());
+                                DuplicateSQL.ExecuteNonQuery();
+
+                                string SetDueDateTime = Convert.ToDateTime(DueDateTB.Text).AddDays((i + 1) * 7).AddHours(23).AddMinutes(59).AddSeconds(59).ToString();
+                                string InsertDueDateQuery = "INSERT INTO SetDueDates_table ([courseID], [dueDate], [questionSet]) VALUES (@courseID, @dueDate, @questionSet)";
+                                SqlCommand cmd = new SqlCommand(InsertDueDateQuery, sqlCon);
+                                cmd.Parameters.AddWithValue("@courseID", Course_listbox.SelectedValue);
+                                cmd.Parameters.AddWithValue("@dueDate", SetDueDateTime);
+                                cmd.Parameters.AddWithValue("@questionSet", shelp.Cells[6].Text + " (" + (i + 2).ToString() + ")");
+                                cmd.ExecuteNonQuery();
+                            }
+
+                        }
+                        sqlCon.Close();
+                    }
+                    clearDuplicate();
+                    // Course_listbox.DataBind();
+                    // CurrentQuestionSet_listbox.DataBind();
+                    GetQuestionSetsForCourse();
+                }
+                else
+                {
+
+                }
+            }
+        }
+        private void clearDuplicate()
+        {
+            DuplicateBttn.Text = "Duplicate Set?";
+            TextBox1.Visible = false;
+            TextBox1.Text = "";
+            SubmitDuplicateBttn.Visible = false;
         }
     }
 }

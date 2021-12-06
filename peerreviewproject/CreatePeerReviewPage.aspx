@@ -62,7 +62,10 @@
         <p>
             <asp:Button ID="NewSetButton" runat="server" OnClick="NewSetButton_click" Text="Add new set" />
             <asp:Label ID="Label1" runat="server"></asp:Label>
-            <asp:GridView ID="QuestionsInSetGridview" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource4" Width="1109px" AutoGenerateEditButton="True" DataKeyNames="reviewQuestionID,classSurvey" OnRowEditing="QuestionsInSetGridview_RowEditing" OnRowUpdated="QuestionsInSetGridview_RowUpdated" EmptyDataText="No questions added yet" OnRowCancelingEdit="QuestionsInSetGridview_RowCancelingEdit" OnRowDataBound="QuestionsInSetGridview_RowDataBound" OnRowUpdating="QuestionsInSetGridview_RowUpdating" OnRowDeleted="QuestionsInSetGridview_RowDeleted" OnRowDeleting="QuestionsInSetGridview_RowDeleting" CellPadding="4" ForeColor="#333333" GridLines="None">
+            <asp:Button ID="DuplicateBttn" runat="server" OnClick="Duplicate_Click" Text="Duplicate Set?" />
+            <asp:TextBox ID="TextBox1" runat="server" TextMode="Number" Visible="False"></asp:TextBox>
+            <asp:Button ID="SubmitDuplicateBttn" runat="server" OnClick="SubmitDuplicate_Click" Text="Submit" />
+            <asp:GridView ID="QuestionsInSetGridview" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource4" Width="1109px" AutoGenerateEditButton="True" DataKeyNames="reviewQuestionID,classSurvey" OnRowEditing="QuestionsInSetGridview_RowEditing" OnRowUpdated="QuestionsInSetGridview_RowUpdated" EmptyDataText="Select set to view questions" OnRowCancelingEdit="QuestionsInSetGridview_RowCancelingEdit" OnRowDataBound="QuestionsInSetGridview_RowDataBound" OnRowUpdating="QuestionsInSetGridview_RowUpdating" OnRowDeleted="QuestionsInSetGridview_RowDeleted" OnRowDeleting="QuestionsInSetGridview_RowDeleting" CellPadding="4" ForeColor="#333333" GridLines="None">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField DataField="reviewQuestionID" HeaderText="reviewQuestionID" SortExpression="reviewQuestionID" InsertVisible="False" ReadOnly="True" Visible="False" />
@@ -123,9 +126,10 @@
             Question Description</p>
         <p>
             <asp:RadioButtonList ID="type_radiobttn" runat="server" OnSelectedIndexChanged="type_radiobttn_SelectedIndexChanged" AutoPostBack="True" CausesValidation="True">
-                <asp:ListItem Selected="True">Comment Response</asp:ListItem>
                 <asp:ListItem Value="1-4 Score Rating">1-4 Score Rating/Multiple Choice</asp:ListItem>
                 <asp:ListItem Value="1-5 Score Rating">1-5 Score Rating/Multiple Choice</asp:ListItem>
+                <asp:ListItem Selected="True">Comment Response</asp:ListItem>
+<asp:ListItem>Yes or No</asp:ListItem>
             </asp:RadioButtonList>        
 
         <asp:Panel ID="Panel1" runat="server" Height="150px" HorizontalAlign="Left" Visible="False" Width="400px" Font-Bold="True">

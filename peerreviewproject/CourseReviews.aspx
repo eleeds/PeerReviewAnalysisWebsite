@@ -16,7 +16,7 @@
         <div class="auto-style1">
             <asp:DropDownList ID="CourseDropDown" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource1" DataTextField="courseName" DataValueField="courseID" OnDataBound="DropDownList1_DataBound" OnSelectedIndexChanged="CourseDropDown_SelectedIndexChanged">
             </asp:DropDownList>
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CellPadding="4" DataKeyNames="teamID" DataSourceID="SqlDataSource2" ForeColor="#333333" GridLines="None" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
+            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CellPadding="4" DataKeyNames="teamID" DataSourceID="SqlDataSource2" ForeColor="#333333" GridLines="None" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" Caption="Course Teams" EmptyDataText="No teams exist" ShowHeaderWhenEmpty="True">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:CommandField SelectText="View" ShowSelectButton="True" />
@@ -43,7 +43,6 @@
                 </SelectParameters>
             </asp:SqlDataSource>
             <br />
-            <asp:ListBox ID="GroupListbox" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource2" DataTextField="name" DataValueField="teamID" Width="295px" OnSelectedIndexChanged="GroupListbox_SelectedIndexChanged" Visible="False"></asp:ListBox>
             <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:Peer_ReviewConnectionString2 %>" SelectCommand="SELECT [name], [teamID] FROM [teams_table] WHERE ([courseID] = @courseID2) ORDER BY [name]">
                 <SelectParameters>
                     <asp:ControlParameter ControlID="CourseDropDown" Name="courseID2" PropertyName="SelectedValue" Type="Int32" />
@@ -54,7 +53,7 @@
                 <asp:ListBox ID="CourseSurveyListBox" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource6" DataTextField="questionSet" DataValueField="questionSet" OnSelectedIndexChanged="CourseSurveyListBox_SelectedIndexChanged" Width="237px"></asp:ListBox>
             </asp:Panel>
         </div>
-        <asp:GridView ID="GroupMembersGridview" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSource3" Caption="Group Members" CellPadding="4" ForeColor="#333333" GridLines="None">
+        <asp:GridView ID="GroupMembersGridview" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSource3" Caption="Group Members" CellPadding="4" ForeColor="#333333" GridLines="None" CaptionAlign="Top" EmptyDataText="Members not added yet" OnSelectedIndexChanged="GroupMembersGridview_SelectedIndexChanged" ShowHeaderWhenEmpty="True">
             <AlternatingRowStyle BackColor="White" />
             <Columns>
                 <asp:CommandField SelectText="View" ShowSelectButton="True" />
