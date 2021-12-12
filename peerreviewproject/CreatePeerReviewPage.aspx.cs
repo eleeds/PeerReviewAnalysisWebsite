@@ -93,7 +93,7 @@ namespace peerreviewproject
             clearText();
         }
 
-        protected void type_radiobttn_SelectedIndexChanged(object sender, EventArgs e)
+        protected void Type_radiobttn_SelectedIndexChanged(object sender, EventArgs e)
         {
             AnswerTextBoxes();
         }
@@ -633,5 +633,6 @@ namespace peerreviewproject
         {
             Response.Redirect("TeacherMain.aspx");
         }
+
     }
 }

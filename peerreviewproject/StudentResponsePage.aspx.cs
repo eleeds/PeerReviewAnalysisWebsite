@@ -25,7 +25,7 @@ namespace peerreviewproject
 
             if (!IsPostBack)                         //loads first question from the question set
             {
-                if (check())
+                if (Check())
                 {
                     GetNextQuestion();
                     Questionlbl.Text = "Survey Question# " + (currentquestion + 1).ToString() + " out of " + Session["questionCount"];
@@ -47,7 +47,7 @@ namespace peerreviewproject
 
         }
 
-        private bool check()
+        private bool Check()
         {
             using (SqlConnection sqlCon = new SqlConnection(sqlconn))
             {

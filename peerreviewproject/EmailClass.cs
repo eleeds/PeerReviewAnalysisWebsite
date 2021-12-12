@@ -97,7 +97,7 @@ namespace peerreviewproject
                 smtp.Send(message);
             }
 
-            catch (Exception ex)
+            catch 
             {
                 flag++; 
             }

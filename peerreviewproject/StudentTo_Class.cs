@@ -73,11 +73,11 @@ namespace peerreviewproject
 
                 if (newStudent(studentInfo[0], sqlCon))
                 {
-                    EmailClass emailStudent = new EmailClass("newAccount", email, studentInfo[1], professorInfo[0], professorInfo[1]);
+                    _ = new EmailClass("newAccount", email, studentInfo[1], professorInfo[0], professorInfo[1]);
                 }
                 else
                 {
-                    EmailClass emailStudent = new EmailClass("newCourse", email, "", professorInfo[0], professorInfo[1]);
+                    _ = new EmailClass("newCourse", email, "", professorInfo[0], professorInfo[1]);
                 }
                 sqlCon.Close();
 

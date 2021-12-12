@@ -69,7 +69,7 @@ namespace peerreviewproject
                 {
                     UserType = "Student";
                 }
-                UsertoDataBase(FirstName, LastName, userEmail, UserType);
+                UsertoDataBase(FirstName, LastName, Email, UserType);
                 return true;
             }
             return false;

@@ -48,6 +48,8 @@
             <asp:Label ID="Label1" runat="server" Text="Email sent to user with password instructions" Visible="False"></asp:Label>
             <br />
             <asp:Label ID="tokenLabel" runat="server" ForeColor="Red" Text="Token has expired! Please create a new one by entering Email again." Visible="False"></asp:Label>
+            <br />
+            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Return to Login Page" />
         </div>
     </form>
 </body>

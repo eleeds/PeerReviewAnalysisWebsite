@@ -72,20 +72,20 @@ namespace peerreviewproject
                             if (filePath == filename)
                             {
                                 check = 1;
-                                Read_from_csv(fileName, filePath);
+                                Read_from_csv(filePath);
                                 break;
                             }
                         }
                         if (check == 0)
                         {
                             FileUpload1.SaveAs(filePath);
-                            Read_from_csv(fileName, filePath);
+                            Read_from_csv(filePath);
                         }
                     }
                     else
                     {
                         FileUpload1.SaveAs(filePath);
-                        Read_from_csv(fileName, filePath);
+                        Read_from_csv(filePath);
                     }
                     SuccessLabel.Text = fileName + " was imported successfully!";
                     File.Delete(filePath);                                  //remove import file after reading data
@@ -125,7 +125,7 @@ namespace peerreviewproject
         }
 
 
-        public void Read_from_csv(string fileName, string filePath)
+        public void Read_from_csv(string filePath)
         {
             string csvreader = File.ReadAllText(filePath);
 
@@ -257,6 +257,7 @@ namespace peerreviewproject
                 LinkButton Remove = e.Row.FindControl("LinkButton2") as LinkButton;
                 Remove.Attributes.Add("onclick", string.Format("return confirm('Are you sure you want to remove {0} ?')", e.Row.Cells[0].Text));
             }
+            CurrentRosterGridView.Caption = CurrentRoster_lbl.Text;
         }
 
         protected void CurrentRosterGridView_RowUpdating(object sender, GridViewUpdateEventArgs e)

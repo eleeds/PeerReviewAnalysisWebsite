@@ -56,6 +56,8 @@
                     
                     <asp:Button ID="ChangePassButton" runat="server" OnClick="ChangePassButton_Click" Text="Change Password" />
                     
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    
                     <asp:Button ID="AdminButton" runat="server" Enabled="False" Text="Admin" Visible="False" OnClick="AdminButton_Click" />
                     
                 </td>

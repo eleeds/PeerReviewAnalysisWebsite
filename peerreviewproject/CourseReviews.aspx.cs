@@ -78,7 +78,7 @@ namespace peerreviewproject
             if (ResultsGridview.Rows.Count > 0)
             {
                 bool isRating;
-                double convertedNumber;
+
                 for (int j = 0; j < ResultsGridview.Rows.Count; j++)
                 {
                     if (ResultsGridview.DataKeys[j].Values[1].ToString() == "Comment Response")
@@ -87,7 +87,7 @@ namespace peerreviewproject
                     }
                     if (!TypeandScores.ContainsKey(ResultsGridview.Rows[j].Cells[4].Text))      //adds rating and score to dictionary
                     {
-                        isRating = double.TryParse(ResultsGridview.Rows[j].Cells[2].Text, out convertedNumber);
+                        isRating = double.TryParse(ResultsGridview.Rows[j].Cells[2].Text, out double convertedNumber);
                         if (isRating)
                         {
                             TypeandScores.Add(ResultsGridview.Rows[j].Cells[4].Text, convertedNumber);

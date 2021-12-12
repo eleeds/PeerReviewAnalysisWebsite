@@ -179,7 +179,7 @@
         <div class="center-text">
             <asp:TextBox ID="questDescriptionTB" runat="server" Height="100px" Width="500px" EnableTheming="True" TextMode="MultiLine"></asp:TextBox>
             
-            <asp:RadioButtonList ID="type_radiobttn" runat="server" OnSelectedIndexChanged="type_radiobttn_SelectedIndexChanged" AutoPostBack="True" CausesValidation="True">
+            <asp:RadioButtonList ID="type_radiobttn" runat="server" OnSelectedIndexChanged="Type_radiobttn_SelectedIndexChanged" AutoPostBack="True" CausesValidation="True">
                 <asp:ListItem Selected="True">Comment Response</asp:ListItem>
                 <asp:ListItem Value="1-4 Score Rating">1-4 Score Rating/Multiple Choice</asp:ListItem>
                 <asp:ListItem Value="1-5 Score Rating">1-5 Score Rating/Multiple Choice</asp:ListItem>
