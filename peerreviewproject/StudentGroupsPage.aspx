@@ -53,7 +53,9 @@
 <body>
     <form id="form1" runat="server">
         <div class="center-text">
-            <h1>STUDENT GROUP MANAGEMENT</h1>
+            <h1>
+                <asp:Button ID="HomeBttn" runat="server" OnClick="HomeBttn_Click" Text="Home" />
+&nbsp;&nbsp;&nbsp; STUDENT GROUP MANAGEMENT</h1>
         </div>
         <div class="center-text">
             <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource1" DataTextField="courseName" DataValueField="courseID">
@@ -100,42 +102,45 @@
             <asp:Table ID="Table1" runat="server" CssClass="center-text">
                 <asp:TableRow runat="server">
                     <asp:TableCell>
-<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#336666" BorderStyle="Double" BorderWidth="3px" Caption="Teams" CellPadding="4" DataKeyNames="teamID" DataSourceID="SqlDataSource2" EmptyDataText="No teams for current class" GridLines="Horizontal" HorizontalAlign="Center" ShowHeaderWhenEmpty="True" Width="539px" AutoGenerateEditButton="True" OnRowUpdating="GridView1_RowUpdating" OnRowUpdated="GridView1_RowUpdated" OnRowDeleting="GridView1_RowDeleting" AllowSorting="True">
-                    <Columns>
-                        
-                        
-                        
-<asp:BoundField DataField="name" HeaderText="Team Name" SortExpression="name" />
-                        
-<asp:CommandField ShowDeleteButton="True" />
-                    
-</Columns>
-                    
+<asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" Caption="Teams" CellPadding="4" DataKeyNames="teamID" DataSourceID="SqlDataSource2" EmptyDataText="No teams for current class" GridLines="None" HorizontalAlign="Center" ShowHeaderWhenEmpty="True" Width="539px" AutoGenerateEditButton="True" OnRowUpdating="GridView1_RowUpdating" OnRowUpdated="GridView1_RowUpdated" OnRowDeleting="GridView1_RowDeleting" AllowSorting="True" ForeColor="#333333">
+                <AlternatingRowStyle BackColor="White"></AlternatingRowStyle>
+                <Columns>
 
-<FooterStyle BackColor="White" ForeColor="#333333" />
-                    
 
-<HeaderStyle BackColor="#336666" Font-Bold="True" ForeColor="White" />
-                    
 
-<PagerStyle BackColor="#336666" ForeColor="White" HorizontalAlign="Center" />
-                    
+                    <asp:BoundField DataField="name" HeaderText="Team Name" SortExpression="name" />
 
-<RowStyle BackColor="White" ForeColor="#333333" />
-                    
+                    <asp:CommandField ShowDeleteButton="True" />
 
-<SelectedRowStyle BackColor="#339966" Font-Bold="True" ForeColor="White" />
-                    
+                </Columns>
 
-<SortedAscendingCellStyle BackColor="#F7F7F7" />
-                    
 
-<SortedAscendingHeaderStyle BackColor="#487575" />
-                    
+                <EditRowStyle BackColor="#2461BF"></EditRowStyle>
 
-<SortedDescendingCellStyle BackColor="#E5E5E5" />
+                <FooterStyle BackColor="#507CD1" ForeColor="White" Font-Bold="True" />
 
-<SortedDescendingHeaderStyle BackColor="#275353" />
+
+                <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+
+
+                <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+
+
+                <RowStyle BackColor="#EFF3FB" />
+
+
+                <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+
+
+                <SortedAscendingCellStyle BackColor="#F5F7FB" />
+
+
+                <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+
+
+                <SortedDescendingCellStyle BackColor="#E9EBEF" />
+
+                <SortedDescendingHeaderStyle BackColor="#4870BE" />
                 
 </asp:GridView>
                     </asp:TableCell>

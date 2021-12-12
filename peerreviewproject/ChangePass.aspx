@@ -55,6 +55,7 @@
             <br />
             <asp:Label ID="Label1" runat="server" Visible="False"></asp:Label>
         </div>
+        <asp:Button ID="HomeBttn" runat="server" OnClick="HomeBttn_Click" Text="Home" Visible="False" />
     </form>
 </body>
 </html>

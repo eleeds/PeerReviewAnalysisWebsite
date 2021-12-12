@@ -24,6 +24,15 @@ namespace peerreviewproject
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
+        /// HomeBttn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button HomeBttn;
+
+        /// <summary>
         /// CourseDropDown control.
         /// </summary>
         /// <remarks>
@@ -58,15 +67,6 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource2;
-
-        /// <summary>
-        /// Panel3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Panel3;
 
         /// <summary>
         /// CourseSurveyListBox control.
@@ -114,15 +114,6 @@ namespace peerreviewproject
         protected global::System.Web.UI.WebControls.GridView ClassSurveyGridView;
 
         /// <summary>
-        /// Panel2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Panel2;
-
-        /// <summary>
         /// SqlDataSource5 control.
         /// </summary>
         /// <remarks>
@@ -157,15 +148,6 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource3;
-
-        /// <summary>
-        /// Panel1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Panel1;
 
         /// <summary>
         /// RatingGridview control.

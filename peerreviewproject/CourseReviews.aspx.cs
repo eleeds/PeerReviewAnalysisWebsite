@@ -12,16 +12,22 @@ namespace peerreviewproject
     public partial class CourseReviews : System.Web.UI.Page
     {
 
-
+        bool Flag = false;                  //for keeping track of scores because of paging settings seperating results gridview
+        Dictionary<string, Double> TypeandScores = new Dictionary<string, Double>();
+        
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session.Count == 0)
+            {
+                Response.Redirect("LoginPage.aspx");
+            }
+
+
             if (IsPostBack)
             {
-                if (GroupMembersGridview.SelectedIndex == -1)
-                {
-                    Panel1.Visible = false;
-                }
+                
                 GroupMembersGridview.DataBind();
+                //ResultsGridview.DataBind();
             }
 
 
@@ -38,44 +44,66 @@ namespace peerreviewproject
         protected void ResultsGridview_DataBound(object sender, EventArgs e)
         {
 
-            if (ResultsGridview.Rows.Count > 0)
+            if (Flag == true && ResultsGridview.AllowPaging)
             {
+                ResultsGridview.AllowPaging = false;
+                ResultsGridview.DataBind();
+            }
+            else if (ResultsGridview.AllowPaging)
+            {
+                for (int i = 0; i < ResultsGridview.Rows.Count; i++)    //removes comments from results gridview
+                {
+                    if (ResultsGridview.DataKeys[i].Values[1].ToString() == "Comment Response")     
+                    {
+                        ResultsGridview.Rows[i].Visible = false;
+                    }
+
+                }
+                return;
+            }
+            else 
+            {
+                return;
+            }
                 DataTable RatingsDatatable = new DataTable();
                 RatingsDatatable.Columns.Add(" ");
                 RatingsDatatable.Columns.Add("Current Rating");
                 RatingsDatatable.Columns.Add("Max Score");
-
                 DataTable CommentsDatatable = new DataTable();
                 CommentsDatatable.Columns.Add("Feedback");
                 CommentsDatatable.Columns.Add("Set");
                 CommentsDatatable.Columns.Add("Date");
 
-                Dictionary<string, Double> TypeandScores = new Dictionary<string, Double>();     //type of question and the rating given for the question
 
-                for (int i = 0; i < ResultsGridview.Rows.Count; i++)
+            if (ResultsGridview.Rows.Count > 0)
+            {
+                bool isRating;
+                double convertedNumber;
+                for (int j = 0; j < ResultsGridview.Rows.Count; j++)
                 {
-                    if (ResultsGridview.DataKeys[i].Values[1].ToString() == "Comment Response")
+                    if (ResultsGridview.DataKeys[j].Values[1].ToString() == "Comment Response")
                     {
-                        ResultsGridview.Rows[i].Visible = false;
+                        ResultsGridview.Rows[j].Visible = false;
                     }
-                    if (!TypeandScores.ContainsKey(ResultsGridview.Rows[i].Cells[4].Text))      //adds rating and score to dictionary
+                    if (!TypeandScores.ContainsKey(ResultsGridview.Rows[j].Cells[4].Text))      //adds rating and score to dictionary
                     {
-                        try
+                        isRating = double.TryParse(ResultsGridview.Rows[j].Cells[2].Text, out convertedNumber);
+                        if (isRating)
                         {
-                            TypeandScores.Add(ResultsGridview.Rows[i].Cells[4].Text, Convert.ToDouble(ResultsGridview.Rows[i].Cells[2].Text)); //review is a number
+                            TypeandScores.Add(ResultsGridview.Rows[j].Cells[4].Text, convertedNumber);
                         }
-                        catch
+                        else
                         {
-                            if (ResultsGridview.Rows[i].Cells[2].Text != "&nbsp;")
-                            { 
-                                CommentsDatatable.Rows.Add(ResultsGridview.Rows[i].Cells[2].Text, ResultsGridview.Rows[i].Cells[5].Text, ResultsGridview.Rows[i].Cells[7].Text);    //review is a string/comment
+                            if (ResultsGridview.Rows[j].Cells[2].Text != "&nbsp;" && ResultsGridview.DataKeys[j].Values[1].ToString() == "Comment Response")
+                            {
+                                CommentsDatatable.Rows.Add(ResultsGridview.Rows[j].Cells[2].Text, ResultsGridview.Rows[j].Cells[5].Text, ResultsGridview.Rows[j].Cells[7].Text);
                             }
                         }
                     }
                     else
-                        TypeandScores[ResultsGridview.Rows[i].Cells[4].Text] = (Convert.ToDouble(TypeandScores[ResultsGridview.Rows[i].Cells[4].Text]) + Convert.ToDouble(ResultsGridview.Rows[i].Cells[2].Text)) / 2;
+                    TypeandScores[ResultsGridview.Rows[j].Cells[4].Text] = (Convert.ToDouble(TypeandScores[ResultsGridview.Rows[j].Cells[4].Text]) + Convert.ToDouble(ResultsGridview.Rows[j].Cells[2].Text)) / 2;
                 }                                                           //if a score already exists in dictionary, update and divide for average
-
+                
                 int count = 0;
                 foreach (var key in TypeandScores)
                 {
@@ -89,10 +117,10 @@ namespace peerreviewproject
                     }
                     count++;
                 }
+
+
                 RatingGridview.DataSource = RatingsDatatable;
                 RatingGridview.DataBind();
-                Panel1.Visible = true;
-                
                 CommentsGridview.DataSource = CommentsDatatable;
                 CommentsGridview.DataBind();
                 ResultsGridview.Caption = "Reviews for " + GroupMembersGridview.SelectedRow.Cells[1].Text;
@@ -100,43 +128,43 @@ namespace peerreviewproject
                 if (RatingGridview.Rows.Count > 0 && CommentsGridview.Rows.Count < 1)
                 {
                     CommentsGridview.EmptyDataText = "No reviews for student";
+                    CommentsGridview.DataBind();
                 }
                 else if (RatingGridview.Rows.Count < 1 && CommentsGridview.Rows.Count > 1)
                 {
                     RatingGridview.EmptyDataText = "No reviews for student";
+                    RatingGridview.DataBind();
                 }
+
             }
             else if (GroupMembersGridview.SelectedIndex == -1)
             {
                 RatingGridview.DataBind();
                 CommentsGridview.DataBind();
-                //ResultsGridview.Caption = ""
                 RatingGridview.EmptyDataText = "No members to review";
                 ResultsGridview.EmptyDataText = "No members to review";
                 CommentsGridview.EmptyDataText = "No members to review";
-                Panel1.Visible = true;
             }
             else
             {
-                //Panel1.Visible = false;
                 RatingGridview.DataBind();
                 CommentsGridview.DataBind();
                 ResultsGridview.Caption = "Reviews for " + GroupMembersGridview.SelectedRow.Cells[1].Text;
                 RatingGridview.EmptyDataText = "No scores for student";
                 ResultsGridview.EmptyDataText = "No reviews for student";
                 CommentsGridview.EmptyDataText = "No reviews for student";
-                Panel1.Visible = true;
             }
-
+            Flag = false;
+            ResultsGridview.AllowPaging = true;
+            ResultsGridview.PageSize = 8;
             
-
         }
 
 
         protected void CourseDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridView1.DataBind();
-
+            Flag = true;
             if (GridView1.Rows.Count > 0)
                 GridView1.SelectedIndex = 0;
             GroupMembersGridview.DataBind();
@@ -147,7 +175,6 @@ namespace peerreviewproject
                 ResultsGridview.DataBind();
                 RatingGridview.DataBind();
                 CommentsGridview.DataBind();
-                Panel1.Visible = true;
                 GroupMembersGridview.Visible = true;
             }
             else
@@ -163,8 +190,9 @@ namespace peerreviewproject
         {
             GroupMembersGridview.SelectedIndex = -1;
             ResultsGridview.Visible = false;
-            Panel1.Visible = false;
             GroupMembersGridview.Visible = false;
+            RatingGridview.Visible = false;
+            CommentsGridview.Visible = false;
             ClassSurveyGridView.Visible = true;
             GetSurveyResults();
         }
@@ -186,8 +214,8 @@ namespace peerreviewproject
             ClassSurveyGridView.DataSource = VotesDataTable;
             ClassSurveyGridView.DataBind();
             ClassSurveyGridView.Caption = "Class Survey for Set " + CourseSurveyListBox.SelectedValue;
-            ClassSurveyGridView.HeaderRow.Visible = false;
-            //ClassSurveyGridView.Columns[0].it
+            if(ClassSurveyGridView.Rows.Count != 0)
+                ClassSurveyGridView.HeaderRow.Visible = false;
 
         }
 
@@ -296,7 +324,10 @@ namespace peerreviewproject
             ClassSurveyGridView.Visible = false;
             ResultsGridview.Visible = true;
             GroupMembersGridview.Visible = true;
+            RatingGridview.Visible = true;
+            CommentsGridview.Visible = true;
             CourseSurveyListBox.SelectedIndex = -1;
+            Flag = true;
         }
 
         protected void ClassSurveyGridView_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -316,7 +347,17 @@ namespace peerreviewproject
 
         protected void GroupMembersGridview_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ResultsGridview.DataBind();
+            Flag = true;
+        }
+
+        protected void ResultsGridview_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            Flag = true;
+        }
+
+        protected void HomeBttn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("TeacherMain.aspx");
         }
     }
 }

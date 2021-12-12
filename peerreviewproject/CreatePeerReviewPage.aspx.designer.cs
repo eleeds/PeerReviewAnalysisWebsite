@@ -24,6 +24,15 @@ namespace peerreviewproject
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
+        /// HomeBttn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button HomeBttn;
+
+        /// <summary>
         /// Course_listbox control.
         /// </summary>
         /// <remarks>
@@ -49,15 +58,6 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox CurrentQuestionSet_listbox;
-
-        /// <summary>
-        /// SqlDataSource2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource2;
 
         /// <summary>
         /// Panel3 control.

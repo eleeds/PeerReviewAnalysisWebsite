@@ -15,7 +15,10 @@ namespace peerreviewproject
                         Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session.Count == 0)
+            {
+                Response.Redirect("LoginPage.aspx");
+            }
         }
 
 
@@ -155,6 +158,11 @@ namespace peerreviewproject
             }
             Label1.Text = "Team removed";
             Label1.Visible = true;
+        }
+
+        protected void HomeBttn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("TeacherMain.aspx");
         }
     }
 }

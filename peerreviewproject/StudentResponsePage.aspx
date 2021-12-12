@@ -93,7 +93,8 @@
             </asp:RadioButtonList>
             <br />
             <asp:Button ID="Button1" runat="server" Text="Submit" OnClick="SubmitBttnClick" />
-            &nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:Button ID="Button2" runat="server" Text="Home" OnClick="HomeBttnClick" />
             <br />
             <br />
 &nbsp;<asp:Label ID="Errorlbl" runat="server" Visible="False" ForeColor="Red"></asp:Label>

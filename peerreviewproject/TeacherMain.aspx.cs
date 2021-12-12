@@ -13,6 +13,10 @@ namespace peerreviewproject
         protected void Page_Load(object sender, EventArgs e)
         {
             lblprofessor.Text = "Welcome " + Session["email"];
+            if (Session.Count == 0)
+            {
+                Response.Redirect("LoginPage.aspx");
+            }
 
             if (Session["type"].ToString() == "Admin")
             {

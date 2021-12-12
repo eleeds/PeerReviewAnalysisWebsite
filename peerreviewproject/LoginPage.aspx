@@ -62,7 +62,7 @@
                 OnClick="LoginButton_Click" />&nbsp;&nbsp;
                 <asp:Button ID="Button1" runat="server" OnClick="ForgotBttn_click" Text="Forgot Password" />
                 </td></tr></table>
-            <table style="margin: auto"><tr><td><asp:Label ID="lblError" runat="server" Text="the email or password entered is incorrect" 
+            <table style="margin: auto"><tr><td><asp:Label ID="lblError" runat="server" Text="The email or password entered is incorrect" 
                 ForeColor="Red"></asp:Label></td></tr></table>
         </div>
     </form>

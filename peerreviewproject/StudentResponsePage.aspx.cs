@@ -17,6 +17,11 @@ namespace peerreviewproject
                         Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session.Count == 0)
+            {
+                Response.Redirect("LoginPage.aspx");
+            }
+
 
             if (!IsPostBack)                         //loads first question from the question set
             {
@@ -90,9 +95,8 @@ namespace peerreviewproject
                     }
                     if (reviewIDs[i] == reviewIDs[reviewIDs.Count - 1] && Session["teamID"] != null)   //reset questions back to 0
                     {
-
                         ChangeTeamMember();
-                        break;
+                        return;
                     }
                 }
 
@@ -207,6 +211,7 @@ namespace peerreviewproject
                 Session["teamMember"] = teamMember;
                 currentquestion = 0;
                 Session["currentQuestion"] = currentquestion;
+                GetNextQuestion();
             }
             else                         //reviewer has finished, return to main student page
             {
@@ -233,39 +238,29 @@ namespace peerreviewproject
                 {
                     insertReviewQuery = "INSERT INTO Response_table (userID, reviewQuestionID, dateComplete, userResponse, questionSet)" +
                                         " VALUES (@userID, @reviewQuestionID, @dateComplete, @userResponse, @questionSet)";
-
-                    if (RadioBttns1to4.Visible)
-                    {
-                        response = RadioBttns1to4.SelectedItem.ToString();
-                    }
-                    else if (Radiobttns1to5.SelectedIndex != -1)
-                    {
-                        response = Radiobttns1to5.SelectedItem.ToString();
-                    }
-                    else if (RadiobttnsYesorNo.SelectedIndex != -1)
-                    {
-                        response = RadiobttnsYesorNo.SelectedItem.ToString();
-                    }
-                    else response = feedbackTxtbox.Text;
                 }
-                else
-                {                                  //inserts as peer review. student review contains a student
+                else 
+                {
+                                        //inserts as peer review. student review contains a student
                     insertReviewQuery = "INSERT INTO Response_table (userID, teamID, reviewQuestionID, dateComplete, userResponse, studentReviewed, questionSet)" +
                     " VALUES (@userID, @teamID, @reviewQuestionID, @dateComplete, @userResponse, @studentReviewed, @questionSet)";
-
-                    if (RadioBttns1to4.Visible)
-                    {
-                        response = RadioBttns1to4.SelectedValue.ToString();
-                    }
-                    else if (Radiobttns1to5.SelectedIndex != -1)
-                    {
-                        response = Radiobttns1to5.SelectedValue.ToString();
-                    }
-                    else
-                    {
-                        response = feedbackTxtbox.Text;
-                    }
                 }
+
+                if (RadioBttns1to4.Visible)
+                {
+                    response = RadioBttns1to4.SelectedItem.ToString();
+                }
+                else if (Radiobttns1to5.SelectedIndex != -1)
+                {
+                    response = Radiobttns1to5.SelectedItem.ToString();
+                }
+                else if (RadiobttnsYesorNo.SelectedIndex != -1)
+                {
+                    response = RadiobttnsYesorNo.SelectedItem.ToString();
+                }
+                else response = feedbackTxtbox.Text;
+                
+
                 
                 SqlCommand sqlInsert = new SqlCommand(insertReviewQuery, sqlCon);
                 sqlInsert.Parameters.AddWithValue("@userID", Session["userID"]);
@@ -298,13 +293,6 @@ namespace peerreviewproject
                 Errorlbl.Text = "Please choose a selection";
                 return false;
             }
-          /*  else if (feedbackTxtbox.Visible && feedbackTxtbox.Text.Length < 5)
-            {
-                Errorlbl.Visible = true;
-                Errorlbl.Text = "Response isn't long enough. Try Again";
-                return false;
-            }
-          */
             return true;
         }
 
@@ -358,5 +346,9 @@ namespace peerreviewproject
             else return false;
         }
 
+        protected void HomeBttnClick(object sender, EventArgs e)
+        {
+            Response.Redirect("StudentMain.aspx");
+        }
     }
 }
