@@ -10,10 +10,7 @@ namespace peerreviewproject
     {
         private int courseID;
         private int professorID;
-        public string sqlConnection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
-                        Integrated Security=True;
-                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-
+        
         public StudentTo_Class(string class_ID, string email, string team, int professor)
         {
             courseID = Convert.ToInt32(class_ID);
@@ -34,7 +31,7 @@ namespace peerreviewproject
 
         public void courseInfo(int courseID, string email)
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 string[] studentInfo = new string[2];
@@ -86,7 +83,7 @@ namespace peerreviewproject
         }
         public bool IsUserInClassAlready(string classID, string email)
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 string inClass_query = "SELECT COUNT(1) FROM Course_access_table WHERE userID=@user AND courseID=@courseID";
@@ -111,7 +108,7 @@ namespace peerreviewproject
         public void studentToGroup(string classID, string email, int name)      //student assigned to team in class
         {
 
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 string toGroup_Query = "INSERT INTO UserTeam_table ([userID], [teamID], [courseID]) VALUES(@userID, @teamID, @courseID)";
@@ -141,7 +138,7 @@ namespace peerreviewproject
         }
         public void createTeam(int courseID, int team)          //teams created in class before student is added
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 string DoesTeamExist_Query = "Select COUNT(teamID) FROM teams_table WHERE courseID=@courseID AND name=@name";
@@ -178,7 +175,7 @@ namespace peerreviewproject
 
         public void RemoveFromClass(int userID, int courseID)
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 SqlCommand cmd = new SqlCommand("_removeStudentFromClass", sqlCon);

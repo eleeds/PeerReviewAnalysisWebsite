@@ -11,9 +11,7 @@ namespace peerreviewproject
     public partial class CreateClassPage : System.Web.UI.Page
     {
         int user;
-        public string sqlConnection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
-                        Integrated Security=True;
-                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session.Count == 0)
@@ -106,7 +104,7 @@ namespace peerreviewproject
 
         private bool FindProfessor(CreateCourse_Class AddtoCourse)                      //finds added professor by email if it exists in user table
         {
-            using (SqlConnection sqlCon = new SqlConnection(AddtoCourse.sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 string CoProfessor_query = "SELECT ID FROM User_table WHERE email=@email AND type != 'Student'";
@@ -139,7 +137,7 @@ namespace peerreviewproject
 
         private bool ProfessorCount(DataKey key)
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 string numberOfProfessors = "SELECT COUNT(1) FROM Course_access_table WHERE courseID=@courseID AND permissionType != 'Student'";

@@ -9,11 +9,11 @@ namespace peerreviewproject
 {
     public class PasswordManagement_Class : CreateUser_Class
     {
-        //using sqlconnection from CreateUser Class
+        
 
         public void ResetPass(string email)
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlconnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 //creates random password and and encrypts it based off of USI2021 passphrase
                 sqlCon.Open();
@@ -31,7 +31,7 @@ namespace peerreviewproject
         }
         public void ChangePass(string email, string newPass)
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlconnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();              //users password is encrypted based off of USI2021 passphrase
                 string reset_query = "UPDATE User_table SET password = ENCRYPTBYPASSPHRASE('USI2021', @password), tempPass = 0 WHERE email=@email";
@@ -46,7 +46,7 @@ namespace peerreviewproject
 
         public int doesUserExist(string email, string pass)
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlconnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 string doesUserExist = "SELECT COUNT(1) FROM User_table WHERE email=@email AND DECRYPTBYPASSPHRASE('USI2021', password)=@password";
@@ -63,7 +63,7 @@ namespace peerreviewproject
         {
             string[] userInfo = new string[2];
 
-            using (SqlConnection sqlCon = new SqlConnection(sqlconnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 string getUser = "SELECT ID, type FROM User_table WHERE email=@email AND CONVERT(NVARCHAR(150), DECRYPTBYPASSPHRASE('USI2021', password))=@password";

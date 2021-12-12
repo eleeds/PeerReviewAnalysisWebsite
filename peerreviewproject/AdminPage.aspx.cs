@@ -12,8 +12,7 @@ namespace peerreviewproject
 {
     public partial class AdminPage : System.Web.UI.Page
     {
-        string sqlconn = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;Integrated Security=True;
-                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session.Count == 0)
@@ -30,7 +29,7 @@ namespace peerreviewproject
         private void SearchUsers()
         {
 
-            using (SqlConnection sqlCon = new SqlConnection(sqlconn))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 SqlCommand cmd = new SqlCommand();
@@ -78,7 +77,7 @@ namespace peerreviewproject
 
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlconn))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 string nextQuestionQuery = "DELETE FROM Course_table FROM Course_table inner join Course_access_table on Course_table.courseID = Course_access_table.courseID Where userID = @userID";
@@ -103,7 +102,7 @@ namespace peerreviewproject
 
         protected void UserGridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlconn))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 string userIDquery = "SELECT ID FROM User_table WHERE CONCAT(firstName, CONCAT(' ', lastName)) = @name";

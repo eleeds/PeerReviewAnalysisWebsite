@@ -14,9 +14,7 @@ namespace peerreviewproject
         private string CourseName;
         private string CourseSemester;
         private int CourseYear;
-        public string sqlConnection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
-                        Integrated Security=True;
-                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+
 
         public int CourseProf
         {
@@ -69,7 +67,7 @@ namespace peerreviewproject
         }
         public void CreateCourse()
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 string createCourse_query = "INSERT INTO Course_table ([courseDepartment], [courseNumber], [courseName], [courseSemester], [year]) VALUES(@department, @courseNum, @courseName, @courseSemester, @year)";
@@ -87,7 +85,7 @@ namespace peerreviewproject
         public void CourseAccess()
         {
 
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 string userCourseAccess_query = "INSERT INTO Course_access_table ([userID], [courseID], [permissionType]) VALUES(@userID, @courseID, N'Professor')";
@@ -111,7 +109,7 @@ namespace peerreviewproject
 
         public bool DoesClassExist(string dept, string num, string name)
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 string classExist_query = "SELECT COUNT(1) FROM Course_table WHERE courseDepartment = @department AND courseNumber = @courseNum and courseName = @courseName";

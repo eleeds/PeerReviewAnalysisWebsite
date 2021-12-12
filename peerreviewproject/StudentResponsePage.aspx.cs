@@ -13,8 +13,7 @@ namespace peerreviewproject
         int currentquestion = 0;
         int teamMember = 0;
         string[] questionArray = new string[7];      // 7 because of each column coming back from question query
-        string sqlconn = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;Integrated Security=True;
-                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session.Count == 0)
@@ -49,7 +48,7 @@ namespace peerreviewproject
 
         private bool Check()
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlconn))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 string nextQuestionQuery = "SELECT COUNT(1) FROM questions_table WHERE courseID=@courseID AND questionSet=@questionSet AND classSurvey = 1";
@@ -70,7 +69,7 @@ namespace peerreviewproject
 
         private void GetNextQuestion()
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlconn))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 string getReviewIDsQuery = "SELECT reviewQuestionID FROM questions_table WHERE courseID=@courseID AND questionSet=@questionSet";
@@ -223,7 +222,7 @@ namespace peerreviewproject
         }
         private void SubmitResponse()
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlconn))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 string insertReviewQuery;
                 string response;

@@ -10,13 +10,10 @@ namespace peerreviewproject
         private string LastName;
         private string Email;
         private string UserType;
-        public string sqlconnection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;Integrated Security=True;
-                            Connect Timeout = 30; Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        //EmailClass emailUser = new EmailClass();
 
         public bool DoesUserExist(string userEmail)
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlconnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 string userExist_query = "SELECT COUNT(1) FROM User_table WHERE email=@email";
@@ -34,7 +31,7 @@ namespace peerreviewproject
         }
         public void UsertoDataBase(string firstName, string lastName, string userEmail, string permissionType)
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlconnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 string createUser_query = "INSERT INTO User_table ([firstName], [lastName], [email], [password], [type]) " +

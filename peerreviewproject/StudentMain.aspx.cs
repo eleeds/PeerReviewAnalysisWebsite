@@ -12,7 +12,6 @@ namespace peerreviewproject
 {
     public partial class StudentMain : System.Web.UI.Page
     {
-        string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         string groupMembers;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -41,8 +40,6 @@ namespace peerreviewproject
                     if (groupMembers == "Exist")
                     {
                         StudentReviewsGridview.Rows[i].Cells[7].Text = "Complete";
-                        // StudentReviewsGridview.Rows[i].Cells[0].Visible = true;
-                        // StudentReviewsGridview.Rows[i].Cells[0].Enabled = false;
                     }
                     else
                     {
@@ -57,7 +54,7 @@ namespace peerreviewproject
         private bool SetComplete(int rowIndex)      //if true applys complete status to gridview
         {
             groupMembers = "Exist";
-            using (SqlConnection sqlCon = new SqlConnection(connectionString))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
 

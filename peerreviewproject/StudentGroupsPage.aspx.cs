@@ -10,9 +10,7 @@ namespace peerreviewproject
 {
     public partial class StudentGroupsPage : System.Web.UI.Page
     {
-        public string sqlConnection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
-                        Integrated Security=True;
-                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session.Count == 0)
@@ -40,7 +38,7 @@ namespace peerreviewproject
                 }
             }
 
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 SqlCommand cmd = new SqlCommand("_insertTeam", sqlCon);         //numbers only
@@ -88,7 +86,7 @@ namespace peerreviewproject
                 Page.ClientScript.RegisterStartupScript(Page.GetType(), "Message Box", "<script language = 'javascript'>alert('Create Team # first before adding Student')</script>");
                 return;
             }
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 string query = "UPDATE UserTeam_table SET teamID = a.teamID FROM UserTeam_table CROSS JOIN (SELECT teamID FROM teams_table WHERE (name = @name)) AS a WHERE (UserTeam_table.userID = @userID)";
 
@@ -105,7 +103,7 @@ namespace peerreviewproject
 
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 string query = "UPDATE teams_table SET name = @name WHERE (courseID = @courseID) AND (name = @old)";
 

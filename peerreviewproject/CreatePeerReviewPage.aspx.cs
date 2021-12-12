@@ -14,9 +14,6 @@ namespace peerreviewproject
         string check;
         int SetIndex;
 
-        string sqlConnection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\SHAI1\PEER_REVIEW.MDF;
-                        Integrated Security=True;
-                        Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         DataTable SetList_Datatable = new DataTable();
         string answers = "Feedback";
         protected void Page_Load(object sender, EventArgs e)
@@ -41,7 +38,7 @@ namespace peerreviewproject
             }
             GetAnswers();
 
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
 
                 string setName = "0";
@@ -229,7 +226,7 @@ namespace peerreviewproject
         protected void QuestionsInSetGridview_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             string deletequery = "DELETE FROM Response_table WHERE reviewQuestionID=@reviewQuestionID";
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))     //manually deleting from response table since cascade won't work
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))     //manually deleting from response table since cascade won't work
             {
                 sqlCon.Open();
                 SqlCommand cmd = new SqlCommand(deletequery, sqlCon);
@@ -246,7 +243,7 @@ namespace peerreviewproject
             if (QuestionsInSetGridview.Rows.Count == 0)
             {
                 string query = "DELETE FROM SetDueDates_table WHERE courseID=@courseID AND questionSet=@questionSet";
-                using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+                using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
                 {
                     sqlCon.Open();
                     SqlCommand cmd = new SqlCommand(query, sqlCon);
@@ -262,7 +259,7 @@ namespace peerreviewproject
         protected void DueDateTB_TextChanged(object sender, EventArgs e)        //update due date for selected set
         {
             string query = "UPDATE SetDueDates_table SET dueDate = @dueDate WHERE courseID=@courseID AND questionSet=@questionSet";
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 if (DueDateExistYet(sqlCon, CurrentQuestionSet_listbox.SelectedValue))              //if already in dueDate table, update with new date
@@ -300,7 +297,7 @@ namespace peerreviewproject
         private void GetQuestionSetsForCourse()
         {
             string query = "select DISTINCT questionSet from questions_table WHERE courseID=@courseID";
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 SqlCommand cmd = new SqlCommand(query, sqlCon);
@@ -434,7 +431,7 @@ namespace peerreviewproject
         {
             string[] info = new string[2];
             string query = "SELECT dueDate, showStudents FROM SetDueDates_table WHERE courseID=@courseID AND questionSet=@questionSet";
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 SqlCommand cmd = new SqlCommand(query, sqlCon);
@@ -468,7 +465,7 @@ namespace peerreviewproject
         private void UpdateForSurvey(int choice)
         {
             string query = "UPDATE questions_table SET classSurvey = @classSurvey WHERE courseID=@courseID AND questionSet=@questionSet";
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 SqlCommand cmd = new SqlCommand(query, sqlCon);
@@ -498,7 +495,7 @@ namespace peerreviewproject
         private void UpdateForDueDate(string Oldvalue, string Newvalue)
         {
             string query = "UPDATE SetDueDates_table SET questionSet = @newquestionSet WHERE courseID=@courseID AND questionSet=@questionSet";
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 SqlCommand cmd = new SqlCommand(query, sqlCon);
@@ -512,7 +509,7 @@ namespace peerreviewproject
         private void UpdateForShowStudents(int choice)
         {
             string query = "UPDATE SetDueDates_table SET showStudents = @showStudents WHERE courseID=@courseID AND questionSet=@questionSet";
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 SqlCommand cmd = new SqlCommand(query, sqlCon);
@@ -563,7 +560,7 @@ namespace peerreviewproject
                 string setName = "";
                 if (count <= 15)
                 {
-                    using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+                    using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
                     {
                         sqlCon.Open();
                         for (int i = 0; i < count; i++)
@@ -616,7 +613,7 @@ namespace peerreviewproject
 
         private void moveAllQuestions(string newSet, string oldSet)
         {
-            using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
             {
                 sqlCon.Open();
                 string updateOtherQuestions = "UPDATE questions_table SET questionSet=@newSet WHERE (questionSet=@oldSet) AND (courseID=@courseID)";
