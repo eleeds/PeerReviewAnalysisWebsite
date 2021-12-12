@@ -16,7 +16,7 @@
     <AssemblyName>peerreviewproject</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <IISExpressSSLPort>44313</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -44,6 +44,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
@@ -100,19 +103,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="AddUserstoClass.aspx" />
+    <Content Include="AdminPage.aspx" />
+    <Content Include="backgroundUSI.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="DefaultNavPage.aspx" />
+    <Content Include="CourseReviews.aspx" />
+    <Content Include="CreateClassPage.aspx" />
+    <Content Include="ChangePass.aspx" />
+    <Content Include="CreatePeerReviewPage.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="ForgotPass.aspx" />
     <Content Include="Global.asax" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -153,7 +158,9 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
+    <Content Include="StudentGroupsPage.aspx" />
     <Content Include="StudentMain.aspx" />
+    <Content Include="StudentResponsePage.aspx" />
     <Content Include="TeacherMain.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -161,15 +168,61 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="DefaultNavPage.aspx.cs">
-      <DependentUpon>DefaultNavPage.aspx</DependentUpon>
+    <Compile Include="AddUserstoClass.aspx.cs">
+      <DependentUpon>AddUserstoClass.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="DefaultNavPage.aspx.designer.cs">
-      <DependentUpon>DefaultNavPage.aspx</DependentUpon>
+    <Compile Include="AddUserstoClass.aspx.designer.cs">
+      <DependentUpon>AddUserstoClass.aspx</DependentUpon>
     </Compile>
+    <Compile Include="AdminPage.aspx.cs">
+      <DependentUpon>AdminPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminPage.aspx.designer.cs">
+      <DependentUpon>AdminPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="CourseReviews.aspx.cs">
+      <DependentUpon>CourseReviews.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CourseReviews.aspx.designer.cs">
+      <DependentUpon>CourseReviews.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CreateClassPage.aspx.cs">
+      <DependentUpon>CreateClassPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreateClassPage.aspx.designer.cs">
+      <DependentUpon>CreateClassPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CreateCourse_Class.cs" />
+    <Compile Include="ChangePass.aspx.cs">
+      <DependentUpon>ChangePass.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChangePass.aspx.designer.cs">
+      <DependentUpon>ChangePass.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CreatePeerReviewPage.aspx.cs">
+      <DependentUpon>CreatePeerReviewPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreatePeerReviewPage.aspx.designer.cs">
+      <DependentUpon>CreatePeerReviewPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CreateUser_Class.cs" />
+    <Compile Include="EmailClass.cs" />
+    <Compile Include="ForgotPass.aspx.cs">
+      <DependentUpon>ForgotPass.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ForgotPass.aspx.designer.cs">
+      <DependentUpon>ForgotPass.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PasswordManagement_Class.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -188,6 +241,13 @@
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
+    <Compile Include="StudentGroupsPage.aspx.cs">
+      <DependentUpon>StudentGroupsPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StudentGroupsPage.aspx.designer.cs">
+      <DependentUpon>StudentGroupsPage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="StudentMain.aspx.cs">
       <DependentUpon>StudentMain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -195,6 +255,14 @@
     <Compile Include="StudentMain.aspx.designer.cs">
       <DependentUpon>StudentMain.aspx</DependentUpon>
     </Compile>
+    <Compile Include="StudentResponsePage.aspx.cs">
+      <DependentUpon>StudentResponsePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="StudentResponsePage.aspx.designer.cs">
+      <DependentUpon>StudentResponsePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="StudentTo_Class.cs" />
     <Compile Include="TeacherMain.aspx.cs">
       <DependentUpon>TeacherMain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -218,7 +286,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="CSV_uploads\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -254,6 +322,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
+      <UserProperties content_4bootstrap_1css_1map__JsonSchema="" />
     </VisualStudio>
   </ProjectExtensions>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
