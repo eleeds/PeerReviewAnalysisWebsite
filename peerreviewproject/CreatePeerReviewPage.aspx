@@ -54,7 +54,9 @@
 <body>
     <form id="form1" runat="server">
         <div class="center-text">
-            <h1>CREATE PEER REVEIW</h1>
+            <h1>
+                <asp:Button ID="HomeBttn" runat="server" OnClick="HomeBttn_Click" Text="Home" />
+            &nbsp;&nbsp;&nbsp; CREATE PEER REVIEW</h1>
         </div>
         <div class="center-text">
             <h2>Select Class</h2>
@@ -81,11 +83,6 @@
 
         <div class="row center-text">
             <asp:ListBox ID="CurrentQuestionSet_listbox" runat="server" Width="405px" AutoPostBack="True" OnSelectedIndexChanged="CurrentQuestionSet_listbox_SelectedIndexChanged"></asp:ListBox>
-            <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:Peer_ReviewConnectionString2 %>" SelectCommand="SELECT DISTINCT questionSet FROM questions_table WHERE (courseID = @courseID)">
-                <SelectParameters>
-                    <asp:ControlParameter ControlID="Course_listbox" Name="courseID" PropertyName="SelectedValue" Type="Int32" />
-                </SelectParameters>
-            </asp:SqlDataSource>
         </div>
         
             

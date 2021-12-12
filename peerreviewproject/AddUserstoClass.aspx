@@ -54,7 +54,11 @@
     <form id="form1" runat="server">
         <div>
         <div class="center-text">
-             <h1>ADD STUDENTS TO CLASS</h1>
+             <h1><asp:Button ID="HomeBttn" runat="server" OnClick="HomeBttn_Click" Text="Home" />
+                 &nbsp;&nbsp;&nbsp;
+                 ADD STUDENTS TO CLASS&nbsp;&nbsp;&nbsp; </h1>
+             <p>
+                 &nbsp;</p>
             </div>
             <div class="center-text">
                 <h3>Select the students you would like to add below</h3>
@@ -242,7 +246,7 @@
 
 </asp:TableCell>
                     <asp:TableCell runat="server">
-                        <asp:TextBox ID="EmailTB" runat="server">   </asp:TextBox>
+                        <asp:TextBox ID="EmailTB" runat="server" TextMode="Email">   </asp:TextBox>
                     
 
 </asp:TableCell>
@@ -277,6 +281,9 @@
             </div>
             
             
+            <asp:Button ID="CSV_exampleBttn" runat="server" OnClick="ExampleCSVFile_Click" Text="CSV Format Example" />
+            
+            
             <asp:Table ID="Table2" runat="server" BackColor="#CCCCCC" Font-Bold="True" HorizontalAlign="Center" BorderStyle="Groove">
                 <asp:TableRow runat="server">
                     <asp:TableCell runat="server">
@@ -296,6 +303,7 @@
             
             
         </div>
+   
     </form>
 </body>
 </html>

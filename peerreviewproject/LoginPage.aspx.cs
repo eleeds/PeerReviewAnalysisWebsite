@@ -40,20 +40,24 @@ namespace peerreviewproject
 
                 if (UserInfo_Array[0] != null)
                 {
-                    if (UserInfo_Array[1] == "Student")
+                    if (UserInfo_Array[1] == "Student" && UserInfo_Array[2] != "True")
                     {
                         Session["userID"] = UserInfo_Array[0];
                         Session["email"] = emailBox.Text.Trim();
 
                         Response.Redirect("StudentMain.aspx");
                     }
-                    else
+                    else if (UserInfo_Array[1] != "Student" && UserInfo_Array[2] != "True")
                     {
                         Session["email"] = emailBox.Text.Trim();
                         Session["userID"] = UserInfo_Array[0];
                         Session["type"] = UserInfo_Array[1];
 
                         Response.Redirect("TeacherMain.aspx");
+                    }
+                    else
+                    {
+                        lblError.Visible = true;
                     }
                 }
                 else

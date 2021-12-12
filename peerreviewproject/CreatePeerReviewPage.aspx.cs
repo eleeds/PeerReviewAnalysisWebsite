@@ -21,6 +21,11 @@ namespace peerreviewproject
         string answers = "Feedback";
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session.Count == 0)
+            {
+                Response.Redirect("LoginPage.aspx");
+            }
+
             if (IsPostBack)
             {
                 return;
@@ -38,21 +43,13 @@ namespace peerreviewproject
 
             using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
             {
-                int recentID = 0;
+
                 string setName = "0";
                 sqlCon.Open();
                 string createQuestion_query = "INSERT INTO questions_table ([courseID], [question], [type], [correctResponses], [questionName], [questionSet], [classSurvey])" +
                     " VALUES (@courseID, @questionText, @type, @answers, @name, @set, @survey)";
                 string ifnew_query = "SELECT MAX(reviewQuestionID) FROM questions_table";
                 SqlCommand getID = new SqlCommand(ifnew_query, sqlCon);
-                try
-                {
-                    recentID = Convert.ToInt32(getID.ExecuteScalar());      //grabs recent number, if list is empty return 0
-                }
-                catch
-                {
-
-                }
 
                 SqlCommand question_sqlCmd = new SqlCommand(createQuestion_query, sqlCon);
 
@@ -63,33 +60,22 @@ namespace peerreviewproject
                 question_sqlCmd.Parameters.AddWithValue("@name", name_tb.Text);
                 question_sqlCmd.Parameters.AddWithValue("@survey", YesCheckBox.Checked.ToString());
 
-
-                if (CurrentQuestionSet_listbox.Items.Count == 0)
+                if (CurrentQuestionSet_listbox.Items.Count == 0 || CurrentQuestionSet_listbox.Items[0].Text != "1")
                 {
                     question_sqlCmd.Parameters.AddWithValue("@set", 1);
                     setName = "1";
                 }
-                else if (CurrentQuestionSet_listbox.SelectedIndex == -1)
+                else if (CurrentQuestionSet_listbox.SelectedIndex == -1)                        //adds next number after most recent set number. if recent 1, new is 2
                 {
-                    for (int i = 0; i < CurrentQuestionSet_listbox.Items.Count; i++)
+                    for (int i = 2; i < CurrentQuestionSet_listbox.Items.Count + 2; i++)
                     {
-                        try
+                        if (CurrentQuestionSet_listbox.Items.FindByValue(i.ToString()) == null)
                         {
-                            int ifNumbercheck = (Convert.ToInt32(CurrentQuestionSet_listbox.Items[i].Value) + 1);    //next set will become last number plus 1
-                            if (Convert.ToInt32(CurrentQuestionSet_listbox.Items[i + 1].Value) != ifNumbercheck)
-                            {
-                                question_sqlCmd.Parameters.AddWithValue("set", (ifNumbercheck + 1).ToString());     //example, last #set is 3, new # set is 4
-                                break;
-                            }
-
-                        }
-                        catch
-                        {
-                            question_sqlCmd.Parameters.AddWithValue("set", (Convert.ToInt32(CurrentQuestionSet_listbox.Items[i].Value) + 1)).ToString();
+                            question_sqlCmd.Parameters.AddWithValue("set", i.ToString());
                             break;
                         }
-                    }
 
+                    }
                 }
                 else
                 {
@@ -101,7 +87,7 @@ namespace peerreviewproject
 
                 sqlCon.Close();
                 QuestionsInSetGridview.DataBind();
-                CurrentQuestionSet_listbox.DataBind();
+                GetQuestionSetsForCourse();
 
             }
             clearText();
@@ -125,8 +111,9 @@ namespace peerreviewproject
 
         private void NewSetToDataTable()
         {
+
             SetList_Datatable = (DataTable)ViewState["data"];
-            if (CurrentQuestionSet_listbox.Items.Count == 0)
+            if (CurrentQuestionSet_listbox.Items.Count == 0 || CurrentQuestionSet_listbox.Items[0].Text != "1")
             {
                 SetList_Datatable.Rows.Add(1);
             }
@@ -134,6 +121,7 @@ namespace peerreviewproject
             {
                 for (int i = 0; i < CurrentQuestionSet_listbox.Items.Count; i++)
                 {
+
                     try
                     {       //makes sure list item is a number, if not skip and place number before list item
                         if (Convert.ToInt32(CurrentQuestionSet_listbox.Items[i].Value) + 1 != Convert.ToInt32(CurrentQuestionSet_listbox.Items[i + 1].Value))
@@ -228,8 +216,6 @@ namespace peerreviewproject
         {
             SubmitBttn.Visible = true;
             clearText();
-            DataView dv = SetList_Datatable.DefaultView;
-            //dv.Sort = "questionSet";
         }
 
         protected void CurrentQuestionSet_listbox_SelectedIndexChanged(object sender, EventArgs e)
@@ -251,12 +237,12 @@ namespace peerreviewproject
                 cmd.ExecuteNonQuery();
                 sqlCon.Close();
             }
-            //grabs recently deleted set number
+                                                                                //grabs recently deleted set number
             check = e.Values[4].ToString();
         }
         protected void QuestionsInSetGridview_RowDeleted(object sender, GridViewDeletedEventArgs e)
         {
-            QuestionsInSetGridview.DataBind();                   //if all questions belonging to the set are deleted then the set is removed from the SetDueDate table
+            QuestionsInSetGridview.DataBind();             //if all questions belonging to the set are deleted then the set is removed from the SetDueDate table
             if (QuestionsInSetGridview.Rows.Count == 0)
             {
                 string query = "DELETE FROM SetDueDates_table WHERE courseID=@courseID AND questionSet=@questionSet";
@@ -574,6 +560,7 @@ namespace peerreviewproject
             if (duplicateTB.Text != "")
             {
                 int count = Convert.ToInt32(duplicateTB.Text);
+                string setName = "";
                 if (count <= 15)
                 {
                     using (SqlConnection sqlCon = new SqlConnection(sqlConnection))
@@ -581,29 +568,30 @@ namespace peerreviewproject
                         sqlCon.Open();
                         for (int i = 0; i < count; i++)
                         {
-                            foreach (GridViewRow shelp in QuestionsInSetGridview.Rows)
+                            foreach (GridViewRow rows in QuestionsInSetGridview.Rows)
                             {
                                 string InsertCopyQuery = "INSERT INTO questions_table ([courseID], [question], [type], " +
                                     "[correctResponses], [questionName], [questionSet], [classSurvey])" +
                                 " VALUES (@courseID, @questionText, @type, @answers, @name, @set, @survey)";
                                 SqlCommand DuplicateSQL = new SqlCommand(InsertCopyQuery, sqlCon);
                                 DuplicateSQL.Parameters.AddWithValue("@courseID", Course_listbox.SelectedValue);
-                                DuplicateSQL.Parameters.AddWithValue("@questionText", shelp.Cells[2].Text);
-                                DuplicateSQL.Parameters.AddWithValue("@type", shelp.Cells[3].Text);
-                                DuplicateSQL.Parameters.AddWithValue("@answers", shelp.Cells[4].Text);
-                                DuplicateSQL.Parameters.AddWithValue("@name", shelp.Cells[5].Text);
-                                DuplicateSQL.Parameters.AddWithValue("@set", shelp.Cells[6].Text + " (" + (i + 2).ToString() + ")");
+                                DuplicateSQL.Parameters.AddWithValue("@questionText", rows.Cells[2].Text);
+                                DuplicateSQL.Parameters.AddWithValue("@type", rows.Cells[3].Text);
+                                DuplicateSQL.Parameters.AddWithValue("@answers", rows.Cells[4].Text);
+                                DuplicateSQL.Parameters.AddWithValue("@name", rows.Cells[5].Text);
+                                DuplicateSQL.Parameters.AddWithValue("@set", rows.Cells[6].Text + " (" + (i + 2).ToString() + ")");
                                 DuplicateSQL.Parameters.AddWithValue("@survey", YesCheckBox.Checked.ToString());
                                 DuplicateSQL.ExecuteNonQuery();
-
-                                string SetDueDateTime = Convert.ToDateTime(DueDateTB.Text).AddDays((i + 1) * 7).AddHours(23).AddMinutes(59).AddSeconds(59).ToString();
-                                string InsertDueDateQuery = "INSERT INTO SetDueDates_table ([courseID], [dueDate], [questionSet]) VALUES (@courseID, @dueDate, @questionSet)";
-                                SqlCommand cmd = new SqlCommand(InsertDueDateQuery, sqlCon);
-                                cmd.Parameters.AddWithValue("@courseID", Course_listbox.SelectedValue);
-                                cmd.Parameters.AddWithValue("@dueDate", SetDueDateTime);
-                                cmd.Parameters.AddWithValue("@questionSet", shelp.Cells[6].Text + " (" + (i + 2).ToString() + ")");
-                                cmd.ExecuteNonQuery();
+                                setName = rows.Cells[6].Text;
                             }
+
+                            string SetDueDateTime = Convert.ToDateTime(DueDateTB.Text).AddDays((i + 1) * 7).AddHours(23).AddMinutes(59).AddSeconds(59).ToString();
+                            string InsertDueDateQuery = "INSERT INTO SetDueDates_table ([courseID], [dueDate], [questionSet]) VALUES (@courseID, @dueDate, @questionSet)";
+                            SqlCommand cmd = new SqlCommand(InsertDueDateQuery, sqlCon);
+                            cmd.Parameters.AddWithValue("@courseID", Course_listbox.SelectedValue);
+                            cmd.Parameters.AddWithValue("@dueDate", SetDueDateTime);
+                            cmd.Parameters.AddWithValue("@questionSet", setName + " (" + (i + 2).ToString() + ")");
+                            cmd.ExecuteNonQuery();
 
                         }
                         sqlCon.Close();
@@ -641,5 +629,9 @@ namespace peerreviewproject
             }
         }
 
+        protected void HomeBttn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("TeacherMain.aspx");
+        }
     }
 }

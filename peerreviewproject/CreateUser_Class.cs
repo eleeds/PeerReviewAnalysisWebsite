@@ -54,7 +54,7 @@ namespace peerreviewproject
 
         }
 
-        public CreateUser_Class(string fName, string lName, string userEmail, string type)
+        public bool newAccount (string fName, string lName, string userEmail, string type)
         {
             if (!DoesUserExist(userEmail))
             {
@@ -70,7 +70,9 @@ namespace peerreviewproject
                     UserType = "Student";
                 }
                 UsertoDataBase(FirstName, LastName, userEmail, UserType);
+                return true;
             }
+            return false;
         }
 
         public CreateUser_Class()

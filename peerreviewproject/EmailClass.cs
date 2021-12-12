@@ -16,12 +16,12 @@ namespace peerreviewproject
         private string Subject;
         private string Professor;
         private string Course;
-
+        private int flag = 0;
         public string letter;
         public EmailClass(string type, string userEmail, string pass, string professor, string course)   //constructor for resetting pass
         {
             Email = userEmail;
-            if (type == "newAccount")
+            if (type == "newAccountStudent" || type == "newAccountProfessor")
             {
                 Professor = professor;
                 Course = course;
@@ -50,8 +50,9 @@ namespace peerreviewproject
                 Subject = "DEA Peer Review Forgot Pass";
                 letter = "<br/> Follow the provided link to reset your pass. <br/>"
                 + "<a href='https://localhost:44313/ChangePass.aspx/?user=" + Email + "&token=" + Pass + "'>Reset Password</a>";
+                
             }
-            else if (type == "newAccount") //new account
+            else if (type == "newAccountStudent") //new account student user
             {
                 Subject = "New Account for DEA Peer Review";
                 letter = "<br/> Professor " + Professor + " has added you to course " + Course + ". Please follow the Link" +
@@ -59,13 +60,19 @@ namespace peerreviewproject
                 + "<a href='https://localhost:44313/ChangePass.aspx/?user=" + Email + "&token=" + Pass + "'>DEA Peer Review</a>";
 
             }
+            else if (type == "newAccountProfessor") //new account professor user
+            {
+                Subject = "New Account for DEA Peer Review";
+                letter = "<br/> You have been invited to use our Peer Review analysis system. Please follow the Link" +
+                    "to finish creating your account and begin setting up your course reviews. <br/>"
+                + "<a href='https://localhost:44313/ChangePass.aspx/?user=" + Email + "&token=" + Pass + "'>DEA Peer Review</a>";
+            }
             else if (type == "newCourse") //student added to new class
             {
                 Subject = "DEA Peer Review New Class";
                 letter = "<br/> Professor " + Professor + " has added you to course " + Course + ". Please sign in to view new surveys" +
                          "to sign in and view your surveys. <br/>"
                          + "<a href='https://localhost:44313/LoginPage.aspx" + Email + "&token=" + Pass + "'>DEA Peer Review</a>";
-
             }
         }
 
@@ -76,7 +83,7 @@ namespace peerreviewproject
                 MailMessage message = new MailMessage();
                 SmtpClient smtp = new SmtpClient();
                 message.From = new MailAddress("usipeerreview@gmail.com");
-                message.To.Add(new MailAddress("shai114@hotmail.com"));
+                message.To.Add(new MailAddress(Email));
                 message.Subject = Subject;
                 message.Body = letter;
                 message.IsBodyHtml = true;
@@ -87,14 +94,22 @@ namespace peerreviewproject
                 smtp.Credentials = new NetworkCredential("usipeerreview@gmail.com", "nyzysanrzdnvrpyn");
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
 
-                //smtp.Send(message);
+                smtp.Send(message);
             }
 
             catch (Exception ex)
             {
-                throw ex;
+                flag++; 
             }
 
+        }
+
+        public bool MessageFailed()
+        {
+            if (flag > 0)
+                return false;
+            else 
+                return true;
         }
 
 

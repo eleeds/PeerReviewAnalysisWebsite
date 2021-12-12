@@ -171,7 +171,9 @@
                    <asp:Label ID="WarningLabel" runat="server" BackColor="White" Visible="False"></asp:Label>
             
             
-            <asp:Button ID="BackButton" runat="server" OnClick="BackButton_Click" Text="Back" />
+            <asp:Button ID="HomeBttn" runat="server" OnClick="HomeBttn_Click" Text="Home" />
+            
+            &nbsp;&nbsp;&nbsp;
             
             <asp:Button ID="CreateCourse_btn" runat="server" Text="Create Course" OnClick="CreateCourse_btnclick"/>
                </div>

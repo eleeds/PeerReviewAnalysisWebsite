@@ -10,6 +10,7 @@ namespace peerreviewproject
     public partial class ChangePass : System.Web.UI.Page
     {
         PasswordManagement_Class changePass = new PasswordManagement_Class();
+        bool isStudent = false;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -32,9 +33,14 @@ namespace peerreviewproject
                 }
                 return;
             }
-            if (Session["type"].ToString().Length > 0)
+            if (Session.Count != 0)
             {
-                
+                HomeBttn.Visible = true;
+
+                if (Session["type"].ToString() == "Student")
+                {
+                    isStudent = true;
+                }
             }
             else
             {
@@ -73,6 +79,18 @@ namespace peerreviewproject
                 Label1.Text = "Passwords don't match. Try again";
                 Label1.Visible = true;
 
+            }
+        }
+
+        protected void HomeBttn_Click(object sender, EventArgs e)
+        {
+            if (isStudent)
+            {
+                Response.Redirect("StudentMain.aspx");
+            }
+            else
+            {
+                Response.Redirect("TeacherMain.aspx");
             }
         }
     }

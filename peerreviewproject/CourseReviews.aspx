@@ -48,7 +48,10 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <table><tr><td><h1 class="centered-text">COURSE REVIEWS</h1></td></tr></table>
+        <table><tr><td><h1 class="centered-text">COURSE REVIEWS<br />
+            </h1>
+            <asp:Button ID="HomeBttn" runat="server" OnClick="HomeBttn_Click" Text="Home" />
+            </td></tr></table>
         <div class="centered">
             <table><tr><td><h3>Course Selection</h3></td></tr></table>
             <asp:DropDownList ID="CourseDropDown" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource1" DataTextField="courseName" DataValueField="courseID" OnDataBound="DropDownList1_DataBound" OnSelectedIndexChanged="CourseDropDown_SelectedIndexChanged">
@@ -92,12 +95,10 @@
 
             </div>
             <table><tr><td><h3>Survey Selection</h3></td></tr></table>
-            <asp:Panel ID="Panel3" runat="server" HorizontalAlign="Right" Width="225px">
                 <asp:ListBox ID="CourseSurveyListBox" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource6" DataTextField="questionSet" DataValueField="questionSet" OnSelectedIndexChanged="CourseSurveyListBox_SelectedIndexChanged" Width="237px"></asp:ListBox>
-            </asp:Panel>
         </div>
         <div class="aside">
-            <asp:GridView ID="GroupMembersGridview" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSource3" CellPadding="4" ForeColor="#333333" GridLines="None">
+            <asp:GridView ID="GroupMembersGridview" runat="server" AutoGenerateColumns="False" DataKeyNames="ID" DataSourceID="SqlDataSource3" CellPadding="4" ForeColor="#333333" GridLines="None" OnSelectedIndexChanged="GroupMembersGridview_SelectedIndexChanged">
             <AlternatingRowStyle BackColor="White" />
             <Columns>
                 <asp:CommandField SelectText="View" ShowSelectButton="True" />
@@ -141,14 +142,13 @@
             <SortedDescendingCellStyle BackColor="#E9EBEF" />
             <SortedDescendingHeaderStyle BackColor="#4870BE" />
         </asp:GridView>
-        <asp:Panel ID="Panel2" runat="server" Width="1009px">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <asp:SqlDataSource ID="SqlDataSource5" runat="server" ConnectionString="<%$ ConnectionStrings:Peer_ReviewConnectionString2 %>" SelectCommand="SELECT DISTINCT [questionSet] FROM [questions_table] WHERE ([courseID] = @courseID)">
                 <SelectParameters>
                     <asp:ControlParameter ControlID="CourseDropDown" Name="courseID" PropertyName="SelectedValue" Type="Int32" />
                 </SelectParameters>
             </asp:SqlDataSource>
-            <asp:GridView ID="ResultsGridview" runat="server" AutoGenerateColumns="False" DataKeyNames="responseID,type" DataSourceID="SqlDataSource4" EmptyDataText="Select student to see reviews" OnDataBound="ResultsGridview_DataBound" ShowHeaderWhenEmpty="True" Font-Bold="False" CellPadding="4" ForeColor="#333333" Visible="False" AllowPaging="True">
+            <asp:GridView ID="ResultsGridview" runat="server" AutoGenerateColumns="False" DataKeyNames="responseID,type" DataSourceID="SqlDataSource4" EmptyDataText="Select student to see reviews" OnDataBound="ResultsGridview_DataBound" ShowHeaderWhenEmpty="True" Font-Bold="False" CellPadding="4" ForeColor="#333333" Visible="False" AllowPaging="True" OnPageIndexChanging="ResultsGridview_PageIndexChanging" PageSize="9" AllowSorting="True">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField DataField="Student" HeaderText="Reviewed By" ReadOnly="True" SortExpression="Student" />
@@ -179,8 +179,7 @@
                 <SortedDescendingHeaderStyle BackColor="#4870BE" />
             </asp:GridView>
             &nbsp;
-        </asp:Panel>
-        <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:Peer_ReviewConnectionString2 %>" SelectCommand="SELECT { fn CONCAT(User_table.firstName, { fn CONCAT(' ', User_table.lastName) }) } AS Student, Response_table.responseID, Response_table.userResponse, Response_table.reviewQuestionID, questions_table.questionName, Response_table.questionSet, questions_table.type, Response_table.dateComplete FROM Response_table INNER JOIN questions_table ON Response_table.reviewQuestionID = questions_table.reviewQuestionID INNER JOIN User_table ON Response_table.userID = User_table.ID WHERE (Response_table.studentReviewed = @studentReviewed) AND (questions_table.courseID = @courseID)">
+        <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:Peer_ReviewConnectionString2 %>" SelectCommand="SELECT { fn CONCAT(User_table.firstName, { fn CONCAT(' ', User_table.lastName) }) } AS Student, Response_table.responseID, Response_table.userResponse, Response_table.reviewQuestionID, questions_table.questionName, Response_table.questionSet, questions_table.type, Response_table.dateComplete FROM Response_table INNER JOIN questions_table ON Response_table.reviewQuestionID = questions_table.reviewQuestionID INNER JOIN User_table ON Response_table.userID = User_table.ID WHERE (Response_table.studentReviewed = @studentReviewed) AND (questions_table.courseID = @courseID) ORDER BY questions_table.type, Response_table.dateComplete DESC">
             <SelectParameters>
                 <asp:ControlParameter ControlID="GroupMembersGridview" Name="studentReviewed" PropertyName="SelectedValue" />
                 <asp:ControlParameter ControlID="CourseDropDown" Name="courseID" PropertyName="SelectedValue" />
@@ -192,8 +191,6 @@
                 <asp:ControlParameter ControlID="CourseDropDown" Name="courseID" PropertyName="SelectedValue" />
             </SelectParameters>
         </asp:SqlDataSource>
-        <asp:Panel ID="Panel1" runat="server" HorizontalAlign="Center" Width="694px">
-            <br />
             <div class="row">
                 <asp:GridView ID="RatingGridview" runat="server" Caption="Scores"  EmptyDataText="Choose Student For Results" ShowHeaderWhenEmpty="True" CellPadding="4" ForeColor="#333333" HorizontalAlign="Left">
                 <AlternatingRowStyle BackColor="White" />
@@ -225,7 +222,6 @@
             </div>
             
             <br />
-        </asp:Panel>
         </div>
         
     </form>

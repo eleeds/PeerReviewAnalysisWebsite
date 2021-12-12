@@ -16,7 +16,11 @@ namespace peerreviewproject
         string groupMembers;
         protected void Page_Load(object sender, EventArgs e)
         {
-            Session["userID"] = 2550;          //for testing
+            if (Session.Count == 0)
+            {
+                Response.Redirect("LoginPage.aspx");
+            }
+            //Session["userID"] = 2550;          //for testing
             lblStudentDetails.Text = "User ID: " + Session["email"];
             Session["type"] = "Student";
         }

@@ -19,6 +19,11 @@ namespace peerreviewproject
         public DataTable CSV_Datatable = new DataTable();
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session.Count == 0)
+            {
+                Response.Redirect("LoginPage.aspx");
+            }
+
             if (!IsPostBack)
             {
                 CourseAvailable_dropdownlist.DataBind();
@@ -84,14 +89,15 @@ namespace peerreviewproject
                     }
                     SuccessLabel.Text = fileName + " was imported successfully!";
                     File.Delete(filePath);                                  //remove import file after reading data
+                    
                 }
                 else WarningLabel.Text = "Please select a CSV file";
 
             }
 
-            catch (Exception ex)
+            catch 
             {
-                throw ex;
+                Response.Write("<script>alert('Incorrect format. Try again.')</script>");
             }
         }
 
@@ -107,7 +113,8 @@ namespace peerreviewproject
             foreach (DataRow row in CSV_Datatable.Rows)
             {
                 // [0]first name, [1]last name, [2]email, [3]team
-                _ = new CreateUser_Class(row[0].ToString(), row[1].ToString(), row[2].ToString(), "Professor");
+                CreateUser_Class newStudent = new CreateUser_Class();
+                newStudent.newAccount(row[0].ToString(), row[1].ToString(), row[2].ToString(), "Professor");
                 _ = new StudentTo_Class(courseID, row[2].ToString(), row[3].ToString(), Convert.ToInt32(Session["userID"]));
 
             }
@@ -269,5 +276,17 @@ namespace peerreviewproject
             }
         }
 
+        protected void ExampleCSVFile_Click(object sender, EventArgs e)
+        {
+            Response.ContentType = "image/jpeg";
+            Response.AppendHeader("Content-Disposition", "attachment; filename=CSV_Format_example.csv");
+            Response.TransmitFile(Server.MapPath("~/CSV_uploads/CSV_Format_example.csv"));
+            Response.End();
+        }
+
+        protected void HomeBttn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("TeacherMain.aspx");
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace peerreviewproject
                 //creates random password and and encrypts it based off of USI2021 passphrase
                 sqlCon.Open();
                 string reset_query = "UPDATE User_table SET password = ENCRYPTBYPASSPHRASE('USI2021', @password), tempPass = 1 WHERE email=@email";
-                string pass = Membership.GeneratePassword(20, 10);               //will delete
+                string pass = Membership.GeneratePassword(20, 2);               
                 SqlCommand resetPass_sqlCmd = new SqlCommand(reset_query, sqlCon);
                 resetPass_sqlCmd.Parameters.AddWithValue("@password", pass);
                 resetPass_sqlCmd.Parameters.AddWithValue("@email", email);

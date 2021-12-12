@@ -24,6 +24,15 @@ namespace peerreviewproject
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
+        /// HomeBttn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button HomeBttn;
+
+        /// <summary>
         /// CourseAvailable_dropdownlist control.
         /// </summary>
         /// <remarks>
@@ -211,6 +220,15 @@ namespace peerreviewproject
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label12;
+
+        /// <summary>
+        /// CSV_exampleBttn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CSV_exampleBttn;
 
         /// <summary>
         /// Table2 control.
