@@ -51,6 +51,12 @@ namespace peerreviewproject
                 UserGridview.DataBind();
 
                 sqlCon.Close();
+
+                if (UserGridview.Rows.Count == 0)
+                {
+                    UserGridview.EmptyDataText = "No results from search";
+                    UserGridview.DataBind();
+                }
             }
 
         }

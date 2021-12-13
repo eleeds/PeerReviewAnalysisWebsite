@@ -42,12 +42,12 @@
         <div class="centered">
             <h3>Enter a new password</h3><br />
             
-            <asp:TextBox ID="passTB1" runat="server" TextMode="Password"></asp:TextBox>
+            <asp:TextBox ID="passTB1" runat="server" TextMode="Password" MaxLength="49"></asp:TextBox>
             <br />
             <p>Must be at least 8 characters</p><br />
             <br />
             <h3>Confirm Password</h3><br />
-            <asp:TextBox ID="PassTB2" runat="server" TextMode="Password"></asp:TextBox>
+            <asp:TextBox ID="PassTB2" runat="server" TextMode="Password" MaxLength="49"></asp:TextBox>
 &nbsp;&nbsp;&nbsp;
             <asp:Button ID="Button1" runat="server" OnClick="SubmitBttn_click" Text="Submit" />
             <br />

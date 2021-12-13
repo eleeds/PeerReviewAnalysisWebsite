@@ -41,7 +41,7 @@
     <form id="form1" runat="server">
         <div class="centered">
             Enter Username<br />
-            <asp:TextBox ID="UsernameTB" runat="server"></asp:TextBox>
+            <asp:TextBox ID="UsernameTB" runat="server" MaxLength="49"></asp:TextBox>
 &nbsp;&nbsp;&nbsp;
             <asp:Button ID="UsersubmitBttn" runat="server" OnClick="UsersubmitBttn_Click" Text="Submit" />
             <br />

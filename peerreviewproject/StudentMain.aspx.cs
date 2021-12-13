@@ -19,7 +19,6 @@ namespace peerreviewproject
             {
                 Response.Redirect("LoginPage.aspx");
             }
-            //Session["userID"] = 2550;          //for testing
             lblStudentDetails.Text = "User ID: " + Session["email"];
             Session["type"] = "Student";
         }

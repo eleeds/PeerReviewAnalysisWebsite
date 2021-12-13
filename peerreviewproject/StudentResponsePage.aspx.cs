@@ -189,7 +189,7 @@ namespace peerreviewproject
                 {
                     Response.Redirect("StudentMain.aspx");
                 }
-                Questionlbl.Text = "Survey Question# " + (currentquestion + 1).ToString() + " out of " + Session["questionCount"] + " for current student";
+                Questionlbl.Text = "Survey Question# " + (currentquestion + 1).ToString() + " out of " + Session["questionCount"];
             }
             else
             {
@@ -237,29 +237,42 @@ namespace peerreviewproject
                 {
                     insertReviewQuery = "INSERT INTO Response_table (userID, reviewQuestionID, dateComplete, userResponse, questionSet)" +
                                         " VALUES (@userID, @reviewQuestionID, @dateComplete, @userResponse, @questionSet)";
+
+                    if (RadioBttns1to4.Visible)
+                    {
+                        response = RadioBttns1to4.SelectedItem.ToString();
+                    }
+                    else if (Radiobttns1to5.SelectedIndex != -1)
+                    {
+                        response = Radiobttns1to5.SelectedItem.ToString();
+                    }
+                    else if (RadiobttnsYesorNo.SelectedIndex != -1)
+                    {
+                        response = RadiobttnsYesorNo.SelectedItem.ToString();
+                    }
+                    else response = feedbackTxtbox.Text;
+
                 }
                 else 
                 {
                                         //inserts as peer review. student review contains a student
                     insertReviewQuery = "INSERT INTO Response_table (userID, teamID, reviewQuestionID, dateComplete, userResponse, studentReviewed, questionSet)" +
                     " VALUES (@userID, @teamID, @reviewQuestionID, @dateComplete, @userResponse, @studentReviewed, @questionSet)";
-                }
 
-                if (RadioBttns1to4.Visible)
-                {
-                    response = RadioBttns1to4.SelectedItem.ToString();
+                    if (RadioBttns1to4.Visible)
+                    {
+                        response = RadioBttns1to4.SelectedValue.ToString();
+                    }
+                    else if (Radiobttns1to5.SelectedIndex != -1)
+                    {
+                        response = Radiobttns1to5.SelectedValue.ToString();
+                    }
+                    else if (RadiobttnsYesorNo.SelectedIndex != -1)
+                    {
+                        response = RadiobttnsYesorNo.SelectedItem.ToString();
+                    }
+                    else response = feedbackTxtbox.Text;
                 }
-                else if (Radiobttns1to5.SelectedIndex != -1)
-                {
-                    response = Radiobttns1to5.SelectedItem.ToString();
-                }
-                else if (RadiobttnsYesorNo.SelectedIndex != -1)
-                {
-                    response = RadiobttnsYesorNo.SelectedItem.ToString();
-                }
-                else response = feedbackTxtbox.Text;
-                
-
                 
                 SqlCommand sqlInsert = new SqlCommand(insertReviewQuery, sqlCon);
                 sqlInsert.Parameters.AddWithValue("@userID", Session["userID"]);

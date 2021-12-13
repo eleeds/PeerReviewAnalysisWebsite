@@ -45,15 +45,15 @@
                 
                 <tr>
                     <td>
-                        <asp:Label ID="emailLbl" runat="server" Text="email"></asp:Label></td>
+                        <asp:Label ID="emailLbl" runat="server" Text="Email"></asp:Label></td>
                     <td>
-                        <asp:TextBox ID="emailBox" runat="server">idk300@eagles.usi.edu</asp:TextBox></td>
+                        <asp:TextBox ID="emailBox" runat="server" MaxLength="49">idk300@eagles.usi.edu</asp:TextBox></td>
                 </tr>
                 <tr>
                     <td>
-                        <asp:Label ID="passwordLbl" runat="server" Text="password"></asp:Label></td>
+                        <asp:Label ID="passwordLbl" runat="server" Text="Password"></asp:Label></td>
                     <td>
-                        <asp:TextBox ID="passwordBox" runat="server" TextMode="Password"></asp:TextBox></td>
+                        <asp:TextBox ID="passwordBox" runat="server" TextMode="Password" MaxLength="49"></asp:TextBox></td>
                 </tr>
              
                 

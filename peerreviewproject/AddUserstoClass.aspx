@@ -234,12 +234,12 @@
 
 </asp:TableCell>
                     <asp:TableCell runat="server">
-                        <asp:TextBox ID="LastnameTB" runat="server"> </asp:TextBox>
+                        <asp:TextBox ID="LastnameTB" runat="server" MaxLength="49"> </asp:TextBox>
                     
 
 </asp:TableCell>
                     <asp:TableCell runat="server">
-                        <asp:TextBox ID="EmailTB" runat="server" TextMode="Email">   </asp:TextBox>
+                        <asp:TextBox ID="EmailTB" runat="server" TextMode="Email" MaxLength="49">   </asp:TextBox>
                     
 
 </asp:TableCell>
@@ -283,7 +283,7 @@
                         <asp:Label ID="UploadfileLabel" runat="server" Font-Bold="True">Upload a CSV file: </asp:Label>
 </asp:TableCell>
                     <asp:TableCell runat="server">
-                        <asp:FileUpload ID="FileUpload1" runat="server" accept=".csv" />
+                        <asp:FileUpload ID="FileUpload1" runat="server" accept=".csv"/>
 </asp:TableCell>
                     <asp:TableCell>
                         <asp:Button ID="ImportBttn" runat="server" OnClick="Import_bttn_click" Text="Import file" />

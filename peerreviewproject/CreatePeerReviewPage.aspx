@@ -82,7 +82,7 @@
         </div>
 
         <div class="row center-text">
-            <asp:ListBox ID="CurrentQuestionSet_listbox" runat="server" Width="405px" AutoPostBack="True" OnSelectedIndexChanged="CurrentQuestionSet_listbox_SelectedIndexChanged"></asp:ListBox>
+            <asp:ListBox ID="CurrentQuestionSet_listbox" runat="server" Width="405px" AutoPostBack="True" OnSelectedIndexChanged="CurrentQuestionSet_listbox_SelectedIndexChanged" OnDataBound="CurrentQuestionSet_listbox_DataBound"></asp:ListBox>
         </div>
         
             
@@ -99,7 +99,7 @@
             <br />
             <asp:Label ID="CheckBoxLabel" runat="server" Font-Bold="True" Text="Make set a Class Survey?"></asp:Label>
             <br />
-            <asp:CheckBox ID="NoCheckBox" runat="server" AutoPostBack="True" Font-Bold="False" OnCheckedChanged="NoCheckBox_CheckedChanged" Text="No" />
+            <asp:CheckBox ID="NoCheckBox" runat="server" AutoPostBack="True" Font-Bold="False" OnCheckedChanged="NoCheckBox_CheckedChanged" Text="No" Checked="True" />
             &nbsp;
             <asp:CheckBox ID="YesCheckBox" runat="server" AutoPostBack="True" Font-Bold="False" OnCheckedChanged="YesCheckBox_CheckedChanged" Text="Yes" />
             <br />
@@ -115,7 +115,7 @@
             <asp:Button ID="NewSetButton" runat="server" OnClick="NewSetButton_click" Text="Add new set" />
             <asp:Label ID="Label1" runat="server"></asp:Label>
             <asp:Button ID="DuplicateBttn" runat="server" Text="Duplicate Set?" OnClick="Duplicate_Click" />
-            <asp:TextBox ID="duplicateTB" runat="server" Visible="False"></asp:TextBox>
+            <asp:TextBox ID="duplicateTB" runat="server" Visible="False" MaxLength="2" TextMode="Number"></asp:TextBox>
             <asp:Button ID="SubmitDuplicateBttn" runat="server" Text="Submit" OnClick="SubmitDuplicate_Click" />
         </div>
         <br />
@@ -177,8 +177,9 @@
         <p draggable="true">
             &nbsp;</p>
         <div class="center-text">
-            <asp:TextBox ID="questDescriptionTB" runat="server" Height="100px" Width="500px" EnableTheming="True" TextMode="MultiLine"></asp:TextBox>
-            
+            Question Description&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    
+            <asp:TextBox ID="questDescriptionTB" runat="server" Height="100px" Width="500px" EnableTheming="True" TextMode="MultiLine" MaxLength="499"></asp:TextBox>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <asp:RadioButtonList ID="type_radiobttn" runat="server" OnSelectedIndexChanged="Type_radiobttn_SelectedIndexChanged" AutoPostBack="True" CausesValidation="True">
                 <asp:ListItem Selected="True">Comment Response</asp:ListItem>
                 <asp:ListItem Value="1-4 Score Rating">1-4 Score Rating/Multiple Choice</asp:ListItem>
@@ -187,25 +188,25 @@
             </asp:RadioButtonList>        
 
         <asp:Panel ID="Panel1" runat="server" Height="150px" HorizontalAlign="Center" Visible="False" Width="400px" Font-Bold="True">
-            1 <asp:TextBox ID="tb1" runat="server"></asp:TextBox>
+            1 <asp:TextBox ID="tb1" runat="server" MaxLength="49"></asp:TextBox>
             <br />
-            2 <asp:TextBox ID="tb2" runat="server"></asp:TextBox>
+            2 <asp:TextBox ID="tb2" runat="server" MaxLength="49"></asp:TextBox>
             <br /> 
             <asp:Label ID="score3lbl" runat="server" Font-Bold="True" Text="3"></asp:Label>
-            <asp:TextBox ID="tb3" runat="server"></asp:TextBox>
+            <asp:TextBox ID="tb3" runat="server" MaxLength="49"></asp:TextBox>
             <br />
             <asp:Label ID="score4lbl" runat="server" Font-Bold="True" Text="4"></asp:Label>
-            <asp:TextBox ID="tb4" runat="server"></asp:TextBox>
+            <asp:TextBox ID="tb4" runat="server" MaxLength="49"></asp:TextBox>
             <br />
             <asp:Label ID="score5lbl" runat="server" Font-Bold="True" Text="5"></asp:Label>
-            <asp:TextBox ID="tb5" runat="server"></asp:TextBox>
+            <asp:TextBox ID="tb5" runat="server" MaxLength="49"></asp:TextBox>
         </asp:Panel>
             
         
         </div>
         <div class="center-text">
                 <p>
-            <asp:TextBox ID="name_tb" runat="server"></asp:TextBox>
+            <asp:TextBox ID="name_tb" runat="server" MaxLength="49"></asp:TextBox>
         &nbsp;&nbsp;&nbsp; Name of Question&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             
         </p>

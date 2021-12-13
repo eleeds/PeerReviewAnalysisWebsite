@@ -192,7 +192,7 @@
             </SelectParameters>
         </asp:SqlDataSource>
             <div class="row">
-                <asp:GridView ID="RatingGridview" runat="server" Caption="Scores"  EmptyDataText="Choose Student For Results" ShowHeaderWhenEmpty="True" CellPadding="4" ForeColor="#333333" HorizontalAlign="Left">
+                <asp:GridView ID="RatingGridview" runat="server" Caption="Scores"  EmptyDataText="Choose Student For Results" ShowHeaderWhenEmpty="True" CellPadding="4" ForeColor="#333333" HorizontalAlign="Left" AllowPaging="True" PageSize="5">
                 <AlternatingRowStyle BackColor="White" />
                 <EditRowStyle BackColor="#2461BF" />
                 <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
@@ -206,7 +206,7 @@
                 <SortedDescendingHeaderStyle BackColor="#4870BE" />
             </asp:GridView>
             
-            <asp:GridView ID="CommentsGridview" runat="server" Caption="Comments" EmptyDataText="Choose Student For Results" ShowHeaderWhenEmpty="True" CellPadding="4" ForeColor="#333333" HorizontalAlign="Right">
+            <asp:GridView ID="CommentsGridview" runat="server" Caption="Comments" EmptyDataText="Choose Student For Results" ShowHeaderWhenEmpty="True" CellPadding="4" ForeColor="#333333" HorizontalAlign="Right" AllowPaging="True" PageSize="5">
                 <AlternatingRowStyle BackColor="White" />
                 <EditRowStyle BackColor="#2461BF" />
                 <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />

@@ -63,15 +63,16 @@ namespace peerreviewproject
             {
                 return;
             }
-                DataTable RatingsDatatable = new DataTable();
-                RatingsDatatable.Columns.Add(" ");
-                RatingsDatatable.Columns.Add("Current Rating");
-                RatingsDatatable.Columns.Add("Max Score");
-                DataTable CommentsDatatable = new DataTable();
-                CommentsDatatable.Columns.Add("Feedback");
-                CommentsDatatable.Columns.Add("Set");
-                CommentsDatatable.Columns.Add("Date");
-
+            DataTable RatingsDatatable = new DataTable();
+            RatingsDatatable.Columns.Add(" ");
+            RatingsDatatable.Columns.Add("Current Rating");
+            RatingsDatatable.Columns.Add("Max Score");
+            DataTable CommentsDatatable = new DataTable();
+            CommentsDatatable.Columns.Add("Feedback");
+            CommentsDatatable.Columns.Add("Set");
+            CommentsDatatable.Columns.Add("Date");
+            //CommentsDatatable.Columns.Add("LeftBy");
+            List<string> names = new List<string>();
 
             if (ResultsGridview.Rows.Count > 0)
             {
@@ -95,6 +96,7 @@ namespace peerreviewproject
                             if (ResultsGridview.Rows[j].Cells[2].Text != "&nbsp;" && ResultsGridview.DataKeys[j].Values[1].ToString() == "Comment Response")
                             {
                                 CommentsDatatable.Rows.Add(ResultsGridview.Rows[j].Cells[2].Text, ResultsGridview.Rows[j].Cells[5].Text, ResultsGridview.Rows[j].Cells[7].Text);
+                                names.Add(ResultsGridview.Rows[j].Cells[0].Text);
                             }
                         }
                     }
@@ -122,6 +124,16 @@ namespace peerreviewproject
                 CommentsGridview.DataSource = CommentsDatatable;
                 CommentsGridview.DataBind();
                 ResultsGridview.Caption = "Reviews for " + GroupMembersGridview.SelectedRow.Cells[1].Text;
+                if (CommentsGridview.Rows.Count > 0)
+                {
+                    for(int i = 0; i < CommentsGridview.Rows.Count; i++)
+                    {
+                        if (names[i] != "")
+                        {
+                            CommentsGridview.Rows[i].ToolTip = "Comment by " + names[i];
+                        }
+                    }
+                }
 
                 if (RatingGridview.Rows.Count > 0 && CommentsGridview.Rows.Count < 1)
                 {
@@ -155,7 +167,6 @@ namespace peerreviewproject
             Flag = false;
             ResultsGridview.AllowPaging = true;
             ResultsGridview.PageSize = 8;
-            
         }
 
 

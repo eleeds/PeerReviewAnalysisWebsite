@@ -61,7 +61,7 @@
                 <table><tr><td><h3>Current Courses</h3></td></tr></table>
             </div>
             
-                <asp:GridView ID="CurrentCourseGridView" runat="server" AutoGenerateColumns="False"  CellPadding="4" DataKeyNames="courseID" DataSourceID="SqlDataSource1" EmptyDataText="No classes" ForeColor="#333333" HorizontalAlign="Center" ShowHeaderWhenEmpty="True" AllowSorting="True" OnDataBound="CurrentCourseGridView_DataBound" ToolTip="Class contains multiple Professors if underlined" GridLines="None">
+                <asp:GridView ID="CurrentCourseGridView" runat="server" AutoGenerateColumns="False"  CellPadding="4" DataKeyNames="courseID" DataSourceID="SqlDataSource1" EmptyDataText="No classes" ForeColor="#333333" HorizontalAlign="Center" ShowHeaderWhenEmpty="True" AllowSorting="True" OnDataBound="CurrentCourseGridView_DataBound"  OnRowDeleted="CurrentCourseGridView_RowDeleted" ToolTip="Class contains multiple Professors if underlined" GridLines="None">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField DataField="courseName" HeaderText="Course" SortExpression="courseName" />
@@ -112,7 +112,7 @@
                         <asp:Label ID="CourseNumLabel" runat="server" Text="Course Number"></asp:Label>
                     </asp:TableCell>
                     <asp:TableCell runat="server">
-                        <asp:TextBox ID="CourseNumberTB"  runat="server"></asp:TextBox>
+                        <asp:TextBox ID="CourseNumberTB"  runat="server" MaxLength="49"></asp:TextBox>
                     </asp:TableCell>
                 </asp:TableRow>
                 <asp:TableRow runat="server">
@@ -149,7 +149,7 @@
                         <asp:Label ID="AnotherProfessorLabel" runat="server" Text="If Co-Teaching enter other Professor's email"></asp:Label>
                     </asp:TableCell>
                     <asp:TableCell runat="server">
-                        <asp:TextBox ID="AnotherProfessorTextBox" runat="server" TextMode="Email"></asp:TextBox>
+                        <asp:TextBox ID="AnotherProfessorTextBox" runat="server" TextMode="Email" MaxLength="49"></asp:TextBox>
                     </asp:TableCell>
                 </asp:TableRow>
             </asp:Table>

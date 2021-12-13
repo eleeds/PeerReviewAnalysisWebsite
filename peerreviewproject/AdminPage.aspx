@@ -106,7 +106,7 @@
             
             
             <br />
-            <asp:GridView ID="UserGridview" runat="server" AllowPaging="True" AllowSorting="True" Caption="Users" CellPadding="4" ForeColor="#333333" GridLines="None" HorizontalAlign="Center" OnPageIndexChanging="OnPaging" OnRowDeleting="UserGridView_RowDeleting" OnRowDataBound="UserGridview_RowDataBound">
+            <asp:GridView ID="UserGridview" runat="server" AllowPaging="True" AllowSorting="True" Caption="Users" CellPadding="4" ForeColor="#333333" GridLines="None" HorizontalAlign="Center" OnPageIndexChanging="OnPaging" OnRowDeleting="UserGridView_RowDeleting" OnRowDataBound="UserGridview_RowDataBound" EmptyDataText="No users" ShowHeaderWhenEmpty="True">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                         <asp:TemplateField ShowHeader="False"><ItemTemplate>

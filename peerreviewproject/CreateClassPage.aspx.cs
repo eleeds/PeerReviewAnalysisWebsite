@@ -53,11 +53,12 @@ namespace peerreviewproject
                         WarningLabel.Text = "Course Created and Professor added";
                         WarningLabel.ForeColor = System.Drawing.Color.Green;
                         WarningLabel.Visible = true;
+                        CurrentCourseGridView.DataBind();
                         Clear();
                     }
                     else
                     {
-                        WarningLabel.Text = "Course Created but Professor wasn't found";
+                        WarningLabel.Text = "Course Created but Co-Professor was not found";
                         WarningLabel.ForeColor = System.Drawing.Color.Green;
                         WarningLabel.Visible = true;
                         Clear();
@@ -151,5 +152,10 @@ namespace peerreviewproject
             return false;
         }
 
+        protected void CurrentCourseGridView_RowDeleted(object sender, GridViewDeletedEventArgs e)
+        {
+            WarningLabel.Text = "Course Deleted.";
+            WarningLabel.Visible = true;
+        }
     }
 }

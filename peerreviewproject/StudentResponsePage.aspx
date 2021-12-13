@@ -71,7 +71,7 @@
             </asp:SqlDataSource>
             <asp:Panel ID="Panel1" runat="server" CssClass="auto-style1" HorizontalAlign="Left">
             </asp:Panel>
-            <asp:TextBox ID="TextBox1" runat="server" BorderStyle="None" Font-Bold="False" Height="187px" ReadOnly="True" TextMode="MultiLine" Width="740px" EnableTheming="True" Font-Size="Large"></asp:TextBox>
+            <asp:TextBox ID="TextBox1" runat="server" BorderStyle="None" Font-Bold="False" Height="187px" ReadOnly="True" TextMode="MultiLine" Width="740px" EnableTheming="True" Font-Size="Large" MaxLength="699"></asp:TextBox>
             <br />
             <asp:TextBox ID="feedbackTxtbox" runat="server" Visible="False"></asp:TextBox>
             <asp:RadioButtonList ID="RadioBttns1to4" runat="server" Visible="False">
