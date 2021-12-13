@@ -61,9 +61,7 @@
                     &nbsp;</p>
             </div>
         </div>
-        <div class="row" style="padding-top: 125px">
-                    <asp:Button ID="HomeBttn" runat="server" OnClick="HomeBttn_Click" Text="Home" />
-        </div>
+        
         
         <div>
             <asp:Table ID="Table1" runat="server" GridLines="Both" Width="400px" Height="150px" BorderStyle="Double" HorizontalAlign="Center">
@@ -130,9 +128,7 @@
                 <SortedDescendingHeaderStyle BackColor="#4870BE" />
             </asp:GridView>
             
-                    <asp:TextBox ID="txtSearch" runat="server" OnTextChanged="Search" AutoPostBack="true"></asp:TextBox>
-
-                    <asp:Button ID="Button1" runat="server" Text="Search" />
+                    
 
 
 
@@ -143,8 +139,16 @@
             </asp:SqlDataSource>
             <br />
             
+            <div class="row center-text" style="padding-top: 20px">
+                    <asp:Button ID="HomeBttn" runat="server" OnClick="HomeBttn_Click" Text="Home"/>
+        </div>
             
-            
+            <div class="row center-text" style="padding: 25px">
+                <asp:TextBox ID="txtSearch" runat="server" OnTextChanged="Search" AutoPostBack="true"></asp:TextBox>
+
+                    <asp:Button ID="Button1" runat="server" Text="Search" />
+
+            </div>
         </div>
     </form>
 </body>
