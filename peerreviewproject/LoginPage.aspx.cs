@@ -23,7 +23,7 @@ namespace peerreviewproject
             {
                 sqlCon.Open();
 
-                string permission = "SELECT ID, type, tempPass FROM User_table WHERE email=@email AND CONVERT(VARCHAR(50), DECRYPTBYPASSPHRASE('USI2021', password))=@password";
+                string permission = "SELECT ID, type, tempPass FROM User_table WHERE email=@email AND CONVERT(VARCHAR(50), DECRYPTBYPASSPHRASE('', password))=@password";
                 string[] UserInfo_Array = new string[3];                               //grabs user's permission type if login information correct
                 SqlCommand UserTypePassCheck_sqlCMD = new SqlCommand(permission, sqlCon);
                 UserTypePassCheck_sqlCMD.Parameters.AddWithValue("@email", emailBox.Text.Trim());

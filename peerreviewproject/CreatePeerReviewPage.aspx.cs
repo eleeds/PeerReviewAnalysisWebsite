@@ -57,11 +57,11 @@ namespace peerreviewproject
                 question_sqlCmd.Parameters.AddWithValue("@name", name_tb.Text);
                 question_sqlCmd.Parameters.AddWithValue("@survey", YesCheckBox.Checked.ToString());
 
-                if (CurrentQuestionSet_listbox.Items.Count == 0) //|| CurrentQuestionSet_listbox.Items[0].Text != "1")
+                if (CurrentQuestionSet_listbox.Items.Count == 0) 
                 {
                     question_sqlCmd.Parameters.AddWithValue("@set", 1);
                 }
-                else if (CurrentQuestionSet_listbox.SelectedIndex == -1)                        //adds next number after most recent set number. if recent 1, new is 2
+                else if (CurrentQuestionSet_listbox.SelectedIndex == -1) //adds next number after most recent set number. if recent 1, new is 2
                 {
                     for (int i = 1; i < CurrentQuestionSet_listbox.Items.Count + 2; i++)
                     {
@@ -114,7 +114,7 @@ namespace peerreviewproject
         {
 
             SetList_Datatable = (DataTable)ViewState["data"];
-            if (CurrentQuestionSet_listbox.Items.Count == 0) //&& CurrentQuestionSet_listbox.Items[0].Text != "1")
+            if (CurrentQuestionSet_listbox.Items.Count == 0) 
             {
                 SetList_Datatable.Rows.Add(1);
             }
@@ -144,7 +144,6 @@ namespace peerreviewproject
                             SetList_Datatable.Rows.Add(i + 2);
                             SetIndex = i + 2;
                         }
-                        //SetIndex = i + 1;
                         break;
                     }
                 }
@@ -595,19 +594,24 @@ namespace peerreviewproject
                         {
                             foreach (GridViewRow rows in QuestionsInSetGridview.Rows)
                             {
-                                string InsertCopyQuery = "INSERT INTO questions_table ([courseID], [question], [type], " +
-                                    "[correctResponses], [questionName], [questionSet], [classSurvey])" +
-                                " VALUES (@courseID, @questionText, @type, @answers, @name, @set, @survey)";
-                                SqlCommand DuplicateSQL = new SqlCommand(InsertCopyQuery, sqlCon);
-                                DuplicateSQL.Parameters.AddWithValue("@courseID", Course_listbox.SelectedValue);
-                                DuplicateSQL.Parameters.AddWithValue("@questionText", rows.Cells[2].Text);
-                                DuplicateSQL.Parameters.AddWithValue("@type", rows.Cells[3].Text);
-                                DuplicateSQL.Parameters.AddWithValue("@answers", rows.Cells[4].Text);
-                                DuplicateSQL.Parameters.AddWithValue("@name", rows.Cells[5].Text);
-                                DuplicateSQL.Parameters.AddWithValue("@set", rows.Cells[6].Text + " (" + (i + 2).ToString() + ")");
-                                DuplicateSQL.Parameters.AddWithValue("@survey", YesCheckBox.Checked.ToString());
-                                DuplicateSQL.ExecuteNonQuery();
-                                setName = rows.Cells[6].Text;
+                                if (CurrentQuestionSet_listbox.Items.FindByText(rows.Cells[6].Text + " (" + (i + 2).ToString() + ")") == null)
+                                {
+
+
+                                    string InsertCopyQuery = "INSERT INTO questions_table ([courseID], [question], [type], " +
+                                        "[correctResponses], [questionName], [questionSet], [classSurvey])" +
+                                    " VALUES (@courseID, @questionText, @type, @answers, @name, @set, @survey)";
+                                    SqlCommand DuplicateSQL = new SqlCommand(InsertCopyQuery, sqlCon);
+                                    DuplicateSQL.Parameters.AddWithValue("@courseID", Course_listbox.SelectedValue);
+                                    DuplicateSQL.Parameters.AddWithValue("@questionText", rows.Cells[2].Text);
+                                    DuplicateSQL.Parameters.AddWithValue("@type", rows.Cells[3].Text);
+                                    DuplicateSQL.Parameters.AddWithValue("@answers", rows.Cells[4].Text);
+                                    DuplicateSQL.Parameters.AddWithValue("@name", rows.Cells[5].Text);
+                                    DuplicateSQL.Parameters.AddWithValue("@set", rows.Cells[6].Text + " (" + (i + 2).ToString() + ")");
+                                    DuplicateSQL.Parameters.AddWithValue("@survey", YesCheckBox.Checked.ToString());
+                                    DuplicateSQL.ExecuteNonQuery();
+                                    setName = rows.Cells[6].Text;
+                                }
                             }
                             if (DueDateTB.Text == "")
                             { 

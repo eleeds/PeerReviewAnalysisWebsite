@@ -61,7 +61,7 @@
                 <table><tr><td><h3>Current Courses</h3></td></tr></table>
             </div>
             
-                <asp:GridView ID="CurrentCourseGridView" runat="server" AutoGenerateColumns="False"  CellPadding="4" DataKeyNames="courseID" DataSourceID="SqlDataSource1" EmptyDataText="No classes" ForeColor="#333333" HorizontalAlign="Center" ShowHeaderWhenEmpty="True" AllowSorting="True" OnDataBound="CurrentCourseGridView_DataBound"  OnRowDeleted="CurrentCourseGridView_RowDeleted" ToolTip="Class contains multiple Professors if underlined" GridLines="None">
+                <asp:GridView ID="CurrentCourseGridView" runat="server" AutoGenerateColumns="False"  CellPadding="4" DataKeyNames="courseID" DataSourceID="SqlDataSource1" EmptyDataText="No classes" ForeColor="#333333" HorizontalAlign="Center" ShowHeaderWhenEmpty="True" AllowSorting="True" OnDataBound="CurrentCourseGridView_DataBound"  OnRowDeleted="CurrentCourseGridView_RowDeleted" ToolTip="Class contains multiple Professors if underlined" GridLines="None" OnRowDeleting="CurrentCourseGridView_RowDeleting">
                 <AlternatingRowStyle BackColor="White" />
                 <Columns>
                     <asp:BoundField DataField="courseName" HeaderText="Course" SortExpression="courseName" />
@@ -156,9 +156,10 @@
             
             
             
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:Peer_ReviewConnectionString2 %>" DeleteCommand="DELETE FROM Course_table WHERE (courseID = @courseID)" SelectCommand="SELECT a.courseName, a.courseID, a.courseNumber, a.courseSemester, a.year FROM Course_table AS a INNER JOIN Course_access_table AS b ON a.courseID = b.courseID WHERE (b.userID = @user )">
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:Peer_ReviewConnectionString2 %>" DeleteCommand="DELETE FROM Course_access_table WHERE(courseID = @courseID) AND(userID = @userID)" SelectCommand="SELECT a.courseName, a.courseID, a.courseNumber, a.courseSemester, a.year FROM Course_table AS a INNER JOIN Course_access_table AS b ON a.courseID = b.courseID WHERE (b.userID = @user )">
                 <DeleteParameters>
                     <asp:Parameter Name="courseID" />
+                    <asp:Parameter Name="userID" />
                 </DeleteParameters>
                 <SelectParameters>
                     <asp:SessionParameter Name="user" SessionField="userID" />

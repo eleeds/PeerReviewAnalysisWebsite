@@ -13,7 +13,8 @@ namespace peerreviewproject
     {
 
         bool Flag = false;                  //for keeping track of scores because of paging settings seperating results gridview
-        Dictionary<string, Double> TypeandScores = new Dictionary<string, Double>();
+        Dictionary<string, double> TypeandScores = new Dictionary<string, double>();
+        Dictionary<string, int> CountForEachType = new Dictionary<string, int>();
         
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -71,7 +72,6 @@ namespace peerreviewproject
             CommentsDatatable.Columns.Add("Feedback");
             CommentsDatatable.Columns.Add("Set");
             CommentsDatatable.Columns.Add("Date");
-            //CommentsDatatable.Columns.Add("LeftBy");
             List<string> names = new List<string>();
 
             if (ResultsGridview.Rows.Count > 0)
@@ -90,6 +90,11 @@ namespace peerreviewproject
                         if (isRating)
                         {
                             TypeandScores.Add(ResultsGridview.Rows[j].Cells[4].Text, convertedNumber);
+                            if (!CountForEachType.ContainsKey(ResultsGridview.Rows[j].Cells[4].Text))
+                            {
+                                CountForEachType.Add(ResultsGridview.Rows[j].Cells[4].Text, 1);
+                            }
+
                         }
                         else
                         {
@@ -101,23 +106,30 @@ namespace peerreviewproject
                         }
                     }
                     else
-                    TypeandScores[ResultsGridview.Rows[j].Cells[4].Text] = (Convert.ToDouble(TypeandScores[ResultsGridview.Rows[j].Cells[4].Text]) + Convert.ToDouble(ResultsGridview.Rows[j].Cells[2].Text)) / 2;
-                }                                                           //if a score already exists in dictionary, update and divide for average
+                    {
+                        TypeandScores[ResultsGridview.Rows[j].Cells[4].Text] = ((Convert.ToDouble(TypeandScores[ResultsGridview.Rows[j].Cells[4].Text])
+                                                                                + Convert.ToDouble(ResultsGridview.Rows[j].Cells[2].Text)));
+                        CountForEachType[ResultsGridview.Rows[j].Cells[4].Text]++;
+                    }                                                           //if a score already exists in dictionary, update count
+                }
                 
-                int count = 0;
-                foreach (var key in TypeandScores)
+
+                for (int i = 0; i < TypeandScores.Count; i++)
                 {
-                    if (ResultsGridview.DataKeys[count].Values[1].ToString() == "1-4 Score Rating")
-                        RatingsDatatable.Rows.Add(key.Key.ToString(), Convert.ToDecimal(key.Value), 4); //max score = 4
-                    else if (ResultsGridview.DataKeys[count].Values[1].ToString() == "1-5 Score Rating")
-                        RatingsDatatable.Rows.Add(key.Key.ToString(), Convert.ToDecimal(key.Value), 5);  //max score = 5
+                    TypeandScores[TypeandScores.ElementAt(i).Key] /= CountForEachType[CountForEachType.ElementAt(i).Key];   //each score is divided by the amount of entries for that certain type
+
+                    if (ResultsGridview.DataKeys[i].Values[1].ToString() == "1-4 Score Rating")
+                        RatingsDatatable.Rows.Add(TypeandScores.ElementAt(i).Key, Math.Round(Convert.ToDecimal(TypeandScores[TypeandScores.ElementAt(i).Key]),2), 4); //max score = 4
+                    else if (ResultsGridview.DataKeys[i].Values[1].ToString() == "1-5 Score Rating")
+                        RatingsDatatable.Rows.Add(TypeandScores.ElementAt(i).Key, Math.Round(Convert.ToDecimal(TypeandScores[TypeandScores.ElementAt(i).Key]),2), 5);  //max score = 5
                     else
                     {
-                        CommentsDatatable.Rows.Add(key.Value);
+                        if (ResultsGridview.SortExpression == "")
+                        {
+                            CommentsDatatable.Rows.Add(TypeandScores[TypeandScores.ElementAt(i).Key]);
+                        }
                     }
-                    count++;
                 }
-
 
                 RatingGridview.DataSource = RatingsDatatable;
                 RatingGridview.DataBind();
@@ -126,7 +138,7 @@ namespace peerreviewproject
                 ResultsGridview.Caption = "Reviews for " + GroupMembersGridview.SelectedRow.Cells[1].Text;
                 if (CommentsGridview.Rows.Count > 0)
                 {
-                    for(int i = 0; i < CommentsGridview.Rows.Count; i++)
+                    for(int i = 0; i < names.Count; i++)
                     {
                         if (names[i] != "")
                         {

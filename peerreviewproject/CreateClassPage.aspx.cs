@@ -152,10 +152,63 @@ namespace peerreviewproject
             return false;
         }
 
+        private bool ProfessorCountforDeletion(DataKey key)
+        {
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection))
+            {
+                sqlCon.Open();
+                string numberOfProfessors = "SELECT COUNT(1) FROM Course_access_table WHERE courseID=@courseID AND permissionType != 'Student'";
+                SqlCommand sqlCmd = new SqlCommand(numberOfProfessors, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@courseID", key.Value);
+                int count = Convert.ToInt32(sqlCmd.ExecuteScalar());
+                sqlCon.Close();
+                if (count > 0)
+                    return true;
+            }
+            return false;
+        }
+
         protected void CurrentCourseGridView_RowDeleted(object sender, GridViewDeletedEventArgs e)
         {
             WarningLabel.Text = "Course Deleted.";
             WarningLabel.Visible = true;
+        }
+
+        protected void CurrentCourseGridView_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+
+            foreach (DataKey x in CurrentCourseGridView.DataKeys)
+            {
+                if (x.Value == e.Keys[0])
+                {
+                    if (!ProfessorCountforDeletion(x)) //if course contains multiple course, just remove course access from current professor
+                    {
+                        using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection)) //if course contains one professor
+                        {                                                                                  //delete whole course
+                            sqlCon.Open();
+                            string DeleteFromCourse = "DELETE FROM Course_table WHERE courseID=@courseID";
+                            SqlCommand sqlCmd = new SqlCommand(DeleteFromCourse, sqlCon);
+                            sqlCmd.Parameters.AddWithValue("@courseID", e.Keys[0]);
+                            sqlCmd.ExecuteNonQuery();
+                            sqlCon.Close();
+                            return;
+                        }
+                    }
+                }
+            }
+
+            using (SqlConnection sqlCon = new SqlConnection(ConnectionStringClass.connection)) 
+            {                                                                                  
+                sqlCon.Open();
+                string DeletefromAccessTable = "DELETE FROM Course_access_table WHERE(courseID = @courseID) AND(userID = @userID)";
+                SqlCommand sqlCmd = new SqlCommand(DeletefromAccessTable, sqlCon);
+                sqlCmd.Parameters.AddWithValue("@courseID", e.Keys[0]);
+                sqlCmd.Parameters.AddWithValue("userID", Session["userID"]);
+                sqlCmd.ExecuteNonQuery();
+                sqlCon.Close();
+            }
+         
+
         }
     }
 }
